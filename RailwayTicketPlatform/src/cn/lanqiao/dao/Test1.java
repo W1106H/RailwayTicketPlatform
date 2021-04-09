@@ -1,4 +1,4 @@
-package cn.lanqiao;
+package cn.lanqiao.dao;
 
 public class Test1 {
     public static void main(String[] args) {
