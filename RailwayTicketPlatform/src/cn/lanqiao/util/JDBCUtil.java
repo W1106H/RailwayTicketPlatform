@@ -1,11 +1,11 @@
 package cn.lanqiao.util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import org.junit.Test;
+
+import java.sql.*;
 
 public class JDBCUtil {
-    public Connection getConnection(){
+    public static Connection getConnection(){
 
 //        务必导入ojdbc jar包，具体的ojdbc几根据连接的oracle版本确定
 //        连oracle11g用ojdbc6.jar,连oracle19c用ojdbc8.jar
@@ -27,5 +27,31 @@ public class JDBCUtil {
             e.printStackTrace();
         }
         return conn;
+    }
+
+    /*关闭连接的对象*/
+    public static void close(ResultSet resultSet, Statement statement, Connection connection) {
+        if(resultSet!=null){
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if(connection!=null){
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
