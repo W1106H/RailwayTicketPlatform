@@ -1,4 +1,4 @@
-package cn.lanqiao.entity;
+package cn.lanqiao.entity.Peoples;
 
 import java.util.Date;
 
@@ -29,6 +29,24 @@ public class Orders {
         this.order_Creator = order_Creator;
         this.order_state = order_state;
         this.order_Create_Time = order_Create_Time;
+    }
+
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "order_No='" + order_No + '\'' +
+                ", pid='" + pid + '\'' +
+                ", train_No='" + train_No + '\'' +
+                ", train_Start_Time=" + train_Start_Time +
+                ", train_End_Time=" + train_End_Time +
+                ", station_Start_No='" + station_Start_No + '\'' +
+                ", station_End_NO='" + station_End_NO + '\'' +
+                ", carriage_No='" + carriage_No + '\'' +
+                ", seat_No='" + seat_No + '\'' +
+                ", order_Creator='" + order_Creator + '\'' +
+                ", order_state='" + order_state + '\'' +
+                ", order_Create_Time=" + order_Create_Time +
+                '}';
     }
 
     public String getOrder_No() {
