@@ -7,7 +7,7 @@ import java.sql.*;
 public class TestClass {
 
     @Test
-    public void getConnection(){
+    public static void getConnection(){
         String className = "oracle.jdbc.driver.OracleDriver";
         try {
             Class.forName(className);
