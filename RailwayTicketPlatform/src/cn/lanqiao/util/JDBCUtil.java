@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 public class JDBCUtil {
     public Connection getConnection(){
+
 //        务必导入ojdbc jar包，具体的ojdbc几根据连接的oracle版本确定
 //        连oracle11g用ojdbc6.jar,连oracle19c用ojdbc8.jar
 //        加载Oracle驱动

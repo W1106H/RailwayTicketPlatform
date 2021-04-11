@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class TestClass {
+
     @Test
     public void getConnection(){
         String className = "oracle.jdbc.driver.OracleDriver";
