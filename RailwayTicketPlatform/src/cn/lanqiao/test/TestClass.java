@@ -19,6 +19,7 @@ public class TestClass {
         String user = "one";
         String pwd = "123";
         Connection conn = null;
+//        测试
         try {
             conn = DriverManager.getConnection(url, user, pwd);
         } catch (SQLException e) {
