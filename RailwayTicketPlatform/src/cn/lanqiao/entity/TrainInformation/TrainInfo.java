@@ -1,6 +1,6 @@
 package cn.lanqiao.entity.TrainInformation;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class TrainInfo {
     private String trainNum;
@@ -9,10 +9,12 @@ public class TrainInfo {
     private String trainStartStation;
     private Date trainEndTime;
     private String trainEndStation;
-    private Date trainRunTime;
+    private String trainRunTime;
     private int trainCarriages;
+    private int trainPrice;
+    private String trainRunType;
 
-    public TrainInfo(String trainNum, String trainTypeName, Date trainStartTime, String trainStartStation, Date trainEndTime, String trainEndStation, Date trainRunTime, int trainCarriages) {
+    public TrainInfo(String trainNum, String trainTypeName, Date trainStartTime, String trainStartStation, Date trainEndTime, String trainEndStation, String trainRunTime, int trainCarriages, int trainPrice, String trainRunType) {
         this.trainNum = trainNum;
         this.trainTypeName = trainTypeName;
         this.trainStartTime = trainStartTime;
@@ -21,9 +23,31 @@ public class TrainInfo {
         this.trainEndStation = trainEndStation;
         this.trainRunTime = trainRunTime;
         this.trainCarriages = trainCarriages;
+        this.trainPrice = trainPrice;
+        this.trainRunType = trainRunType;
+    }
+
+    public TrainInfo(String trainNum, String trainTypeName, Date trainStartTime, String trainStartStation, Date trainEndTime, String trainEndStation, String trainRunTime, int trainCarriages, int trainPrice) {
+        this.trainNum = trainNum;
+        this.trainTypeName = trainTypeName;
+        this.trainStartTime = trainStartTime;
+        this.trainStartStation = trainStartStation;
+        this.trainEndTime = trainEndTime;
+        this.trainEndStation = trainEndStation;
+        this.trainRunTime = trainRunTime;
+        this.trainCarriages = trainCarriages;
+        this.trainPrice=trainPrice;
     }
 
     public TrainInfo() {
+    }
+
+    public int getTrainPrice() {
+        return trainPrice;
+    }
+
+    public void setTrainPrice(int trainPrice) {
+        this.trainPrice = trainPrice;
     }
 
     public String getTrainNum() {
@@ -74,11 +98,11 @@ public class TrainInfo {
         this.trainEndStation = trainEndStation;
     }
 
-    public Date getTrainRunTime() {
+    public String getTrainRunTime() {
         return trainRunTime;
     }
 
-    public void setTrainRunTime(Date trainRunTime) {
+    public void setTrainRunTime(String trainRunTime) {
         this.trainRunTime = trainRunTime;
     }
 
@@ -99,8 +123,9 @@ public class TrainInfo {
                 ", trainStartStation='" + trainStartStation + '\'' +
                 ", trainEndTime=" + trainEndTime +
                 ", trainEndStation='" + trainEndStation + '\'' +
-                ", trainRunTime=" + trainRunTime +
+                ", trainRunTime='" + trainRunTime + '\'' +
                 ", trainCarriages=" + trainCarriages +
+                ", trainPrice=" + trainPrice +
                 '}';
     }
 }

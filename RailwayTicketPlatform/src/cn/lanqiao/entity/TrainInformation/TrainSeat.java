@@ -2,7 +2,7 @@ package cn.lanqiao.entity.TrainInformation;
 
 public class TrainSeat {
     private String trainNum;
-    private String carriageNum;//车厢号
+    private int carriageNum;//车厢号
     private String seatType;
     private int seatCount;
 
@@ -10,7 +10,7 @@ public class TrainSeat {
 
     }
 
-    public TrainSeat(String trainNum, String carriageNum, String seatType, int seatCount) {
+    public TrainSeat(String trainNum, int carriageNum, String seatType, int seatCount) {
         this.trainNum = trainNum;
         this.carriageNum = carriageNum;
         this.seatType = seatType;
@@ -25,11 +25,11 @@ public class TrainSeat {
         this.trainNum = trainNum;
     }
 
-    public String getCarriageNum() {
+    public int getCarriageNum() {
         return carriageNum;
     }
 
-    public void setCarriageNo(String carriageNum) {
+    public void setCarriageNo(int carriageNum) {
         this.carriageNum = carriageNum;
     }
 

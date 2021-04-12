@@ -1,25 +1,42 @@
 package cn.lanqiao.entity.TrainInformation;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class TrainParkingStation {
     private String stationOrder;
+    private String stationName;
     private String trainNum;
-    private String trainName;
     private Date arriveTime;
     private Date startTime;
-    private String price;
+    private int price;
 
-    public TrainParkingStation(String stationOrder, String trainNum, String trainName, Date arriveTime, Date startTime, String price) {
+
+    public TrainParkingStation(String stationName, String stationOrder, String trainNum,  Date arriveTime, Date startTime, int price) {
         this.stationOrder = stationOrder;
         this.trainNum = trainNum;
-        this.trainName = trainName;
         this.arriveTime = arriveTime;
         this.startTime = startTime;
         this.price = price;
+        this.stationName=stationName;
     }
 
     public TrainParkingStation() {
+    }
+
+    public String getStationName() {
+        return stationName;
+    }
+
+    public void setStationName(String stationName) {
+        this.stationName = stationName;
+    }
+
+    public String getTrainNum() {
+        return trainNum;
+    }
+
+    public void setTrainNum(String trainNum) {
+        this.trainNum = trainNum;
     }
 
     public String getStationOrder() {
@@ -38,14 +55,6 @@ public class TrainParkingStation {
         this.trainNum = trainNum;
     }
 
-    public String getTrainName() {
-        return trainName;
-    }
-
-    public void setTrainName(String trainName) {
-        this.trainName = trainName;
-    }
-
     public Date getArriveTime() {
         return arriveTime;
     }
@@ -62,22 +71,22 @@ public class TrainParkingStation {
         this.startTime = startTime;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
     @Override
     public String toString() {
-        return "ParkingStation{" +
+        return "TrainParkingStation{" +
                 "stationOrder='" + stationOrder + '\'' +
-                ", trainNo='" + trainNum + '\'' +
-                ", trainName='" + trainName + '\'' +
-                ", arriveTime='" + arriveTime + '\'' +
-                ", startTime='" + startTime + '\'' +
+                ", stationName='" + stationName + '\'' +
+                ", trainNum='" + trainNum + '\'' +
+                ", arriveTime=" + arriveTime +
+                ", startTime=" + startTime +
                 ", price='" + price + '\'' +
                 '}';
     }
