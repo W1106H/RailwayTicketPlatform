@@ -1,0 +1,115 @@
+JFDML JFormDesigner: "7.0.1.0.272" Java: "11.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			"title": "铁路票务管理平台"
+			"font": new java.awt.Font( "仿宋", 0, 18 )
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/cn/lanqiao/util/Pictures/MainLogo.png" )
+			"$sizePolicy": 1
+			"background": new java.awt.Color( 102, 153, 255, 255 )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "origin"
+				"horizontalAlignment": 0
+				"toolTipText": "出发站"
+				"font": new java.awt.Font( "仿宋", 1, 22 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 220
+				"y": 110
+				"width": 130
+				"height": 70
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "destination"
+				"horizontalAlignment": 0
+				"toolTipText": "终点站"
+				"font": new java.awt.Font( "仿宋", 1, 22 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 520
+				"y": 110
+				"width": 130
+				"height": 70
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/cn/lanqiao/util/Pictures/jiantou .png" )
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "jiantouMouseClicked", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 405
+				"y": 110
+				"width": 65
+				"height": 65
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField2"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 300
+				"y": 205
+				"width": 275
+				"height": 40
+			} )
+			add( new FormComponent( "javax.swing.JRadioButton" ) {
+				name: "radioButton1"
+				"text": "高铁/动车"
+				"foreground": sfield java.awt.Color white
+				"background": new java.awt.Color( 102, 153, 255, 110 )
+				"font": new java.awt.Font( "仿宋", 1, 14 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 325
+				"y": 250
+				"height": 24
+			} )
+			add( new FormComponent( "javax.swing.JRadioButton" ) {
+				name: "radioButton2"
+				"text": "学生票"
+				"background": new java.awt.Color( 102, 153, 255, 110 )
+				"foreground": sfield java.awt.Color white
+				"font": new java.awt.Font( "仿宋", 1, 14 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 485
+				"y": 250
+				"width": 75
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField3"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 355
+				"y": 295
+				"width": 165
+				"height": 45
+			} )
+			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
+				name: "menuBar1"
+				"toolTipText": "列车信息"
+				"font": new java.awt.Font( "仿宋", 0, 12 )
+				add( new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
+					name: "menuBar2"
+					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+						name: "menu1"
+						"text": "列车信息"
+						"font": new java.awt.Font( "仿宋", 1, 14 )
+						add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+							name: "menu2"
+							"text": "text"
+						} )
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "menu3"
+					"text": "订单信息"
+					"font": new java.awt.Font( "仿宋", 1, 14 )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "menu4"
+					"text": "个人信息"
+					"font": new java.awt.Font( "仿宋", 1, 14 )
+				} )
+			}
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 875, 505 )
+		} )
+	}
+}
