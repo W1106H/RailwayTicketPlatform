@@ -257,8 +257,5 @@ public class MainFrm extends JFrame {
     private JButton ticketSearch;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
-    public static void main(String[] args) {
-        MainFrm mainFrm = new MainFrm();
-        mainFrm.setVisible(true);
-    }
+
 }
