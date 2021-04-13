@@ -13,10 +13,12 @@ public class Orders {
     String carriage_No;
     String seat_No;
     String order_Creator;
-    String order_state;
+    char order_state;
     Date order_Create_Time;
+    double sumPrice;
+    boolean Visual;
 
-    public Orders(String order_No, String pid, String train_No, Date train_Start_Time, Date train_End_Time, String station_Start_No, String station_End_NO, String carriage_No, String seat_No, String order_Creator, String order_state, Date order_Create_Time) {
+    public Orders(String order_No, String pid, String train_No, Date train_Start_Time, Date train_End_Time, String station_Start_No, String station_End_NO, String carriage_No, String seat_No, String order_Creator, char order_state, Date order_Create_Time, double sumPrice, boolean visual) {
         this.order_No = order_No;
         this.pid = pid;
         this.train_No = train_No;
@@ -29,6 +31,8 @@ public class Orders {
         this.order_Creator = order_Creator;
         this.order_state = order_state;
         this.order_Create_Time = order_Create_Time;
+        this.sumPrice = sumPrice;
+        Visual = visual;
     }
 
     @Override
@@ -44,8 +48,10 @@ public class Orders {
                 ", carriage_No='" + carriage_No + '\'' +
                 ", seat_No='" + seat_No + '\'' +
                 ", order_Creator='" + order_Creator + '\'' +
-                ", order_state='" + order_state + '\'' +
+                ", order_state=" + order_state +
                 ", order_Create_Time=" + order_Create_Time +
+                ", sumPrice=" + sumPrice +
+                ", Visual=" + Visual +
                 '}';
     }
 
@@ -129,11 +135,11 @@ public class Orders {
         this.order_Creator = order_Creator;
     }
 
-    public String getOrder_state() {
+    public char getOrder_state() {
         return order_state;
     }
 
-    public void setOrder_state(String order_state) {
+    public void setOrder_state(char order_state) {
         this.order_state = order_state;
     }
 
@@ -143,5 +149,21 @@ public class Orders {
 
     public void setOrder_Create_Time(Date order_Create_Time) {
         this.order_Create_Time = order_Create_Time;
+    }
+
+    public double getSumPrice() {
+        return sumPrice;
+    }
+
+    public void setSumPrice(double sumPrice) {
+        this.sumPrice = sumPrice;
+    }
+
+    public boolean isVisual() {
+        return Visual;
+    }
+
+    public void setVisual(boolean visual) {
+        Visual = visual;
     }
 }
