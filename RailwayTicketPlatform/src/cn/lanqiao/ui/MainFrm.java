@@ -8,6 +8,7 @@ import com.eltima.components.ui.DatePicker;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Date;
 import javax.swing.*;
 /**
  * @author Brainrain
@@ -79,6 +80,12 @@ public class MainFrm extends JFrame {
         }
     }
 
+    private void ticketSearchMouseClicked(MouseEvent e) {
+        String searchOrigin=origin.getText();
+        String searchDestination=destination.getText();
+        System.out.println(datePicker.getValue());
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         menuBar1 = new JMenuBar();
@@ -93,7 +100,7 @@ public class MainFrm extends JFrame {
         radioButton1 = new JRadioButton();
         radioButton2 = new JRadioButton();
         datePicker = new DatePicker();
-        button1 = new JButton();
+        ticketSearch = new JButton();
 
         //======== this ========
         setTitle("\u94c1\u8def\u7968\u52a1\u7ba1\u7406\u5e73\u53f0");
@@ -200,14 +207,20 @@ public class MainFrm extends JFrame {
         contentPane.add(datePicker);
         datePicker.setBounds(345, 205, 185, 30);
 
-        //---- button1 ----
-        button1.setText("\u706b\u8f66\u7968\u67e5\u8be2");
-        button1.setBackground(new Color(204, 204, 204));
-        button1.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 22));
-        button1.setForeground(new Color(0, 0, 204));
-        button1.setIcon(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/search.png")));
-        contentPane.add(button1);
-        button1.setBounds(new Rectangle(new Point(340, 290), button1.getPreferredSize()));
+        //---- ticketSearch ----
+        ticketSearch.setText("\u706b\u8f66\u7968\u67e5\u8be2");
+        ticketSearch.setBackground(new Color(204, 204, 204));
+        ticketSearch.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 22));
+        ticketSearch.setForeground(new Color(0, 0, 204));
+        ticketSearch.setIcon(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/search.png")));
+        ticketSearch.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ticketSearchMouseClicked(e);
+            }
+        });
+        contentPane.add(ticketSearch);
+        ticketSearch.setBounds(new Rectangle(new Point(340, 290), ticketSearch.getPreferredSize()));
 
         {
             // compute preferred size
@@ -241,7 +254,7 @@ public class MainFrm extends JFrame {
     private JRadioButton radioButton1;
     private JRadioButton radioButton2;
     private DatePicker datePicker;
-    private JButton button1;
+    private JButton ticketSearch;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     public static void main(String[] args) {
