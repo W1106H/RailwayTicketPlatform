@@ -81,10 +81,10 @@ new FormModel {
 				"background": new java.awt.Color( 204, 204, 204, 255 )
 				"font": new java.awt.Font( "仿宋", 1, 22 )
 				"foreground": new java.awt.Color( 0, 0, 204, 255 )
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/cn/lanqiao/util/Pictures/search.png" )
+				"icon": sfield com.jformdesigner.model.FormObject NULL_VALUE
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "ticketSearchMouseClicked", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 340
+				"x": 365
 				"y": 290
 			} )
 			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {

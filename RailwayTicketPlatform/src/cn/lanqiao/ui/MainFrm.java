@@ -212,7 +212,7 @@ public class MainFrm extends JFrame {
         ticketSearch.setBackground(new Color(204, 204, 204));
         ticketSearch.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 22));
         ticketSearch.setForeground(new Color(0, 0, 204));
-        ticketSearch.setIcon(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/search.png")));
+        ticketSearch.setIcon(null);
         ticketSearch.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -220,7 +220,7 @@ public class MainFrm extends JFrame {
             }
         });
         contentPane.add(ticketSearch);
-        ticketSearch.setBounds(new Rectangle(new Point(340, 290), ticketSearch.getPreferredSize()));
+        ticketSearch.setBounds(new Rectangle(new Point(365, 290), ticketSearch.getPreferredSize()));
 
         {
             // compute preferred size
@@ -257,5 +257,9 @@ public class MainFrm extends JFrame {
     private JButton ticketSearch;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
+    public static void main(String[] args) {
+        MainFrm mainFrm = new MainFrm();
+        mainFrm.setVisible(true);
+    }
 
 }
