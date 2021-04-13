@@ -4,11 +4,11 @@
 
 package cn.lanqiao.ui;
 
+import com.eltima.components.ui.DatePicker;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.plaf.*;
-
 /**
  * @author Brainrain
  */
@@ -52,28 +52,15 @@ public class MainFrm extends JFrame {
         }
         setSize(875, 505);
         setLocationRelativeTo(getOwner());
-        origin = new JTextField();
-        origin.setText("出发站");
     }
 
     private void originFocusGained(FocusEvent e) {
         //获取焦点时，清空提示内容
         String temp = origin.getText();
 
-        if(temp.equals(origin)) {
+        if(temp.equals("出发站")) {
             origin.setText("");
         }
-    }
-
-    /*private void originFocusLost(FocusEvent e) {
-        origin.setText("出发站");
-    }*/
-
-    private void swap(MouseEvent e) {
-        String theorigin=origin.getText();
-        String thedestination=destination.getText();
-        origin.setText(thedestination);
-        destination.setText(theorigin);
     }
 
     private void jiantouMouseClicked(MouseEvent e) {
@@ -83,6 +70,14 @@ public class MainFrm extends JFrame {
         destination.setText(theorigin);
     }
 
+    private void destinationFocusGained(FocusEvent e) {
+        //获取焦点时，清空提示内容
+        String temp = destination.getText();
+
+        if(temp.equals("终点站")) {
+            destination.setText("");
+        }
+    }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -95,10 +90,10 @@ public class MainFrm extends JFrame {
         origin = new JTextField();
         destination = new JTextField();
         label3 = new JLabel();
-        textField2 = new JTextField();
         radioButton1 = new JRadioButton();
         radioButton2 = new JRadioButton();
-        textField3 = new JTextField();
+        datePicker = new DatePicker();
+        button1 = new JButton();
 
         //======== this ========
         setTitle("\u94c1\u8def\u7968\u52a1\u7ba1\u7406\u5e73\u53f0");
@@ -151,6 +146,12 @@ public class MainFrm extends JFrame {
         origin.setHorizontalAlignment(SwingConstants.CENTER);
         origin.setToolTipText("\u51fa\u53d1\u7ad9");
         origin.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 22));
+        origin.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                originFocusGained(e);
+            }
+        });
         contentPane.add(origin);
         origin.setBounds(220, 110, 130, 70);
 
@@ -158,6 +159,12 @@ public class MainFrm extends JFrame {
         destination.setHorizontalAlignment(SwingConstants.CENTER);
         destination.setToolTipText("\u7ec8\u70b9\u7ad9");
         destination.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 22));
+        destination.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                destinationFocusGained(e);
+            }
+        });
         contentPane.add(destination);
         destination.setBounds(520, 110, 130, 70);
 
@@ -171,8 +178,6 @@ public class MainFrm extends JFrame {
         });
         contentPane.add(label3);
         label3.setBounds(405, 110, 65, 65);
-        contentPane.add(textField2);
-        textField2.setBounds(300, 205, 275, 40);
 
         //---- radioButton1 ----
         radioButton1.setText("\u9ad8\u94c1/\u52a8\u8f66");
@@ -189,8 +194,20 @@ public class MainFrm extends JFrame {
         radioButton2.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 14));
         contentPane.add(radioButton2);
         radioButton2.setBounds(485, 250, 75, radioButton2.getPreferredSize().height);
-        contentPane.add(textField3);
-        textField3.setBounds(355, 295, 165, 45);
+
+        //---- datePicker ----
+        datePicker.setToolTipText("\u8bf7\u9009\u62e9\u51fa\u884c\u65e5\u671f");
+        contentPane.add(datePicker);
+        datePicker.setBounds(345, 205, 185, 30);
+
+        //---- button1 ----
+        button1.setText("\u706b\u8f66\u7968\u67e5\u8be2");
+        button1.setBackground(new Color(204, 204, 204));
+        button1.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 22));
+        button1.setForeground(new Color(0, 0, 204));
+        button1.setIcon(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/search.png")));
+        contentPane.add(button1);
+        button1.setBounds(new Rectangle(new Point(340, 290), button1.getPreferredSize()));
 
         {
             // compute preferred size
@@ -221,10 +238,10 @@ public class MainFrm extends JFrame {
     private JTextField origin;
     private JTextField destination;
     private JLabel label3;
-    private JTextField textField2;
     private JRadioButton radioButton1;
     private JRadioButton radioButton2;
-    private JTextField textField3;
+    private DatePicker datePicker;
+    private JButton button1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     public static void main(String[] args) {
