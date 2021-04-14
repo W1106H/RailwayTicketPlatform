@@ -107,6 +107,66 @@ public class TrainInforDaoimpl implements TrainInforDao {
     }
 
     @Override
+    public Object[][] getDetailTrainParking(String trainNum, String startStation, String endStation) {
+        String sql="select s.train_num,s.station_name as startStation,e.station_name as endStation,\n" +
+                "to_char(s.start_time,'hh24:mi') as startTime,to_char(e.arrive_time,'hh24:mi') as endTime\n" +
+                "from train_parking_station s,train_parking_station e \n" +
+                "where s.train_num=? and E.STATION_ORDEr=s.station_order+1  and \n" +
+                "s.station_order >=(select p1.station_order from train_parking_station p1 where p1.station_name=? and p1.train_num=s.train_num )\n" +
+                "and s.station_order <(select p2.station_order from train_parking_station p2 where p2.station_name=? and p2.train_num=s.train_num )";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Object[][] trains = new Object[this.getTrainPakingNum(trainNum,startStation,endStation)][];
+        try {
+            connection = JDBCUtil.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, trainNum);
+            preparedStatement.setString(2, startStation);
+            preparedStatement.setString(3, endStation);
+            resultSet = preparedStatement.executeQuery();
+            int i = 0;
+            while (resultSet.next()) {
+                //String trainNum = resultSet.getString("TRAIN_NUM");
+                String trainStartTime = resultSet.getString("startTime");
+                String trainEndTime = resultSet.getString("endTime");
+                String startStation1 = resultSet.getString("startStation");
+                String endStation1 = resultSet.getString("endStation");
+                //计算运行时间
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                java.util.Date date2 = sdf.parse(trainStartTime);
+                java.util.Date date1 = sdf.parse(trainEndTime);
+                StringBuffer time = new StringBuffer();
+                long temp = (date1.getTime() - date2.getTime()) / 1000;
+                long hours = temp % (24 * 3600) / 3600;
+                if (hours < 10) {
+                    time.append("0" + hours + ":");
+                }
+                if (hours >= 10) {
+                    time.append(hours + ":");
+                }
+                long mins = temp % 3600 / 60;
+                if (mins < 10) {
+                    time.append("0" + mins);
+                }
+                if (mins >= 10) {
+                    time.append(mins);
+                }
+                String runTime = time.toString();
+                trains[i] = new Object[]{trainNum,startStation1,endStation1, trainStartTime,trainEndTime, time};
+                i++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtil.close(resultSet, preparedStatement, connection);
+        }
+        return trains;
+    }
+
+    @Override
     //列车时刻表
     public Object[][] getAllTrainPakingInfo() {
         Connection connection = null;
@@ -218,28 +278,33 @@ public class TrainInforDaoimpl implements TrainInforDao {
     }
 
     @Override
-    //修改
-
-    public Object[][] serchTrainInfoByStationName(String startStation, String endStation) {
+    public Object[][] serchTrainInfoByStationNameAndtrainType(String startStation, String endStation, String trainType) {
+        String sql="select s.station_name as startStation , e.station_name as endStation ,e.price,e.train_num,\n" +
+                "s.station_order sStationOrder,e.station_order  eStationOrder,tf.train_type,\n" +
+                "to_char(s.start_time,'HH24:mi') as startTime, to_char(e.arrive_time,'HH24:mi') as arriveTime from \n" +
+                "train_parking_station s,train_parking_station e,train_info tf\n" +
+                "where s.train_num=e.train_num and e.station_order>s.station_order and s.station_name=? and e.station_name=? and tf.train_num=s.train_num\n" +
+                "and tf.train_type=?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Object[][] trains = new Object[this.TraincountByStationName(startStation, endStation)][];
+        Object[][] trains = new Object[this.TraincountByStationNameAndtrainType(startStation, endStation,trainType)][];
         try {
             connection = JDBCUtil.getConnection();
-            preparedStatement = connection.prepareStatement("SELECT train_price,train_num,train_type,train_start_station,train_end_station,train_start_time,train_end_time,to_char(TRAIN_START_TIME,'hh24:mi') as startTime ,to_char(train_end_time,'hh24:mi') as endTime FROM train_info where train_start_station=? and train_end_station=?");
+            preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, startStation);
             preparedStatement.setString(2, endStation);
+            preparedStatement.setString(3,trainType);
             resultSet = preparedStatement.executeQuery();
             int i = 0;
             while (resultSet.next()) {
                 String trainNum = resultSet.getString("TRAIN_NUM");
-                String trainType = resultSet.getString("TRAIN_TYPE");
+                String traintype = resultSet.getString("TRAIN_TYPE");
                 String trainStartTime = resultSet.getString("startTime");
-                String trainEndTime = resultSet.getString("endTime");
-                String trainStartStation = resultSet.getString("TRAIN_START_STATION");
-                String trainEndStation = resultSet.getString("TRAIN_END_STATION");
-                int price = resultSet.getInt("train_price");
+                String trainEndTime = resultSet.getString("arriveTime");
+                String trainStartStation = resultSet.getString("startstation");
+                String trainEndStation = resultSet.getString("endstation");
+                int price = resultSet.getInt("price");
                 //计算运行时间
                 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
                 java.util.Date date2 = sdf.parse(trainEndTime);
@@ -261,7 +326,7 @@ public class TrainInforDaoimpl implements TrainInforDao {
                     time.append(mins);
                 }
                 String runTime = time.toString();
-                trains[i] = new Object[]{trainNum, trainType, trainStartTime, trainEndTime, trainStartStation, trainEndStation, runTime, price};
+                trains[i] = new Object[]{trainNum, traintype, trainStartTime, trainEndTime, trainStartStation, trainEndStation, runTime, price};
                 i++;
             }
         } catch (SQLException e) {
@@ -275,28 +340,6 @@ public class TrainInforDaoimpl implements TrainInforDao {
     }
 
     @Override
-    public int TraincountByStationName(String startStation, String endStationg) {
-        Connection connection = JDBCUtil.getConnection();
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        int num = 0;
-        try {
-            preparedStatement = connection.prepareStatement("select count(*) from train_info where train_start_station=? and train_end_station=?");
-            preparedStatement.setString(1, startStation);
-            preparedStatement.setString(2, endStationg);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                num = resultSet.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            JDBCUtil.close(resultSet, preparedStatement, connection);
-        }
-        return num;
-    }
-
-    @Override
     public Object[][] serchRemainingticketsByTrainNum(String trainNum) {
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement preparedStatement = null;
@@ -305,7 +348,7 @@ public class TrainInforDaoimpl implements TrainInforDao {
         Object[][] seats =new Object[carriage][];
         int i = 0;
         try {
-            preparedStatement = connection.prepareStatement("select * from seat where train_num=? ");
+            preparedStatement = connection.prepareStatement("select * from seat where train_num=? order by carriage_num asc ");
             preparedStatement.setString(1,trainNum);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -324,7 +367,66 @@ public class TrainInforDaoimpl implements TrainInforDao {
         return seats;
     }
 
+    @Override
+    public int TraincountByStationNameAndtrainType(String startStation, String endStationg, String trainType) {
+        String sql = "select count(*) from (select s.station_name as startStation , e.station_name as endStation ,e.price,e.train_num,\n" +
+                "s.station_order sStationOrder,e.station_order  eStationOrder,tf.train_type,\n" +
+                "to_char(s.start_time,'HH24:mi') as startTime, to_char(e.arrive_time,'HH24:mi') as arriveTime from \n" +
+                "train_parking_station s,train_parking_station e,train_info tf\n" +
+                "where s.train_num=e.train_num and e.station_order>s.station_order and s.station_name=?  and e.station_name=?  and tf.train_num=s.train_num\n" +
+                "and tf.train_type=?) ";
+        Connection connection = JDBCUtil.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int num = 0;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, startStation);
+            preparedStatement.setString(2, endStationg);
+            preparedStatement.setString(3,trainType);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                num = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtil.close(resultSet, preparedStatement, connection);
+        }
+        return num;
+    }
 
+    //根据列车名，站名得到列车经停站信息行数
+    @Override
+    public int getTrainPakingNum(String trainNum, String startStation, String endStation) {
+        int num=0;
+        String sql="select count(*) from (select s.train_num,s.station_name as startStation,e.station_name as endStation,\n" +
+                "to_char(s.start_time,'hh24:mi') as startTime,to_char(e.arrive_time,'hh24:mi') as endTime\n" +
+                "from train_parking_station s,train_parking_station e \n" +
+                "where s.train_num=? and E.STATION_ORDEr=s.station_order+1  and \n" +
+                "s.station_order >=(select p1.station_order from train_parking_station p1 where p1.station_name=?  and p1.train_num=s.train_num )\n" +
+                "and s.station_order <(select p2.station_order from train_parking_station p2 where p2.station_name=?  and p2.train_num=s.train_num ))";
+        Connection connection = JDBCUtil.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, trainNum);
+            preparedStatement.setString(2, startStation);
+            preparedStatement.setString(3,endStation);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                num = resultSet.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            JDBCUtil.close(resultSet,preparedStatement,connection);
+        }
+        return num;
+    }
     //得到列车车厢数
     public int getCarriage(String trainNum) {
         int carriage=0;
@@ -347,4 +449,6 @@ public class TrainInforDaoimpl implements TrainInforDao {
         }
         return carriage;
     }
+
+
 }

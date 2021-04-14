@@ -94,6 +94,8 @@ public class MainFrm extends JFrame {
         //System.out.println(uSearchdate);
     }
 
+
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         menuBar1 = new JMenuBar();
@@ -104,16 +106,16 @@ public class MainFrm extends JFrame {
         menu4 = new JMenu();
         origin = new JTextField();
         destination = new JTextField();
+        label3 = new JLabel();
+        textField2 = new JTextField();
         radioButton1 = new JRadioButton();
         radioButton2 = new JRadioButton();
-        datePicker = new DatePicker();
-        ticketSearch = new JButton();
-        label3 = new JLabel();
+        textField3 = new JTextField();
 
         //======== this ========
         setTitle("\u94c1\u8def\u7968\u52a1\u7ba1\u7406\u5e73\u53f0");
         setFont(new Font("\u4eff\u5b8b", Font.PLAIN, 18));
-        setIconImage(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/mainLogo.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/MainLogo.png")).getImage());
         setBackground(new Color(102, 153, 255));
         var contentPane = getContentPane();
         contentPane.setLayout(null);
@@ -161,12 +163,6 @@ public class MainFrm extends JFrame {
         origin.setHorizontalAlignment(SwingConstants.CENTER);
         origin.setToolTipText("\u51fa\u53d1\u7ad9");
         origin.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 22));
-        origin.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                originFocusGained(e);
-            }
-        });
         contentPane.add(origin);
         origin.setBounds(220, 110, 130, 70);
 
@@ -174,14 +170,21 @@ public class MainFrm extends JFrame {
         destination.setHorizontalAlignment(SwingConstants.CENTER);
         destination.setToolTipText("\u7ec8\u70b9\u7ad9");
         destination.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 22));
-        destination.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                destinationFocusGained(e);
-            }
-        });
         contentPane.add(destination);
         destination.setBounds(520, 110, 130, 70);
+
+        //---- label3 ----
+        label3.setIcon(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/jiantou .png")));
+        label3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                jiantouMouseClicked(e);
+            }
+        });
+        contentPane.add(label3);
+        label3.setBounds(405, 110, 65, 65);
+        contentPane.add(textField2);
+        textField2.setBounds(300, 205, 275, 40);
 
         //---- radioButton1 ----
         radioButton1.setText("\u9ad8\u94c1/\u52a8\u8f66");
@@ -198,37 +201,8 @@ public class MainFrm extends JFrame {
         radioButton2.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 14));
         contentPane.add(radioButton2);
         radioButton2.setBounds(485, 250, 75, radioButton2.getPreferredSize().height);
-
-        //---- datePicker ----
-        datePicker.setToolTipText("\u8bf7\u9009\u62e9\u51fa\u884c\u65e5\u671f");
-        contentPane.add(datePicker);
-        datePicker.setBounds(340, 205, 185, 30);
-
-        //---- ticketSearch ----
-        ticketSearch.setText("\u706b\u8f66\u7968\u67e5\u8be2");
-        ticketSearch.setBackground(new Color(204, 204, 204));
-        ticketSearch.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 22));
-        ticketSearch.setForeground(new Color(0, 0, 204));
-        ticketSearch.setIcon(null);
-        ticketSearch.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                ticketSearchMouseClicked(e);
-            }
-        });
-        contentPane.add(ticketSearch);
-        ticketSearch.setBounds(new Rectangle(new Point(360, 290), ticketSearch.getPreferredSize()));
-
-        //---- label3 ----
-        label3.setIcon(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/jiantou.png")));
-        label3.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                jiantouMouseClicked(e);
-            }
-        });
-        contentPane.add(label3);
-        label3.setBounds(400, 115, 65, 65);
+        contentPane.add(textField3);
+        textField3.setBounds(355, 295, 165, 45);
 
         {
             // compute preferred size
@@ -258,11 +232,11 @@ public class MainFrm extends JFrame {
     private JMenu menu4;
     private JTextField origin;
     private JTextField destination;
+    private JLabel label3;
+    private JTextField textField2;
     private JRadioButton radioButton1;
     private JRadioButton radioButton2;
-    private DatePicker datePicker;
-    private JButton ticketSearch;
-    private JLabel label3;
+    private JTextField textField3;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     public static void main(String[] args) {
