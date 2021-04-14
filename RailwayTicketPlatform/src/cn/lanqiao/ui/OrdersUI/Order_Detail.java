@@ -106,6 +106,16 @@ public class Order_Detail extends JDialog {
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
 
+    private void trainPassBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        String orderNoText = this.orderNo.getText();
+        String trainNo = this.trainNo.getText();
+        String startStation = this.startStation.getText();
+        String arriveStation = this.arriveStation.getText();
+        Order_DetailTrainPass order_detailTrainPass = new Order_DetailTrainPass(orderNoText,trainNo,startStation,arriveStation);
+        order_detailTrainPass.setVisible(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         desktopPane1 = new JDesktopPane();
@@ -259,6 +269,7 @@ public class Order_Detail extends JDialog {
                     button1MouseExited(e);
                 }
             });
+            trainPassBtn.addActionListener(e -> trainPassBtnActionPerformed(e));
             desktopPane1.add(trainPassBtn, JLayeredPane.DEFAULT_LAYER);
             trainPassBtn.setBounds(new Rectangle(new Point(175, 80), trainPassBtn.getPreferredSize()));
 

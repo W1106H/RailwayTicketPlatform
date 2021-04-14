@@ -189,6 +189,7 @@ new FormModel {
 					"text": "时刻表"
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "button1MouseEntered", true ) )
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "button1MouseExited", true ) )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "trainPassBtnActionPerformed", true ) )
 				}, new FormLayoutConstraints( null ) {
 					"x": 175
 					"y": 80

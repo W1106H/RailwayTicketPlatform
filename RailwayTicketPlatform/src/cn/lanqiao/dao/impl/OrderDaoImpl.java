@@ -3,12 +3,10 @@ package cn.lanqiao.dao.impl;
 import cn.lanqiao.dao.OrderDao;
 import cn.lanqiao.entity.Peoples.Orders;
 import cn.lanqiao.util.JDBCUtil;
+import cn.lanqiao.util.StringForData;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Date;
+import java.sql.*;
+import java.text.SimpleDateFormat;
 
 public class OrderDaoImpl implements OrderDao {
     private boolean orderAlreadyPayFlag = false;
@@ -173,6 +171,93 @@ public class OrderDaoImpl implements OrderDao {
             JDBCUtil.close(rs,ps,connection);
         }
         return orders;
+    }
+
+    @Override
+    public Object[][] getTrainPassInfo(String orderNo) {
+        Object[][] trainPassInfo = null;
+        Connection connection = JDBCUtil.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int number = this.getTrainPassInfo_Count(orderNo);
+        trainPassInfo = new Object[number][];
+        try {
+            String sql = "select tps.* " +
+                    "from orders o,train_parking_station tps " +
+                    "where o.order_no = '" + orderNo + "' " +
+                    "    and o.train_no = tps.train_num ";
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            int i = 0;
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            while(rs.next()){
+                String station_name = rs.getString("station_name");
+                Time arrive_Time = rs.getTime("arrive_Time");
+                Time start_Time = rs.getTime("start_Time");
+                String arriveTime = sdf.format(arrive_Time);
+                String startTime = sdf.format(start_Time);
+                if(i == 0){
+                    trainPassInfo[i] = new Object[]{station_name,"--",startTime,"--"};
+                } else if(i == number - 1){
+                    trainPassInfo[i] = new Object[]{station_name,arriveTime,"--","--"};
+                } else{
+                    int timeSub = StringForData.getTimeSub(arrive_Time, start_Time);
+                    trainPassInfo[i] = new Object[]{station_name,arriveTime,startTime,timeSub + "分钟"};
+                }
+                i++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtil.close(rs,ps,connection);
+        }
+        return trainPassInfo;
+    }
+
+    @Override
+    public int getTrainPassInfo_Count(String orderNo) {
+        Connection connection = JDBCUtil.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int number = 0;
+        try {
+            String sql = "select count(*) " +
+                    "from orders o,train_parking_station tps " +
+                    "where o.order_no = '" + orderNo + "' " +
+                    "    and o.train_no = tps.train_num ";
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                number = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtil.close(rs,ps,connection);
+        }
+        return number;
+    }
+
+    @Override
+    public java.util.Date getTrainPassInfo_trainStartDate(String orderNo) {
+        java.util.Date date = null;
+        Connection con = JDBCUtil.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            String sql = "select train_start_time from orders where order_no = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1,orderNo);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                date = rs.getDate("train_start_time");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtil.close(rs,ps,con);
+        }
+        return date;
     }
 
     public void setOrderAlreadyPayFlag(boolean orderAlreadyPayFlag) {
