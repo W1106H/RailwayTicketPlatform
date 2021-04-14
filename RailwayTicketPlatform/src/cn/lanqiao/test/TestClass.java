@@ -19,17 +19,17 @@ public class TestClass {
         }
     }
 
-    @Test
+    /*@Test
     public void Order_getObject() {
         OrderDaoImpl orderDao = new OrderDaoImpl();
-        Object[][] orderAlreadyPay = orderDao.getOrderAlreadyPay("450000200010090022");
+        Object[][] orderAlreadyPay = orderDao.getOrderAlreadyPay("1001");
         System.out.println(Arrays.toString(orderAlreadyPay));
-    }
+    }*/
 
     @Test
     public void Order_getObjectCount() {
         OrderDaoImpl orderDao = new OrderDaoImpl();
-        int orderAlreadyPay_count = orderDao.getOrderAlreadyPay_Count();
+        int orderAlreadyPay_count = orderDao.getOrderAlreadyPay_Count("1001");
         System.out.println(orderAlreadyPay_count);
     }
 }

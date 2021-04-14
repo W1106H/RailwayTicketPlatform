@@ -12,8 +12,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Object[][] getOrderAlreadyPay(String userPID) {
-        return orderDao.getOrderAlreadyPay(userPID);
+    public Object[][] getOrderAlreadyPay(String userPID,int currentPage) {
+        return orderDao.getOrderAlreadyPay(userPID,currentPage);
     }
 
     @Override
@@ -24,6 +24,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public boolean getOrderAlreadyPay_SetVisible(String orderNo) {
         return orderDao.getOrderAlreadyPay_SetVisible(orderNo);
+    }
+
+    @Override
+    public int getOrderAlreadyPay_Count(String userPID) {
+        return orderDao.getOrderAlreadyPay_Count(userPID);
     }
 
 

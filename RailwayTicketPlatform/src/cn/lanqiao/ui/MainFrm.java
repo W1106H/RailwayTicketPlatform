@@ -4,33 +4,32 @@
 
 package cn.lanqiao.ui;
 
+import cn.lanqiao.entity.Peoples.User;
 import com.eltima.components.ui.DatePicker;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.swing.*;
 /**
  * @author Brainrain
  */
 public class MainFrm extends JFrame {
-    //private User currentUser;
-    public MainFrm() {
+    private User currentUser;
+    public MainFrm(User user) {
+        this.currentUser = user;
+        this.setTitle("\u94c1\u8def\u7968\u52a1\u7ba1\u7406\u5e73\u53f0");
+        this.setTitle(this.getTitle() +"      " + "欢迎：" + user.getUName());
         var contentPane = getContentPane();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// 关闭窗口后操作为退出程序
         init(contentPane);
         initComponents();
-
     }
-
-    /*public MainFrm(User user){
-        this();
-        this.currentUser = user;
-        this.setTitle(this.getTitle() +"      " + "欢迎：" + user.getUname());
-    }*/
 
     private void init(Container contentPane){
         //======== this ========
-        setTitle("\u94c1\u8def\u7968\u52a1\u7ba1\u7406\u5e73\u53f0");
         setFont(new Font("\u4eff\u5b8b", Font.PLAIN, 18));
         setIconImage(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/mainLogo.png")).getImage());
         contentPane.setBackground(new Color(102, 153, 255));
@@ -81,9 +80,18 @@ public class MainFrm extends JFrame {
     }
 
     private void ticketSearchMouseClicked(MouseEvent e) {
-        String searchOrigin=origin.getText();
-        String searchDestination=destination.getText();
-        System.out.println(datePicker.getValue());
+        String searchOrigin=origin.getText(); //选择的出发站
+        String searchDestination=destination.getText();//选择的终点站
+        String dateString = datePicker.getText();
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date utilDate = null;
+        try {
+            utilDate = fmt.parse(dateString);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        java.sql.Date uSearchdate = new java.sql.Date(utilDate.getTime());//选择的日期
+        //System.out.println(uSearchdate);
     }
 
     private void initComponents() {
@@ -194,7 +202,7 @@ public class MainFrm extends JFrame {
         //---- datePicker ----
         datePicker.setToolTipText("\u8bf7\u9009\u62e9\u51fa\u884c\u65e5\u671f");
         contentPane.add(datePicker);
-        datePicker.setBounds(345, 205, 185, 30);
+        datePicker.setBounds(340, 205, 185, 30);
 
         //---- ticketSearch ----
         ticketSearch.setText("\u706b\u8f66\u7968\u67e5\u8be2");
@@ -209,7 +217,7 @@ public class MainFrm extends JFrame {
             }
         });
         contentPane.add(ticketSearch);
-        ticketSearch.setBounds(new Rectangle(new Point(365, 290), ticketSearch.getPreferredSize()));
+        ticketSearch.setBounds(new Rectangle(new Point(360, 290), ticketSearch.getPreferredSize()));
 
         //---- label3 ----
         label3.setIcon(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/jiantou.png")));
@@ -258,8 +266,7 @@ public class MainFrm extends JFrame {
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     public static void main(String[] args) {
-        MainFrm mainFrm = new MainFrm();
+        MainFrm mainFrm = new MainFrm(new User("133","1","王欢","女","2795222","北街","wh","123","622630"));
         mainFrm.setVisible(true);
     }
-
 }

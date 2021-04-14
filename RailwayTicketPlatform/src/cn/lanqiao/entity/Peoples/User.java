@@ -15,7 +15,6 @@ public class User {
     private String UPassword;
     private String PId;
 
-
     public User(String UTel, String userId, String URealName, String UGender,String UEmail, String UAddress, String UName, String UPassword, String PId) {
         this.UTel = UTel;
         UserId = userId;

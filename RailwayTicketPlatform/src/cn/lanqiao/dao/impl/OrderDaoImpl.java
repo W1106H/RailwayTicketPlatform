@@ -12,26 +12,37 @@ public class OrderDaoImpl implements OrderDao {
     private boolean orderAlreadyPayFlag = false;
 
     @Override
-    public Object[][] getOrderAlreadyPay(String userPID) {
+    public Object[][] getOrderAlreadyPay(String userPID,int currentPage) {
         Object[][] orderAlreadyPay = null;
 //        第一步：获得连接
         Connection connection = JDBCUtil.getConnection();
-        String sql = "select o.order_no,o.train_no,tps1.station_name as startStationName,tps2.station_name as arriveStationName,o.train_start_time,o.sumprice,p.pname " +
-                "from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
-                "where o.PID = " + userPID + " " +
-                "    and o.visual = 'T' " +
-                "    and o.train_no = tps1.train_num " +
-                "    and o.train_no = tps2.train_num " +
-                "    and o.pid = p.passengerid " +
-                "    and o.station_start_no = tps1.station_order " +
-                "    and o.station_end_no = tps2.station_order " +
-                "    and tps1.train_num = tps2.train_num " +
-                "    and o.train_start_time = tps1.start_time " +
-                "    and o.train_end_time = tps2.arrive_time" +
-                "    and o.order_state = 'T' ";
+        int startIndex=(currentPage-1) *2 + 1;
+        int endIndex=currentPage*2;
+        System.out.println("dao里的当前页"+currentPage);
+        System.out.println(startIndex);
+        System.out.println(endIndex);
+        String sql = "select * " +
+                "from " +
+                "    (select table1.*,ROWNUM rn " +
+                "    from\n" +
+                "        (select o.order_no,o.train_no,tps1.station_name as startStationName,tps2.station_name as arriveStationName,o.train_start_time,o.sumprice,p.pname " +
+                "        from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
+                "        where o.order_creator = '1001' " +
+                "            and o.visual = 'T' " +
+                "            and o.train_no = tps1.train_num " +
+                "            and o.train_no = tps2.train_num " +
+                "            and o.station_start_no = tps1.station_order " +
+                "            and o.station_end_no = tps2.station_order " +
+                "            and tps1.train_num = tps2.train_num " +
+                "            and o.train_start_time = tps1.start_time " +
+                "            and o.train_end_time = tps2.arrive_time " +
+                "            and o.order_state = 'T' " +
+                "            and o.PID = p.passengerID " +
+                "        ORDER BY train_start_time DESC) table1) table2 " +
+                "where rn between "+startIndex+" and "+endIndex;
         PreparedStatement pr = null;
         ResultSet rs = null;
-        orderAlreadyPay = new Object[this.getOrderAlreadyPay_Count()][];
+        orderAlreadyPay = new Object[this.getOrderAlreadyPay_Count(userPID)][];
         try {
             pr = connection.prepareStatement(sql);
             rs = pr.executeQuery();
@@ -41,10 +52,12 @@ public class OrderDaoImpl implements OrderDao {
                 String trainNo = rs.getString("train_no");
                 String startStationName = rs.getString("startStationName");
                 String arriveStationName = rs.getString("arriveStationName");
-                java.sql.Date startTime = rs.getDate("train_start_time");
+                java.sql.Date startDate = rs.getDate("train_start_time");
+                java.sql.Time startTime = rs.getTime("train_start_time");
                 double sumPrice = rs.getDouble("sumprice");
                 String pname = rs.getString("pname");
-                orderAlreadyPay[i] = new Object[]{orderNo,trainNo,startStationName,arriveStationName,startTime,sumPrice,pname};
+                String startDateAndTime = new String(startDate + " " + startTime);
+                orderAlreadyPay[i] = new Object[]{orderNo,trainNo,startStationName,arriveStationName,startDateAndTime,sumPrice,pname};
                 setOrderAlreadyPayFlag(true);
                 i++;
             }
@@ -57,7 +70,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public int getOrderAlreadyPay_Count() {
+    public int getOrderAlreadyPay_Count(String userPID) {
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -65,15 +78,18 @@ public class OrderDaoImpl implements OrderDao {
         try {
             String sql = "select count(*) " +
                     "from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
-                    "where o.train_no = tps1.train_num " +
+                    "where o.order_creator = " + userPID + " " +
+                    "    and o.visual = 'T' " +
+                    "    and o.train_no = tps1.train_num " +
                     "    and o.train_no = tps2.train_num " +
-                    "    and o.pid = p.passengerid " +
                     "    and o.station_start_no = tps1.station_order " +
                     "    and o.station_end_no = tps2.station_order " +
                     "    and tps1.train_num = tps2.train_num " +
                     "    and o.train_start_time = tps1.start_time " +
                     "    and o.train_end_time = tps2.arrive_time" +
-                    "    and o.order_state = 'T' ";
+                    "    and o.order_state = 'T' " +
+                    "    and o.PID = p.passengerId " +
+                    "ORDER BY train_start_time DESC " ;
             ps = connection.prepareStatement(sql);
             rs = ps.executeQuery();
             if(rs.next()){

@@ -14,11 +14,6 @@ new FormModel {
 			add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
 				name: "tabbedPane1"
 				add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
-					name: "desktopPane1"
-				}, new FormLayoutConstraints( null ) {
-					"title": "未出行订单"
-				} )
-				add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
 					name: "desktopPane2"
 					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 						name: "scrollPane1"
@@ -60,8 +55,79 @@ new FormModel {
 						"width": 95
 						"height": 30
 					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "上一页"
+						"text": "上一页"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "lastPageActionPerformed", true ) )
+					}, new FormLayoutConstraints( null ) {
+						"x": 485
+						"y": 330
+						"height": 25
+						"width": 80
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "下一页"
+						"text": "下一页"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "nextPageActionPerformed", true ) )
+					}, new FormLayoutConstraints( null ) {
+						"x": 655
+						"y": 330
+						"width": 80
+						"height": 25
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "firstPage"
+						"text": "第一页"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "firstPageActionPerformed", true ) )
+					}, new FormLayoutConstraints( null ) {
+						"x": 570
+						"y": 330
+						"width": 80
+						"height": 25
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "currentPage"
+						"text": "当前页"
+						"enabled": false
+					}, new FormLayoutConstraints( null ) {
+						"x": 555
+						"y": 365
+						"width": 50
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "pageCount"
+						"text": "页数"
+						"enabled": false
+					}, new FormLayoutConstraints( null ) {
+						"x": 615
+						"y": 365
+						"width": 50
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "lastPage"
+						"text": "上一页"
+						"enabled": false
+					}, new FormLayoutConstraints( null ) {
+						"x": 490
+						"y": 365
+						"width": 50
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "nextPage"
+						"text": "下一页"
+						"enabled": false
+					}, new FormLayoutConstraints( null ) {
+						"x": 665
+						"y": 365
+						"width": 70
+					} )
 				}, new FormLayoutConstraints( null ) {
 					"title": "已出行订单"
+				} )
+				add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
+					name: "desktopPane1"
+				}, new FormLayoutConstraints( null ) {
+					"title": "未出行订单"
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 0

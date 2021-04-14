@@ -60,7 +60,7 @@ new FormModel {
 				name: "datePicker"
 				"toolTipText": "请选择出行日期"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 345
+				"x": 340
 				"y": 205
 				"width": 185
 				"height": 30
@@ -74,7 +74,7 @@ new FormModel {
 				"icon": sfield com.jformdesigner.model.FormObject NULL_VALUE
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "ticketSearchMouseClicked", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 365
+				"x": 360
 				"y": 290
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
@@ -115,7 +115,7 @@ new FormModel {
 				} )
 			}
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 0, 0 )
+			"location": new java.awt.Point( 5, 5 )
 			"size": new java.awt.Dimension( 875, 505 )
 		} )
 	}
