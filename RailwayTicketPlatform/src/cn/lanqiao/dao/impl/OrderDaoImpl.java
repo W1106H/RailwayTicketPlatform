@@ -18,9 +18,6 @@ public class OrderDaoImpl implements OrderDao {
         Connection connection = JDBCUtil.getConnection();
         int startIndex=(currentPage-1) *2 + 1;
         int endIndex=currentPage*2;
-        System.out.println("dao里的当前页"+currentPage);
-        System.out.println(startIndex);
-        System.out.println(endIndex);
         String sql = "select * " +
                 "from " +
                 "    (select table1.*,ROWNUM rn " +
