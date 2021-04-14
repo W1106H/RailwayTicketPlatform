@@ -2,6 +2,7 @@ package cn.lanqiao.service.impl;
 
 import cn.lanqiao.dao.OrderDao;
 import cn.lanqiao.dao.impl.OrderDaoImpl;
+import cn.lanqiao.entity.Peoples.Orders;
 import cn.lanqiao.service.OrderService;
 
 public class OrderServiceImpl implements OrderService {
@@ -29,6 +30,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public int getOrderAlreadyPay_Count(String userPID) {
         return orderDao.getOrderAlreadyPay_Count(userPID);
+    }
+
+    @Override
+    public Orders getDetailOrder(String orderNo) {
+        return orderDao.getDetailOrder(orderNo);
     }
 
 

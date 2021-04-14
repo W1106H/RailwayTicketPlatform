@@ -1,0 +1,236 @@
+JFDML JFormDesigner: "7.0.1.0.272" Java: "11.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			"title": "车票详情"
+			add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
+				name: "desktopPane1"
+				"background": new java.awt.Color( 102, 153, 255, 255 )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "startDate"
+					"text": "4月3日"
+					"font": &Font0 new java.awt.Font( "Microsoft YaHei UI", 0, 13 )
+				}, new FormLayoutConstraints( null ) {
+					"x": 40
+					"y": 35
+					"width": 85
+					"height": 30
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "arriveDate"
+					"text": "4月3日"
+					"font": #Font0
+				}, new FormLayoutConstraints( null ) {
+					"width": 80
+					"height": 30
+					"x": 330
+					"y": 35
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "startTime"
+					"text": "12:54"
+					"font": new java.awt.Font( "Times New Roman", 1, 26 )
+				}, new FormLayoutConstraints( null ) {
+					"x": 40
+					"y": 70
+					"width": 140
+					"height": 50
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "arriveTime"
+					"text": "15:27"
+					"font": new java.awt.Font( "Times New Roman", 1, 26 )
+				}, new FormLayoutConstraints( null ) {
+					"width": 115
+					"height": 50
+					"x": 330
+					"y": 70
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "startStation"
+					"text": "桂林北"
+					"font": &Font1 new java.awt.Font( "方正粗黑宋简体", 0, 17 )
+				}, new FormLayoutConstraints( null ) {
+					"width": 120
+					"height": 30
+					"x": 40
+					"y": 115
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "arriveStation"
+					"text": "广州南"
+					"font": #Font1
+				}, new FormLayoutConstraints( null ) {
+					"width": 120
+					"height": 30
+					"x": 330
+					"y": 115
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label1"
+					"text": "→"
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 10, false )
+				}, new FormLayoutConstraints( null ) {
+					"x": 235
+					"y": 115
+					"width": 50
+					"height": 25
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "trainNo"
+					"text": "D2965"
+					"font": new java.awt.Font( "Times New Roman", 1, 20 )
+				}, new FormLayoutConstraints( null ) {
+					"x": 180
+					"y": 115
+					"width": 110
+					"height": 35
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "passengerName"
+					"text": "姜柳彤"
+					"font": &Font2 new java.awt.Font( "华文楷体", 1, 20 )
+				}, new FormLayoutConstraints( null ) {
+					"x": 40
+					"y": 160
+					"width": 95
+					"height": 35
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "passengerPID"
+					"text": "45010520001022222X"
+					"font": new java.awt.Font( "Times New Roman", 1, 12 )
+				}, new FormLayoutConstraints( null ) {
+					"x": 40
+					"y": 195
+					"width": 155
+					"height": 25
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "orderState"
+					"text": "已支付"
+					"foreground": new java.awt.Color( 255, 17, 13, 255 )
+				}, new FormLayoutConstraints( null ) {
+					"x": 40
+					"y": 220
+					"width": 80
+					"height": 45
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label2"
+					"text": "车厢"
+					"font": #Font2
+				}, new FormLayoutConstraints( null ) {
+					"width": 105
+					"height": 35
+					"x": 310
+					"y": 165
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label3"
+					"text": "号"
+					"font": #Font2
+				}, new FormLayoutConstraints( null ) {
+					"width": 70
+					"height": 35
+					"x": 385
+					"y": 165
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "carrigeNo"
+					"text": "05"
+					"font": &Font3 new java.awt.Font( "Times New Roman", 0, 16 )
+				}, new FormLayoutConstraints( null ) {
+					"x": 295
+					"y": 165
+					"width": 35
+					"height": 40
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "seatNo"
+					"text": "01D"
+					"font": #Font3
+				}, new FormLayoutConstraints( null ) {
+					"width": 35
+					"height": 40
+					"x": 355
+					"y": 165
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label4"
+					"text": "元"
+				}, new FormLayoutConstraints( null ) {
+					"x": 385
+					"y": 205
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "sumPrice"
+					"text": "165"
+				}, new FormLayoutConstraints( null ) {
+					"x": 355
+					"y": 205
+					"width": 40
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "orderType"
+					"text": "成人票"
+					"border": new javax.swing.border.LineBorder( sfield java.awt.Color black, 1, false )
+				}, new FormLayoutConstraints( null ) {
+					"x": 135
+					"y": 170
+					"width": 40
+					"height": 25
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "trainPassBtn"
+					"text": "时刻表"
+					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "button1MouseEntered", true ) )
+					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "button1MouseExited", true ) )
+				}, new FormLayoutConstraints( null ) {
+					"x": 175
+					"y": 80
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "seatType"
+					"text": "二等座"
+					"border": new javax.swing.border.LineBorder( sfield java.awt.Color black, 1, false )
+				}, new FormLayoutConstraints( null ) {
+					"width": 40
+					"height": 25
+					"x": 310
+					"y": 200
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label5"
+					"text": "NO."
+					"font": new java.awt.Font( "Times New Roman", 0, 12 )
+				}, new FormLayoutConstraints( null ) {
+					"x": 5
+					"y": 5
+					"width": 25
+					"height": 25
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "orderNo"
+					"text": "5"
+				}, new FormLayoutConstraints( null ) {
+					"x": 30
+					"y": 5
+					"width": 230
+					"height": 25
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 0
+				"y": 0
+				"width": 470
+				"height": 320
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 160, 65 )
+			"size": new java.awt.Dimension( 470, 355 )
+		} )
+	}
+}

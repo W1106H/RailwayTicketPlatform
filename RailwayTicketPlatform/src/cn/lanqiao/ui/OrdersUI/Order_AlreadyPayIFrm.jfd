@@ -39,6 +39,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "button2"
 						"text": "查看详情"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button2ActionPerformed", true ) )
 					}, new FormLayoutConstraints( null ) {
 						"x": 110
 						"y": 330

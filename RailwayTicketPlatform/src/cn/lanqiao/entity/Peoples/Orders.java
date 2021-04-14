@@ -1,29 +1,54 @@
 package cn.lanqiao.entity.Peoples;
 
+import java.sql.Time;
 import java.util.Date;
 
 public class Orders {
     String order_No;
     String pid;
     String train_No;
-    Date train_Start_Time;
-    Date train_End_Time;
+    Date train_Start_Date;
+    Date train_End_Date;
     String station_Start_No;
     String station_End_NO;
     String carriage_No;
     String seat_No;
+    String seat_Type;   //这个属性在数据库表中是不存在的……座位类型，一等座二等座等
     String order_Creator;
-    char order_state;
+    String order_state;
     Date order_Create_Time;
     double sumPrice;
     boolean Visual;
+    String order_Type;  //订单的类型，学生票？成人票？
+    Time train_start_Time;
+    Time train_end_Time;
+    String passengerName;
 
-    public Orders(String order_No, String pid, String train_No, Date train_Start_Time, Date train_End_Time, String station_Start_No, String station_End_NO, String carriage_No, String seat_No, String order_Creator, char order_state, Date order_Create_Time, double sumPrice, boolean visual) {
+    public Orders(String order_No, String pid, String train_No, Date train_Start_Date, Date train_End_Date, String station_Start_No, String station_End_NO, String carriage_No, String seat_No, String seat_Type, String order_state, double sumPrice, String order_Type,Time train_start_Time,Time train_end_Time,String passengerName) {
         this.order_No = order_No;
         this.pid = pid;
         this.train_No = train_No;
-        this.train_Start_Time = train_Start_Time;
-        this.train_End_Time = train_End_Time;
+        this.train_Start_Date = train_Start_Date;
+        this.train_End_Date = train_End_Date;
+        this.station_Start_No = station_Start_No;
+        this.station_End_NO = station_End_NO;
+        this.carriage_No = carriage_No;
+        this.seat_No = seat_No;
+        this.seat_Type = seat_Type;
+        this.order_state = order_state;
+        this.sumPrice = sumPrice;
+        this.order_Type = order_Type;
+        this.train_start_Time = train_start_Time;
+        this.train_end_Time = train_end_Time;
+        this.passengerName = passengerName;
+    }
+
+    public Orders(String order_No, String pid, String train_No, Date train_Start_Date, Date train_End_Date, String station_Start_No, String station_End_NO, String carriage_No, String seat_No, String order_Creator, String order_state, Date order_Create_Time, double sumPrice, boolean visual, String order_Type) {
+        this.order_No = order_No;
+        this.pid = pid;
+        this.train_No = train_No;
+        this.train_Start_Date = train_Start_Date;
+        this.train_End_Date = train_End_Date;
         this.station_Start_No = station_Start_No;
         this.station_End_NO = station_End_NO;
         this.carriage_No = carriage_No;
@@ -33,6 +58,7 @@ public class Orders {
         this.order_Create_Time = order_Create_Time;
         this.sumPrice = sumPrice;
         Visual = visual;
+        this.order_Type = order_Type;
     }
 
     @Override
@@ -41,17 +67,19 @@ public class Orders {
                 "order_No='" + order_No + '\'' +
                 ", pid='" + pid + '\'' +
                 ", train_No='" + train_No + '\'' +
-                ", train_Start_Time=" + train_Start_Time +
-                ", train_End_Time=" + train_End_Time +
+                ", train_Start_Date=" + train_Start_Date +
+                ", train_End_Date=" + train_End_Date +
                 ", station_Start_No='" + station_Start_No + '\'' +
                 ", station_End_NO='" + station_End_NO + '\'' +
                 ", carriage_No='" + carriage_No + '\'' +
                 ", seat_No='" + seat_No + '\'' +
+                ", seat_Type='" + seat_Type + '\'' +
                 ", order_Creator='" + order_Creator + '\'' +
-                ", order_state=" + order_state +
+                ", order_state='" + order_state + '\'' +
                 ", order_Create_Time=" + order_Create_Time +
                 ", sumPrice=" + sumPrice +
                 ", Visual=" + Visual +
+                ", order_Type='" + order_Type + '\'' +
                 '}';
     }
 
@@ -79,20 +107,20 @@ public class Orders {
         this.train_No = train_No;
     }
 
-    public Date getTrain_Start_Time() {
-        return train_Start_Time;
+    public Date getTrain_Start_Date() {
+        return train_Start_Date;
     }
 
-    public void setTrain_Start_Time(Date train_Start_Time) {
-        this.train_Start_Time = train_Start_Time;
+    public void setTrain_Start_Date(Date train_Start_Date) {
+        this.train_Start_Date = train_Start_Date;
     }
 
-    public Date getTrain_End_Time() {
-        return train_End_Time;
+    public Date getTrain_End_Date() {
+        return train_End_Date;
     }
 
-    public void setTrain_End_Time(Date train_End_Time) {
-        this.train_End_Time = train_End_Time;
+    public void setTrain_End_Date(Date train_End_Date) {
+        this.train_End_Date = train_End_Date;
     }
 
     public String getStation_Start_No() {
@@ -127,6 +155,14 @@ public class Orders {
         this.seat_No = seat_No;
     }
 
+    public String getSeat_Type() {
+        return seat_Type;
+    }
+
+    public void setSeat_Type(String seat_Type) {
+        this.seat_Type = seat_Type;
+    }
+
     public String getOrder_Creator() {
         return order_Creator;
     }
@@ -135,11 +171,11 @@ public class Orders {
         this.order_Creator = order_Creator;
     }
 
-    public char getOrder_state() {
+    public String getOrder_state() {
         return order_state;
     }
 
-    public void setOrder_state(char order_state) {
+    public void setOrder_state(String order_state) {
         this.order_state = order_state;
     }
 
@@ -165,5 +201,25 @@ public class Orders {
 
     public void setVisual(boolean visual) {
         Visual = visual;
+    }
+
+    public String getOrder_Type() {
+        return order_Type;
+    }
+
+    public void setOrder_Type(String order_Type) {
+        this.order_Type = order_Type;
+    }
+
+    public Time getTrain_start_Time() {
+        return train_start_Time;
+    }
+
+    public Time getTrain_end_Time() {
+        return train_end_Time;
+    }
+
+    public String getPassengerName() {
+        return passengerName;
     }
 }

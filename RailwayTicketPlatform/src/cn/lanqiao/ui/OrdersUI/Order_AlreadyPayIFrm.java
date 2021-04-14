@@ -5,6 +5,8 @@
 package cn.lanqiao.ui.OrdersUI;
 
 import java.awt.event.*;
+
+import cn.lanqiao.entity.Peoples.Orders;
 import cn.lanqiao.service.OrderService;
 import cn.lanqiao.service.impl.OrderServiceImpl;
 
@@ -156,6 +158,25 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
         this.flagOfTable1 = true;
     }
 
+    private void button2ActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        OrderService orderService = new OrderServiceImpl();
+        if(table1.getSelectedRowCount()==0){
+            JOptionPane.showMessageDialog(tabbedPane1,"请选择需要查看的行");
+            return ;
+        }
+        String orderNo = table1.getValueAt(table1.getSelectedRow(), 0).toString();  //获得订单号
+        Orders detailOrder = orderService.getDetailOrder(orderNo);
+        if(detailOrder != null){
+            Order_Detail order_detail = new Order_Detail(detailOrder);
+            order_detail.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(tabbedPane1,"服务器开小差了~稍后再试试");
+        }
+
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         tabbedPane1 = new JTabbedPane();
@@ -184,6 +205,7 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
 
         //======== tabbedPane1 ========
         {
+            tabbedPane1.addTab("\u672a\u51fa\u884c\u8ba2\u5355", desktopPane1);
 
             //======== desktopPane2 ========
             {
@@ -203,6 +225,7 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
 
                 //---- button2 ----
                 button2.setText("\u67e5\u770b\u8be6\u60c5");
+                button2.addActionListener(e -> button2ActionPerformed(e));
                 desktopPane2.add(button2, JLayeredPane.DEFAULT_LAYER);
                 button2.setBounds(110, 330, 95, 30);
 

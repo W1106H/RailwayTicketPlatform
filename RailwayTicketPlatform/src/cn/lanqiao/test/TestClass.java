@@ -1,6 +1,8 @@
 package cn.lanqiao.test;
 
+import cn.lanqiao.dao.OrderDao;
 import cn.lanqiao.dao.impl.OrderDaoImpl;
+import cn.lanqiao.entity.Peoples.Orders;
 import cn.lanqiao.util.JDBCUtil;
 import org.junit.Test;
 
@@ -31,6 +33,13 @@ public class TestClass {
         OrderDaoImpl orderDao = new OrderDaoImpl();
         int orderAlreadyPay_count = orderDao.getOrderAlreadyPay_Count("1001");
         System.out.println(orderAlreadyPay_count);
+    }
+
+    @Test
+    public void Order_testGetOrder(){
+        OrderDao orderDao = new OrderDaoImpl();
+        Orders detailOrder = orderDao.getDetailOrder("5");
+        System.out.println(detailOrder.toString());
     }
 }
 
