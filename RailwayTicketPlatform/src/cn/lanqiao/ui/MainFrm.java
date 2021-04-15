@@ -28,6 +28,7 @@ public class MainFrm extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// 关闭窗口后操作为退出程序
         init(contentPane);
         initComponents();
+        //exaop
         desktopPaneinit();
     }
 
