@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "7.0.1.0.272" Java: "11.0.5" encoding: "UTF-8"
+JFDML JFormDesigner: "7.0.1.0.272" Java: "1.8.0_152-release" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -79,6 +79,7 @@ new FormModel {
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "ticketSearchMouseClicked", true ) )
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "ticketSearchMouseEntered", true ) )
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "ticketSearchMouseExited", true ) )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "ticketSearchActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 360
 				"y": 290
@@ -94,6 +95,14 @@ new FormModel {
 				"y": 115
 				"width": 65
 				"height": 65
+			} )
+			add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
+				name: "desktopPane1"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 875
+				"height": 440
+				"x": 0
+				"y": 0
 			} )
 			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
 				name: "menuBar1"
@@ -123,7 +132,7 @@ new FormModel {
 				} )
 			}
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 5, 5 )
+			"location": new java.awt.Point( 35, 40 )
 			"size": new java.awt.Dimension( 875, 505 )
 		} )
 	}

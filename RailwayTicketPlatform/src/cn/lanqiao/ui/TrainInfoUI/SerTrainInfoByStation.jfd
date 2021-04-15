@@ -3,11 +3,12 @@ JFDML JFormDesigner: "7.0.1.0.272" Java: "1.8.0_152-release" encoding: "UTF-8"
 new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
-		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+		add( new FormContainer( "javax.swing.JInternalFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
 			"autoSize": false
 		} ) {
 			name: "this"
-			"title": "经停站信息"
+			"visible": true
+			"closable": true
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "scrollPane1"
 				add( new FormComponent( "javax.swing.JTable" ) {
@@ -20,11 +21,6 @@ new FormModel {
 							add( null )
 							add( null )
 							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
 							add( null )
 							add( null )
 							add( null )
@@ -33,11 +29,6 @@ new FormModel {
 							add( null )
 							add( null )
 							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
 							add( null )
 							add( null )
 							add( null )
@@ -52,11 +43,6 @@ new FormModel {
 							add( null )
 							add( null )
 							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
 							add( null )
 							add( null )
 							add( null )
@@ -68,8 +54,69 @@ new FormModel {
 							add( null )
 							add( null )
 							add( null )
+							add( null )
+							add( null )
+							add( null )
 						} )
 						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
 							add( null )
 							add( null )
 							add( null )
@@ -84,10 +131,6 @@ new FormModel {
 						add( null )
 						add( null )
 						add( null )
-					}, new java.util.Vector {
-						add( null )
-						add( null )
-						add( null )
 						add( null )
 						add( null )
 						add( null )
@@ -98,7 +141,23 @@ new FormModel {
 						add( null )
 						add( null )
 						add( null )
+						add( null )
+						add( null )
+						add( null )
 					}, new java.util.Vector {
+						add( null )
+						add( null )
+						add( null )
+						add( null )
+						add( null )
+						add( null )
+						add( null )
+						add( null )
+						add( null )
+					}, new java.util.Vector {
+						add( null )
+						add( null )
+						add( null )
 						add( null )
 						add( null )
 						add( null )
@@ -108,14 +167,36 @@ new FormModel {
 					} )
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 550
-				"height": 150
 				"x": 0
 				"y": 0
+				"width": 625
+				"height": 180
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btndatail"
+				"text": "查询详情"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btndatailActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 540
+				"y": 190
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnorder"
+				"text": "订票"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 445
+				"y": 190
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btntransfer"
+				"text": "中转查询"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 350
+				"y": 190
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 175, 160 )
-			"size": new java.awt.Dimension( 550, 180 )
+			"location": new java.awt.Point( 165, 125 )
+			"size": new java.awt.Dimension( 625, 240 )
 		} )
 	}
 }

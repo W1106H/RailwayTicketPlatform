@@ -7,6 +7,19 @@ import cn.lanqiao.service.TrainInforService;
 import org.junit.Test;
 
 public class TrainInforServiceimpl implements TrainInforService {
+
+    public Object[][] getTransferInfor(String startStation, String endStation,boolean decSortYesOrNo){
+        TrainInforDao trainInforDao = new TrainInforDaoimpl();
+        Object[][] transferInfor =null;
+        if(decSortYesOrNo){
+            trainInforDao.getTransferInfor(startStation, endStation,true);
+
+        }else{
+            transferInfor = trainInforDao.getTransferInfor(startStation, endStation,false);
+        }
+        return transferInfor;
+    }
+
     private TrainInforDao trainInforDao=null;
     public TrainInforServiceimpl() {
         trainInforDao = new TrainInforDaoimpl();
@@ -31,9 +44,9 @@ public class TrainInforServiceimpl implements TrainInforService {
     }
 
     @Override
-    public TrainInfo getTrainInfoBytrainNum(String trainNum) {
-        TrainInfo trainInfo = trainInforDao.serchTrainInfoBytrainNum(trainNum);
-        return trainInfo;
+    public Object[][] getTrainInfoBytrainNum(String trainNum) {
+        Object[][] train = trainInforDao.serchTrainInfoBytrainNum(trainNum);
+        return train;
     }
 
     @Override
@@ -46,6 +59,22 @@ public class TrainInforServiceimpl implements TrainInforService {
     public Object[][] getDetailTrainParking(String trainNum, String startStation, String endStation) {
         Object[][] detailTrainParking = trainInforDao.getDetailTrainParking(trainNum, startStation, endStation);
         return detailTrainParking;
+    }
+
+    @Override
+    public Object[][] UserBuyBuyTickets(String PID, String orders_creator, String trainNum, String startStation, String endStation) {
+        Object[][] order = trainInforDao.TicketsOrder(PID, orders_creator, trainNum, startStation, endStation);
+        return order;
+    }
+
+    @Override
+    public void refundTicket(String trainNum, String startStationNum, String endStationNum) {
+        trainInforDao.refundTicket(trainNum, startStationNum, endStationNum);
+    }
+
+    @Override
+    public void updataTicket(String trainNum, String startStationNum, String endStationNum) {
+        trainInforDao.updataTicket(trainNum, startStationNum, endStationNum);
     }
 
 

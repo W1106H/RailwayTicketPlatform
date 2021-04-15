@@ -1,15 +1,18 @@
 package cn.lanqiao.test;
 
+import cn.lanqiao.dao.TrainInforDao;
 import cn.lanqiao.dao.OrderDao;
 import cn.lanqiao.dao.impl.OrderDaoImpl;
+import cn.lanqiao.dao.impl.TrainInforDaoimpl;
+import cn.lanqiao.entity.TrainInformation.TrainInfo;
 import cn.lanqiao.entity.Peoples.Orders;
 import cn.lanqiao.util.JDBCUtil;
+import cn.lanqiao.util.StringForData;
 import org.junit.Test;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 
 public class TestClass {
     @Test
@@ -35,6 +38,126 @@ public class TestClass {
         OrderDaoImpl orderDao = new OrderDaoImpl();
         int orderAlreadyPay_count = orderDao.getOrderAlreadyPay_Count("1001");
         System.out.println(orderAlreadyPay_count);
+    }
+    @Test
+    public void testTrainCount() {
+        TrainInforDao trainInforDao = new TrainInforDaoimpl();
+        System.out.println(trainInforDao.Traincount());
+    }
+
+    @Test
+    public void testGetAllTrainInfo() {
+        TrainInforDao trainInforDao = new TrainInforDaoimpl();
+        Object[][] allTrainInfo = trainInforDao.getAllTrainInfo();
+        for (int i = 0; i < trainInforDao.Traincount(); i++) {
+            for (int j = 0; j < 8; j++) {
+                System.out.print(allTrainInfo[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
+
+    @Test
+    public void testParkingcount() {
+        TrainInforDao trainInforDao = new TrainInforDaoimpl();
+        System.out.println(trainInforDao.Parkingcount());
+    }
+
+    @Test
+    public void testgetAllTrainPakingInfo() {
+        TrainInforDao trainInforDao = new TrainInforDaoimpl();
+        Object[][] allTrainInfo = trainInforDao.getAllTrainPakingInfo();
+        for (int i = 0; i < trainInforDao.Parkingcount(); i++) {
+            for (int j = 0; j < 7; j++) {
+                System.out.print(allTrainInfo[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
+
+    @Test
+    public void testSerchTrainInfo() {
+        TrainInforDao trainInforDao = new TrainInforDaoimpl();
+       Object[][] train = trainInforDao.serchTrainInfoBytrainNum("D8481");
+        for (int i = 0; i < 1; i++) {
+            for (int j = 0; j < 8; j++) {
+                System.out.print(train[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
+
+    @Test
+    //通过“HH：MM”得到目前DATA
+    public void testStringForData() {
+        StringForData stringForData = new StringForData();
+        System.out.println(stringForData.slip("12:20"));
+
+
+    }
+
+    @Test
+    public void testTraincountByStationNameAndtrainType() {
+        TrainInforDao trainInforDao = new TrainInforDaoimpl();
+        System.out.println(trainInforDao.TraincountByStationNameAndtrainType("桂林北站","柳州站","动车"));
+    }
+
+    @Test
+    public void testserchTrainInfoByStationNameAndtrainType() {
+        TrainInforDao trainInforDao = new TrainInforDaoimpl();
+        Object[][] allTrainInfo = trainInforDao.serchTrainInfoByStationNameAndtrainType("桂林北站", "柳州站","动车");
+        int s = trainInforDao.TraincountByStationNameAndtrainType("桂林北站", "柳州站","动车");
+        for (int i = 0; i < s; i++) {
+            for (int j = 0; j < 9; j++) {
+                System.out.print(allTrainInfo[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
+
+    @Test
+    public void testserchRemainingticketsByTrainNum() {
+        TrainInforDao trainInforDao = new TrainInforDaoimpl();
+        Object[][] seats = trainInforDao.serchRemainingticketsByTrainNum("D8461");
+        int s = ((TrainInforDaoimpl) trainInforDao).getCarriage("D8461");
+        for (int i = 0; i < s; i++) {
+            for (int j = 0; j < 4; j++) {
+                System.out.print(seats[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
+
+    @Test
+    public void testgetTrainPakingNum() {
+        TrainInforDao trainInforDao = new TrainInforDaoimpl();
+        System.out.println(trainInforDao.getTrainPakingNum("D8481", "桂林站", "来宾北站"));
+    }
+
+    @Test
+    public void testgetDetailTrainParking() {
+        TrainInforDao trainInforDao = new TrainInforDaoimpl();
+        Object[][] allTrainInfo = trainInforDao.getDetailTrainParking("D8481", "桂林站", "来宾北站");
+
+        for (int i = 0; i < trainInforDao.getTrainPakingNum("D8481", "桂林站", "来宾北站"); i++) {
+            for (int j = 0; j < 7; j++) {
+                System.out.print(allTrainInfo[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
+
+    @Test
+    public void testTicketsOrder() {
+        TrainInforDao trainInforDao = new TrainInforDaoimpl();
+        Object[][] objects = trainInforDao.TicketsOrder("123", "123", "D8481", "桂林北站", "柳州站");
+        for (int i = 0; i < 1; i++) {
+            for (int j = 0; j < 7; j++) {
+                System.out.print(objects[i][j]+" ");
+            }
+            System.out.println();
+        }
+
     }
 
     @Test
@@ -63,13 +186,13 @@ public class TestClass {
         }
     }
 
-    @Test
+  /*  @Test
     public void getTrainPassInfo_trainStartDate(){
         OrderDao orderDao = new OrderDaoImpl();
         Date trainPassInfo_trainStartDate = orderDao.getTrainPassInfo_trainStartDate("5");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String format = sdf.format(trainPassInfo_trainStartDate);
         System.out.println(format);
-    }
+    }*/
 }
 

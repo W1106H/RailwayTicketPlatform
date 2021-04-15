@@ -5,6 +5,7 @@
 package cn.lanqiao.ui;
 
 import cn.lanqiao.entity.Peoples.User;
+import cn.lanqiao.ui.TrainInfoUI.SerTrainInfoByStation;
 import com.eltima.components.ui.DatePicker;
 
 import java.awt.*;
@@ -13,7 +14,8 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.*;
-/**
+/*
+ *
  * @author Brainrain
  */
 public class MainFrm extends JFrame {
@@ -26,6 +28,7 @@ public class MainFrm extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// 关闭窗口后操作为退出程序
         init(contentPane);
         initComponents();
+        desktopPaneinit();
     }
 
     private void init(Container contentPane){
@@ -35,6 +38,7 @@ public class MainFrm extends JFrame {
         contentPane.setBackground(new Color(102, 153, 255));
         contentPane = getContentPane();
         contentPane.setLayout(null);
+
 
         {
             // compute preferred size
@@ -52,6 +56,11 @@ public class MainFrm extends JFrame {
         }
         setSize(875, 505);
         setLocationRelativeTo(getOwner());
+    }
+
+    //exaop 将容器设置成透明
+    public void desktopPaneinit() {
+        this.desktopPane1.setOpaque(false);
     }
 
     private void originFocusGained(FocusEvent e) {
@@ -143,6 +152,24 @@ public class MainFrm extends JFrame {
         // TODO add your code here
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
+    //exaop 查询列车
+    private void ticketSearchActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        String origin = this.origin.getText();
+        String destination = this.destination.getText();
+        String time = datePicker.getText();
+        String type;
+        boolean selected = radioButton1.isSelected();
+        if (selected) {
+            type = "动车";
+        } else {
+            type = "火车";
+        }
+        SerTrainInfoByStation serTrainInfoByStation = new SerTrainInfoByStation(origin, destination, type);
+        serTrainInfoByStation.setLocation(125,0);
+        serTrainInfoByStation.setVisible(true);
+        desktopPane1.add(serTrainInfoByStation);
+    }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -154,13 +181,12 @@ public class MainFrm extends JFrame {
         menu4 = new JMenu();
         origin = new JTextField();
         destination = new JTextField();
-        label3 = new JLabel();
-        textField2 = new JTextField();
         radioButton1 = new JRadioButton();
         radioButton2 = new JRadioButton();
         datePicker = new DatePicker();
         ticketSearch = new JButton();
         label3 = new JLabel();
+        desktopPane1 = new JDesktopPane();
 
         //======== this ========
         setTitle("\u94c1\u8def\u7968\u52a1\u7ba1\u7406\u5e73\u53f0");
@@ -235,19 +261,6 @@ public class MainFrm extends JFrame {
         contentPane.add(destination);
         destination.setBounds(520, 110, 130, 70);
 
-        //---- label3 ----
-        label3.setIcon(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/jiantou .png")));
-        label3.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                jiantouMouseClicked(e);
-            }
-        });
-        contentPane.add(label3);
-        label3.setBounds(405, 110, 65, 65);
-        contentPane.add(textField2);
-        textField2.setBounds(300, 205, 275, 40);
-
         //---- radioButton1 ----
         radioButton1.setText("\u9ad8\u94c1/\u52a8\u8f66");
         radioButton1.setForeground(Color.white);
@@ -287,7 +300,7 @@ public class MainFrm extends JFrame {
         //---- datePicker ----
         datePicker.setToolTipText("\u8bf7\u9009\u62e9\u51fa\u884c\u65e5\u671f");
         contentPane.add(datePicker);
-        datePicker.setBounds(345, 205, 185, 30);
+        datePicker.setBounds(340, 205, 185, 30);
 
         //---- ticketSearch ----
         ticketSearch.setText("\u706b\u8f66\u7968\u67e5\u8be2");
@@ -309,8 +322,9 @@ public class MainFrm extends JFrame {
                 ticketSearchMouseExited(e);
             }
         });
+        ticketSearch.addActionListener(e -> ticketSearchActionPerformed(e));
         contentPane.add(ticketSearch);
-        ticketSearch.setBounds(new Rectangle(new Point(365, 290), ticketSearch.getPreferredSize()));
+        ticketSearch.setBounds(new Rectangle(new Point(360, 290), ticketSearch.getPreferredSize()));
 
         //---- label3 ----
         label3.setIcon(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/jiantou.png")));
@@ -330,6 +344,8 @@ public class MainFrm extends JFrame {
         });
         contentPane.add(label3);
         label3.setBounds(400, 115, 65, 65);
+        contentPane.add(desktopPane1);
+        desktopPane1.setBounds(0, 0, 875, 440);
 
         {
             // compute preferred size
@@ -359,12 +375,12 @@ public class MainFrm extends JFrame {
     private JMenu menu4;
     private JTextField origin;
     private JTextField destination;
-    private JLabel label3;
-    private JTextField textField2;
     private JRadioButton radioButton1;
     private JRadioButton radioButton2;
     private DatePicker datePicker;
     private JButton ticketSearch;
+    private JLabel label3;
+    private JDesktopPane desktopPane1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     public static void main(String[] args) {

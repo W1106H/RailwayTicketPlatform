@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Tue Apr 13 16:57:06 GMT+08:00 2021
  */
 
-package cn.lanqiao.ui;
+package cn.lanqiao.ui.TrainInfoUI;
 
 import java.awt.*;
 import javax.swing.*;
