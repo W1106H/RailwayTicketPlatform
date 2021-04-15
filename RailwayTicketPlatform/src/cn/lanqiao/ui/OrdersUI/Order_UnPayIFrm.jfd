@@ -11,15 +11,91 @@ new FormModel {
 			"closable": true
 			"title": "未支付订单"
 			"border": new javax.swing.border.LineBorder( sfield java.awt.Color black, 1, false )
+			addEvent( new FormEvent( "javax.swing.event.InternalFrameListener", "internalFrameActivated", "thisInternalFrameActivated", true ) )
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "scrollPane1"
 				add( new FormComponent( "javax.swing.JTable" ) {
 					name: "table1"
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 0
-				"y": 0
+				"x": 5
+				"y": 10
 				"width": 750
+				"height": 295
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "refresh"
+				"text": "刷新"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "refreshActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 5
+				"y": 330
+				"width": 95
+				"height": 30
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "goToPay"
+				"text": "去支付"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 115
+				"y": 330
+				"width": 90
+				"height": 30
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "deleteOrder"
+				"text": "删除订单"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteOrderActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 225
+				"y": 330
+				"width": 90
+				"height": 30
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "lastPage"
+				"text": "上一页"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "lastPageActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 480
+				"y": 330
+				"width": 80
+				"height": 25
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "firstPage"
+				"text": "第一页"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 570
+				"y": 330
+				"width": 80
+				"height": 25
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "nextPage"
+				"text": "下一页"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "nextPageActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 660
+				"y": 330
+				"width": 80
+				"height": 25
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "currentPage"
+				"text": "当前页"
+				"enabled": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 520
+				"y": 270
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "pageCount"
+				"text": "页数"
+				"enabled": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 620
+				"y": 270
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 40, 5 )

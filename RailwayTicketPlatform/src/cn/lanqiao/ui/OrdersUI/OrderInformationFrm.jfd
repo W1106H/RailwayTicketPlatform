@@ -9,6 +9,77 @@ new FormModel {
 			"$sizePolicy": 1
 			add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
 				name: "frmContainer"
+				add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
+					name: "desktopPane1"
+					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+						name: "scrollPane1"
+						add( new FormComponent( "javax.swing.JTable" ) {
+							name: "historicalOrdersTable"
+						} )
+					}, new FormLayoutConstraints( null ) {
+						"x": 0
+						"y": 40
+						"width": 860
+						"height": 335
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "lastPage"
+						"text": "上一页"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "lastPageActionPerformed", true ) )
+					}, new FormLayoutConstraints( null ) {
+						"x": 540
+						"y": 380
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "nextPage"
+						"text": "下一页"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "nextPageActionPerformed", true ) )
+					}, new FormLayoutConstraints( null ) {
+						"x": 755
+						"y": 380
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "firstPage"
+						"text": "第一页"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "firstPageActionPerformed", true ) )
+					}, new FormLayoutConstraints( null ) {
+						"x": 645
+						"y": 380
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "currentPage"
+						"text": "当前页"
+						"enabled": false
+					}, new FormLayoutConstraints( null ) {
+						"x": 675
+						"y": 345
+						"width": 50
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label1"
+						"text": "所有订单列表"
+						"font": new java.awt.Font( "仿宋", 1, 24 )
+					}, new FormLayoutConstraints( null ) {
+						"x": 350
+						"y": 10
+						"width": 165
+						"height": 22
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "pageCount"
+						"text": "页数"
+						"enabled": false
+					}, new FormLayoutConstraints( null ) {
+						"x": 555
+						"y": 355
+						"width": 65
+					} )
+				}, new FormLayoutConstraints( null ) {
+					"x": 0
+					"y": 0
+					"width": 865
+					"height": 410
+				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "Center"
 			} )
@@ -20,17 +91,18 @@ new FormModel {
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "menu2MouseEntered", true ) )
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "menu2MouseExited", true ) )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "menuItem3"
+						name: "historialsOrders"
 						"text": "所有历史订单"
 						"accelerator": static javax.swing.KeyStroke getKeyStroke( 65, 130, false )
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "menuItem3MouseEntered", true ) )
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "menuItem3MouseExited", true ) )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "historialsOrdersActionPerformed", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JPopupMenu$Separator" ) {
 						name: "separator1"
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "menuItem4"
+						name: "unPayOrders"
 						"text": "未支付订单"
 						"accelerator": static javax.swing.KeyStroke getKeyStroke( 85, 130, false )
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "menuItem4MouseEntered", true ) )
@@ -38,7 +110,7 @@ new FormModel {
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "menuItem4ActionPerformed", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "menuItem5"
+						name: "alreadyPayOrders"
 						"text": "已支付订单"
 						"accelerator": static javax.swing.KeyStroke getKeyStroke( 80, 130, false )
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "menuItem5MouseEntered", true ) )
@@ -55,7 +127,7 @@ new FormModel {
 			}
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 50, 20 )
-			"size": new java.awt.Dimension( 865, 480 )
+			"size": new java.awt.Dimension( 860, 480 )
 		} )
 	}
 }
