@@ -1,46 +1,74 @@
 JFDML JFormDesigner: "7.0.1.0.272" Java: "1.8.0_152-release" encoding: "UTF-8"
 
 new FormModel {
-	"i18n.autoExternalize": true
-	"i18n.bundlePackage": "lanqiao.com"
-	"i18n.bundleName": "message"
-	"i18n.keyPrefix": "TraintransferFrm"
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
 			"autoSize": false
 		} ) {
 			name: "this"
-			"title": new FormMessage( null, "TraintransferFrm.this.title" )
-			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "textStartStation"
-				"text": new FormMessage( null, "TraintransferFrm.textStartStation.text" )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 60
-				"y": 15
-				"width": 165
-			} )
-			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "textEndStation"
-				"text": new FormMessage( null, "TraintransferFrm.textEndStation.text" )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 240
-				"y": 15
-				"width": 165
-			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "btnTransferSearch"
-				"text": new FormMessage( null, "TraintransferFrm.btnTransferSearch.text" )
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnTransferSearchActionPerformed", true ) )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 425
-				"y": 15
-			} )
+			"title": "列车信息"
+			"$sizePolicy": 1
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "scrollPane1"
 				add( new FormComponent( "javax.swing.JTable" ) {
-					name: "TransferTable"
+					name: "table1"
 					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
 						add( new java.util.Vector {
 							add( null )
 							add( null )
@@ -150,44 +178,38 @@ new FormModel {
 					} )
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 10
-				"y": 50
-				"width": 815
-				"height": 315
+				"x": 0
+				"y": 0
+				"width": 745
+				"height": 195
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "btnTimeSortAsc"
-				"text": new FormMessage( null, "TraintransferFrm.btnTimeSortAsc.text" )
+				name: "btndatail"
+				"text": "查询详情"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btndatailActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 155
-				"y": 475
+				"x": 655
+				"y": 200
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "btnTimeSortDesc"
-				"text": new FormMessage( null, "TraintransferFrm.btnTimeSortDesc.text" )
+				name: "btnOrder"
+				"text": "订票"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnOrderActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 290
-				"y": 475
-				"width": 130
+				"x": 555
+				"y": 200
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "btnBuyTicket"
-				"text": new FormMessage( null, "TraintransferFrm.btnBuyTicket.text" )
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnBuyTicketActionPerformed", true ) )
+				name: "btntransfer"
+				"text": "中转查询"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btntransferActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 445
-				"y": 475
-			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "btnFindStationInfor"
-				"text": new FormMessage( null, "TraintransferFrm.btnFindStationInfor.text" )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 545
-				"y": 475
+				"x": 450
+				"y": 200
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 845, 540 )
+			"location": new java.awt.Point( 110, 80 )
+			"size": new java.awt.Dimension( 800, 270 )
 		} )
 	}
 }

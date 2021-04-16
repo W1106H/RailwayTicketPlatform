@@ -21,16 +21,28 @@ public class GetDetailTrainParkingFrm extends JFrame {
     private String trainNum;
     private String startStation;
     private String endStation;
-    public GetDetailTrainParkingFrm(String trainNum, String startStation, String endStation) {
+    private String year_month_day;
+    private int ticketType;
+    private Object[][] detailTrainParking;
+
+    public Object[][] getDetailTrainParking() {
+        return detailTrainParking;
+    }
+
+    public GetDetailTrainParkingFrm(String trainNum, String startStation, String endStation, String year_month_day, int ticketType) {
         initComponents();
         this.trainNum=trainNum;
         this.startStation=startStation;
         this.endStation = endStation;
+        this.year_month_day=year_month_day;
+        this.ticketType=ticketType;
         init();
     }
 
     public void init() {
-        Object[][] detailTrainParking = trainInforService.getDetailTrainParking(trainNum, startStation, endStation);
+        Container contentPane = getContentPane();
+        contentPane.setBackground(new Color(102, 153, 255));
+        detailTrainParking = trainInforService.getDetailTrainParking(trainNum, startStation, endStation);
         //当数据超过下面的宽度和高度即可拉
         table1.setPreferredScrollableViewportSize(new Dimension( 550, 150));
         //创建下拉条
@@ -50,18 +62,35 @@ public class GetDetailTrainParkingFrm extends JFrame {
 
     private void btnreservationActionPerformed(ActionEvent e) {
         int[] selectedRows = table1.getSelectedRows();
-        int startRow = selectedRows[0];
-        int endRow = selectedRows[1];
-        String trainNum= table1.getValueAt(startRow,0).toString();
-        String startStation = table1.getValueAt(startRow, 1).toString();
-        String endStation = table1.getValueAt(endRow, 2).toString();
-        Object[][] order = trainInforService.UserBuyBuyTickets("123", "123", trainNum, startStation, endStation);
-        for (int i = 0; i < 1; i++) {
-            for (int j = 0; j < 7; j++) {
+        String trainNum=null;
+        String startStation=null;
+        String endStation=null;
+        Object[][] order=null;
+        if (selectedRows.length == 2) {
+            int startRow = selectedRows[0];
+            int endRow = selectedRows[1];
+            trainNum= table1.getValueAt(startRow,0).toString();
+            startStation = table1.getValueAt(startRow, 1).toString();
+            endStation = table1.getValueAt(endRow, 2).toString();
+            order = trainInforService.UserBuyBuyTickets( "123", trainNum, startStation, endStation);
+        } else if (selectedRows.length == 1) {
+            trainNum= table1.getValueAt(selectedRows[0],0).toString();
+            startStation = table1.getValueAt(selectedRows[0], 1).toString();
+            endStation = table1.getValueAt(selectedRows[0], 2).toString();
+            order = trainInforService.UserBuyBuyTickets( "123", trainNum, startStation, endStation);
+        }
+        else {
+            JOptionPane.showMessageDialog(null,"请选择两行或一行");
+        }
+        //还差参数
+        CreateOrder createOrder = new CreateOrder(order, year_month_day, ticketType);
+        createOrder.setVisible(true);
+    /*    for (int i = 0; i < 1; i++) {
+            for (int j = 0; j < 6; j++) {
                 System.out.print(order[i][j]+" ");
             }
             System.out.println();
-        }
+        }*/
     }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -106,9 +135,9 @@ public class GetDetailTrainParkingFrm extends JFrame {
         btnreservation.setBounds(new Rectangle(new Point(450, 165), btnreservation.getPreferredSize()));
 
         //---- label1 ----
-        label1.setText("\u8ba2\u7968\u6309\u4f4fCTRL\u9009\u62e9\u4e24\u884c");
+        label1.setText("\u8ba2\u7968\u6309\u4f4fCTRL\u9009\u62e9\u4e24\u884c\u6216\u9009\u62e9\u4e00\u884c");
         contentPane.add(label1);
-        label1.setBounds(10, 160, 140, 30);
+        label1.setBounds(10, 160, 195, 30);
 
         contentPane.setPreferredSize(new Dimension(550, 235));
         pack();

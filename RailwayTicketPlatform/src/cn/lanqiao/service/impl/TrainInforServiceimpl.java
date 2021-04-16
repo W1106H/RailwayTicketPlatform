@@ -62,8 +62,8 @@ public class TrainInforServiceimpl implements TrainInforService {
     }
 
     @Override
-    public Object[][] UserBuyBuyTickets(String PID, String orders_creator, String trainNum, String startStation, String endStation) {
-        Object[][] order = trainInforDao.TicketsOrder(PID, orders_creator, trainNum, startStation, endStation);
+    public Object[][] UserBuyBuyTickets( String orders_creator, String trainNum, String startStation, String endStation) {
+        Object[][] order = trainInforDao.TicketsOrder(orders_creator, trainNum, startStation, endStation);
         return order;
     }
 

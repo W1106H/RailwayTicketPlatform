@@ -132,7 +132,7 @@ public class TrainInforDaoimpl implements TrainInforDao {
                     time1.append("0" + mins1);
                 }
                 if (mins1 >= 10) {
-                    time2.append(mins1);
+                    time1.append(mins1);
                 }
                 String transferTime = time1.toString();
 
@@ -150,7 +150,7 @@ public class TrainInforDaoimpl implements TrainInforDao {
                     time2.append(mins2);
                 }
                 String runTime = time2.toString();
-                object[i] = new Object[]{ stationName, trainNum,startDate,startTime, arriveTime, transferTime,midleStationName, trainNum2,startTime2,arriveDate, arriveTime2,endstationName2,runTime,price };
+                object[i] = new Object[]{ stationName, trainNum,startTime, arriveTime, transferTime,midleStationName, trainNum2,startTime2, arriveTime2,endstationName2,runTime,price };
                 i++;
             }
         } catch (SQLException e) {
@@ -579,7 +579,7 @@ public class TrainInforDaoimpl implements TrainInforDao {
     }
     //得到订单信息
     @Override
-    public Object[][] TicketsOrder(String PID, String orders_creator, String trainNum,String startStation, String endStation) {
+    public Object[][] TicketsOrder( String orders_creator, String trainNum,String startStation, String endStation) {
         String sql ="select s.station_name as startStation , e.station_name as endStation ,e.price,e.train_num,\n" +
                 "s.station_order Station_start_no,e.station_order  Station_end_no,\n" +
                 "to_char(s.start_time,'HH24:mi') as startTime, to_char(e.arrive_time,'HH24:mi') as endTime from \n" +
@@ -603,7 +603,7 @@ public class TrainInforDaoimpl implements TrainInforDao {
                 String train_end_time = resultSet.getString("endTime");
                 String station_start_no = resultSet.getString("Station_start_no");
                 String station_end_no = resultSet.getString("station_end_no");
-                orders[0] = new Object[]{PID, trainNo, train_start_time, train_end_time, station_start_no, station_end_no, orders_creator};
+                orders[0] = new Object[]{trainNo, train_start_time, train_end_time, station_start_no, station_end_no, orders_creator};
             }
             /*sql="UPDATE train_parking_station set remaining_tickets=remaining_tickets-1 where station_order<=? and  station_order>=?  and train_num=?";
             connection1 = JDBCUtil.getConnection();

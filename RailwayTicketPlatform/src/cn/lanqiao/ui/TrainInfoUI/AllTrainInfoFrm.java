@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.swing.*;
 import javax.swing.table.*;
+import com.eltima.components.ui.*;
 
 /**
  * @author Brainrain
@@ -23,22 +24,20 @@ public class AllTrainInfoFrm extends JFrame {
     private TrainInforService trainInforService = new TrainInforServiceimpl();
     private String[] header = new String[]{"列车编号", "列车类型", "发车时间", "到达时间", "起点站", "终点站", "运行时间", "车厢数"};
     private Object[][] allTrainInfo = trainInforService.getAllTrainInfo();
-
-/*    //测试内部窗口
-    private SerTrainInfoByStation serTrainInfoByStation = new SerTrainInfoByStation("桂林北站", "百色站");
-
-    public void test1() {
-        serTrainInfoByStation.setVisible(true);
-        test.add(serTrainInfoByStation);
-    }*/
-
+    private String year_month_day;
+    private int ticketType;
 
     public AllTrainInfoFrm() {
+        this.year_month_day = year_month_day;
+        this.ticketType = ticketType;
         initComponents();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// 关闭窗口后操作为退出程序
         init();
     }
+
     public void init() {
+        //设置datepicker只看到年月日??
+
+
         //设置颜色
         Container contentPane = getContentPane();
         contentPane.setBackground(new Color(102, 153, 255));
@@ -73,12 +72,23 @@ public class AllTrainInfoFrm extends JFrame {
     }
 
     private void btndetailsActionPerformed(ActionEvent e) {
-        int selectedRow = table1.getSelectedRow();
-        String trainNum= table1.getValueAt(selectedRow,0).toString();
-        String startStation = table1.getValueAt(selectedRow, 4).toString();
-        String endStation = table1.getValueAt(selectedRow, 5).toString();
-        GetDetailTrainParkingFrm getDetailTrainParkingFrm = new GetDetailTrainParkingFrm(trainNum, startStation, endStation);
-        getDetailTrainParkingFrm.setVisible(true);
+        if (datePicker1.getText().length() > 0) {
+            year_month_day = datePicker1.getText().substring(0,10);
+            if (radioButton1.isSelected()) {
+                ticketType = 2;//学生票
+            } else {
+                ticketType = 1;
+            }
+            int selectedRow = table1.getSelectedRow();
+            String trainNum = table1.getValueAt(selectedRow, 0).toString();
+            String startStation = table1.getValueAt(selectedRow, 4).toString();
+            String endStation = table1.getValueAt(selectedRow, 5).toString();
+            //需要修改
+            GetDetailTrainParkingFrm getDetailTrainParkingFrm = new GetDetailTrainParkingFrm(trainNum, startStation, endStation, year_month_day, ticketType);
+            getDetailTrainParkingFrm.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "请选择时间");
+        }
 
     }
 
@@ -105,6 +115,8 @@ public class AllTrainInfoFrm extends JFrame {
         trainNum = new JTextField();
         butserch = new JButton();
         btnupdata = new JButton();
+        datePicker1 = new DatePicker();
+        radioButton1 = new JRadioButton();
 
         //======== this ========
         setTitle("\u6240\u6709\u5217\u8f66\u4fe1\u606f");
@@ -154,7 +166,7 @@ public class AllTrainInfoFrm extends JFrame {
         contentPane.add(btndetails);
         btndetails.setBounds(665, 360, 84, btndetails.getPreferredSize().height);
         contentPane.add(trainNum);
-        trainNum.setBounds(55, 25, 300, 35);
+        trainNum.setBounds(55, 25, 305, 30);
 
         //---- butserch ----
         butserch.setText("\u641c\u7d22");
@@ -167,6 +179,14 @@ public class AllTrainInfoFrm extends JFrame {
         btnupdata.addActionListener(e -> btnupdataActionPerformed(e));
         contentPane.add(btnupdata);
         btnupdata.setBounds(new Rectangle(new Point(485, 30), btnupdata.getPreferredSize()));
+        contentPane.add(datePicker1);
+        datePicker1.setBounds(55, 65, 200, 26);
+
+        //---- radioButton1 ----
+        radioButton1.setText("\u5b66\u751f\u7968");
+        radioButton1.setBackground(new Color(102, 153, 255, 110));
+        contentPane.add(radioButton1);
+        radioButton1.setBounds(290, 70, 70, radioButton1.getPreferredSize().height);
 
         contentPane.setPreferredSize(new Dimension(925, 440));
         setSize(925, 440);
@@ -182,9 +202,11 @@ public class AllTrainInfoFrm extends JFrame {
     private JTextField trainNum;
     private JButton butserch;
     private JButton btnupdata;
+    private DatePicker datePicker1;
+    private JRadioButton radioButton1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
-    public static void main(String[] args) {
+  /*  public static void main(String[] args) {
         AllTrainInfoFrm allTrainInfoFrm=new AllTrainInfoFrm();
         allTrainInfoFrm.setVisible(true);
-    }
+    }*/
 }

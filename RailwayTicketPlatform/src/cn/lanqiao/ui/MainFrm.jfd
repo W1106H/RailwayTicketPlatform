@@ -96,14 +96,6 @@ new FormModel {
 				"width": 65
 				"height": 65
 			} )
-			add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
-				name: "desktopPane1"
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 875
-				"height": 440
-				"x": 0
-				"y": 0
-			} )
 			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
 				name: "menuBar1"
 				"toolTipText": "列车信息"
@@ -114,9 +106,10 @@ new FormModel {
 						name: "menu1"
 						"text": "列车信息"
 						"font": new java.awt.Font( "仿宋", 1, 14 )
-						add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
-							name: "menu2"
-							"text": "text"
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "alltrainInfo"
+							"text": "所有列车信息"
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "alltrainInfoActionPerformed", true ) )
 						} )
 					} )
 				} )
@@ -132,7 +125,7 @@ new FormModel {
 				} )
 			}
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 35, 40 )
+			"location": new java.awt.Point( 140, 0 )
 			"size": new java.awt.Dimension( 875, 505 )
 		} )
 	}

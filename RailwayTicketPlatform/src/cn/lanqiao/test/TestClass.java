@@ -154,7 +154,7 @@ public class TestClass {
     @Test
     public void testTicketsOrder() {
         TrainInforDao trainInforDao = new TrainInforDaoimpl();
-        Object[][] objects = trainInforDao.TicketsOrder("123", "123", "D8481", "桂林北站", "柳州站");
+        Object[][] objects = trainInforDao.TicketsOrder("123", "D8481", "桂林北站", "柳州站");
         for (int i = 0; i < 1; i++) {
             for (int j = 0; j < 7; j++) {
                 System.out.print(objects[i][j]+" ");
@@ -218,13 +218,24 @@ public class TestClass {
         }
     }
 
-  /*  @Test
-    public void getTrainPassInfo_trainStartDate(){
-        OrderDao orderDao = new OrderDaoImpl();
-        Date trainPassInfo_trainStartDate = orderDao.getTrainPassInfo_trainStartDate("5");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String format = sdf.format(trainPassInfo_trainStartDate);
-        System.out.println(format);
-    }*/
+    /*  @Test
+      public void getTrainPassInfo_trainStartDate(){
+          OrderDao orderDao = new OrderDaoImpl();
+          Date trainPassInfo_trainStartDate = orderDao.getTrainPassInfo_trainStartDate("5");
+          SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+          String format = sdf.format(trainPassInfo_trainStartDate);
+          System.out.println(format);
+      }*/
+    @Test
+    public void testgetTransferInfor() {
+        TrainInforDao trainInforDao=new TrainInforDaoimpl();
+        Object[][] transferInfor = trainInforDao.getTransferInfor("桂林站", "南宁站", false);
+        for (int i = 0; i < transferInfor.length-1; i++) {
+            for (int j = 0; j < 11; j++) {
+                System.out.print(transferInfor[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
 }
 

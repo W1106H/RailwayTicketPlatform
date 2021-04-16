@@ -7,66 +7,11 @@ new FormModel {
 			"autoSize": false
 		} ) {
 			name: "this"
-			"title": "经停站信息"
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "scrollPane1"
 				add( new FormComponent( "javax.swing.JTable" ) {
 					name: "table1"
 					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
 						add( new java.util.Vector {
 							add( null )
 							add( null )
@@ -118,33 +63,30 @@ new FormModel {
 						add( null )
 						add( null )
 					} )
+					"selectionMode": 0
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 550
-				"height": 150
 				"x": 0
 				"y": 0
+				"width": 945
+				"height": 205
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "btnreservation"
-				"text": "订票"
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnreservationActionPerformed", true ) )
+				name: "btnbuy"
+				"text": "购票"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 450
-				"y": 165
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label1"
-				"text": "订票按住CTRL选择两行或选择一行"
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 10
-				"y": 160
-				"width": 195
-				"height": 30
+				"x": 850
+				"y": 215
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 105, 180 )
-			"size": new java.awt.Dimension( 550, 235 )
+			"location": new java.awt.Point( 20, 100 )
+			"size": new java.awt.Dimension( 945, 280 )
+		} )
+		add( new FormComponent( "javax.swing.JLabel" ) {
+			name: "label1"
+			"text": "text"
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 25, 155 )
 		} )
 	}
 }

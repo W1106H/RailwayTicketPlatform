@@ -5,7 +5,8 @@
 package cn.lanqiao.ui;
 
 import cn.lanqiao.entity.Peoples.User;
-import cn.lanqiao.ui.TrainInfoUI.SerTrainInfoByStation;
+import cn.lanqiao.ui.TrainInfoUI.AllTrainInfoFrm;
+import cn.lanqiao.ui.TrainInfoUI.serTrainInfoByStation1;
 import com.eltima.components.ui.DatePicker;
 
 import java.awt.*;
@@ -28,8 +29,6 @@ public class MainFrm extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// 关闭窗口后操作为退出程序
         init(contentPane);
         initComponents();
-        //exaop
-        desktopPaneinit();
     }
 
     private void init(Container contentPane){
@@ -59,10 +58,6 @@ public class MainFrm extends JFrame {
         setLocationRelativeTo(getOwner());
     }
 
-    //exaop 将容器设置成透明
-    public void desktopPaneinit() {
-        this.desktopPane1.setOpaque(false);
-    }
 
     private void originFocusGained(FocusEvent e) {
         //获取焦点时，清空提示内容
@@ -156,28 +151,53 @@ public class MainFrm extends JFrame {
     //exaop 查询列车
     private void ticketSearchActionPerformed(ActionEvent e) {
         // TODO add your code here
+        String Creator=currentUser.getPId();//传给创建订单的窗口
         String origin = this.origin.getText();
         String destination = this.destination.getText();
-        String time = datePicker.getText();
-        String type;
+        //截取年月日
+        String time;
+        String type="火车";
+        int ticketType=1;
         boolean selected = radioButton1.isSelected();
         if (selected) {
             type = "动车";
-        } else {
-            type = "火车";
         }
-        SerTrainInfoByStation serTrainInfoByStation = new SerTrainInfoByStation(origin, destination, type);
-        serTrainInfoByStation.setLocation(125,0);
-        serTrainInfoByStation.setVisible(true);
-        desktopPane1.add(serTrainInfoByStation);
+        boolean selected1 = radioButton2.isSelected();
+        if (selected1) {
+            ticketType =2;//学生票
+        }
+        if (datePicker.getText().length() == 0) {
+            JOptionPane.showMessageDialog(null, "请选择时间");
+        } else {
+            time = datePicker.getText().substring(0, 10);
+            serTrainInfoByStation1 serTrainInfoByStation = new serTrainInfoByStation1(origin, destination, type,Creator,time,ticketType);
+            if (serTrainInfoByStation.getTrainsInfoByStationName().length>0) {
+                serTrainInfoByStation.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null,"列车不存在或起始站错误");
+            }
+        }
+
+
     }
+
+    private void alltrainInfoActionPerformed(ActionEvent e) {
+        //测试 year_month_day，ticketType 还需从AllTrainInfoFrm窗口中获取
+        AllTrainInfoFrm allTrainInfoFrm = new AllTrainInfoFrm();
+        allTrainInfoFrm.setVisible(true);
+    }
+
+
+
+
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         menuBar1 = new JMenuBar();
         menuBar2 = new JMenuBar();
         menu1 = new JMenu();
-        menu2 = new JMenu();
+        alltrainInfo = new JMenuItem();
         menu3 = new JMenu();
         menu4 = new JMenu();
         origin = new JTextField();
@@ -187,7 +207,6 @@ public class MainFrm extends JFrame {
         datePicker = new DatePicker();
         ticketSearch = new JButton();
         label3 = new JLabel();
-        desktopPane1 = new JDesktopPane();
 
         //======== this ========
         setTitle("\u94c1\u8def\u7968\u52a1\u7ba1\u7406\u5e73\u53f0");
@@ -210,11 +229,10 @@ public class MainFrm extends JFrame {
                     menu1.setText("\u5217\u8f66\u4fe1\u606f");
                     menu1.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 14));
 
-                    //======== menu2 ========
-                    {
-                        menu2.setText("text");
-                    }
-                    menu1.add(menu2);
+                    //---- alltrainInfo ----
+                    alltrainInfo.setText("\u6240\u6709\u5217\u8f66\u4fe1\u606f");
+                    alltrainInfo.addActionListener(e -> alltrainInfoActionPerformed(e));
+                    menu1.add(alltrainInfo);
                 }
                 menuBar2.add(menu1);
             }
@@ -345,8 +363,6 @@ public class MainFrm extends JFrame {
         });
         contentPane.add(label3);
         label3.setBounds(400, 115, 65, 65);
-        contentPane.add(desktopPane1);
-        desktopPane1.setBounds(0, 0, 875, 440);
 
         {
             // compute preferred size
@@ -371,7 +387,7 @@ public class MainFrm extends JFrame {
     private JMenuBar menuBar1;
     private JMenuBar menuBar2;
     private JMenu menu1;
-    private JMenu menu2;
+    private JMenuItem alltrainInfo;
     private JMenu menu3;
     private JMenu menu4;
     private JTextField origin;
@@ -381,7 +397,6 @@ public class MainFrm extends JFrame {
     private DatePicker datePicker;
     private JButton ticketSearch;
     private JLabel label3;
-    private JDesktopPane desktopPane1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     public static void main(String[] args) {

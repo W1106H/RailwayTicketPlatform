@@ -213,8 +213,8 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 55
 				"y": 25
-				"width": 300
-				"height": 35
+				"width": 305
+				"height": 30
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "butserch"
@@ -232,8 +232,25 @@ new FormModel {
 				"x": 485
 				"y": 30
 			} )
+			add( new FormComponent( "com.eltima.components.ui.DatePicker" ) {
+				name: "datePicker1"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 55
+				"y": 65
+				"width": 200
+				"height": 26
+			} )
+			add( new FormComponent( "javax.swing.JRadioButton" ) {
+				name: "radioButton1"
+				"text": "学生票"
+				"background": new java.awt.Color( 102, 153, 255, 110 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 290
+				"y": 70
+				"width": 70
+			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 15, 30 )
+			"location": new java.awt.Point( 85, 70 )
 			"size": new java.awt.Dimension( 925, 440 )
 		} )
 	}
