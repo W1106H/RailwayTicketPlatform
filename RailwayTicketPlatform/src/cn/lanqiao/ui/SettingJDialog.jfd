@@ -1,0 +1,102 @@
+JFDML JFormDesigner: "7.0.1.0.272" Java: "11.0.9.1" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "this"
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			"resizable": false
+			"background": new java.awt.Color( 255, 255, 255, 255 )
+			add( new FormContainer( "javax.swing.JLayeredPane", new FormLayoutManager( class javax.swing.JLayeredPane ) ) {
+				name: "layeredPane1"
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+					"autoSize": false
+				} ) {
+					name: "panel1"
+					"background": new java.awt.Color( 102, 102, 255, 255 )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label1"
+						"text": "设置"
+						"horizontalAlignment": 0
+						"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 0, false )
+						"background": new java.awt.Color( 255, 255, 255, 255 )
+						"foreground": sfield java.awt.Color white
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"x": 150
+						"y": 10
+						"width": 75
+						"height": 25
+					} )
+				}, new FormLayoutConstraints( null ) {
+					"x": 0
+					"y": 0
+					"width": 376
+					"height": 50
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "OutButton"
+					"text": "退出登录"
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 0, false )
+					"foreground": sfield java.awt.Color white
+					"background": new java.awt.Color( 102, 102, 255, 255 )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "OutButtonActionPerformed", true ) )
+				}, new FormLayoutConstraints( null ) {
+					"x": 30
+					"y": 335
+					"width": 305
+					"height": 30
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "PersonalInformationButton"
+					"text": "个人信息"
+					"horizontalAlignment": 2
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 0, false )
+					"background": new java.awt.Color( 255, 255, 255, 255 )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "PersonalInformationButtonActionPerformed", true ) )
+				}, new FormLayoutConstraints( null ) {
+					"x": 0
+					"y": 70
+					"width": 375
+					"height": 30
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "LogoutButton"
+					"text": "注销"
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 0, false )
+					"horizontalAlignment": 2
+					"background": new java.awt.Color( 255, 255, 255, 255 )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "LogoutButtonActionPerformed", true ) )
+				}, new FormLayoutConstraints( null ) {
+					"x": 0
+					"y": 120
+					"width": 375
+					"height": 30
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "AboutButton"
+					"text": "关于"
+					"horizontalAlignment": 2
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 0, false )
+					"background": new java.awt.Color( 255, 255, 255, 255 )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "AboutButtonActionPerformed", true ) )
+				}, new FormLayoutConstraints( null ) {
+					"y": 170
+					"width": 375
+					"height": 30
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 375
+				"height": 390
+				"x": 0
+				"y": 0
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 160, 5 )
+			"size": new java.awt.Dimension( 375, 420 )
+		} )
+	}
+}

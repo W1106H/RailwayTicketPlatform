@@ -30,15 +30,15 @@ public class UserDaoImpl implements UserDao {
             ps.setString(1,uname);
             rs = ps.executeQuery();
             if (rs.next()) {
-                String UTel = rs.getString("utel");
-                String UserId = rs.getString("userid");
-                String URealName = rs.getString("urealname");
-                String UGender = rs.getString("ugender");
-                String UEmail = rs.getString("uemail");
-                String UAddress = rs.getString("uaddress");
+                String UTel = rs.getString("utel").trim();
+                String UserId = rs.getString("userid").trim();
+                String URealName = rs.getString("urealname").trim();
+                String UGender = rs.getString("ugender").trim();
+                String UEmail = rs.getString("uemail").trim();
+                String UAddress = rs.getString("uaddress").trim();
                 String UName = rs.getString("uname");
-                String UPassword = rs.getString("upassword");
-                String PId = rs.getString("pid");
+                String UPassword = (rs.getString("upassword")).trim();
+                String PId = rs.getString("pid").trim();
                 user = new User(UTel,UserId, URealName, UGender,UEmail, UAddress, UName, UPassword,PId);
             }
         } catch (SQLException e) {
@@ -91,7 +91,8 @@ public class UserDaoImpl implements UserDao {
         return 0;
     }
 
-    public int updateUser(String utel, String userid) {
+    @Override
+    public int updateUTel(String utel, String userid) {
         Connection connection=null;
         PreparedStatement preparedStatement=null;
         try{
@@ -108,4 +109,21 @@ public class UserDaoImpl implements UserDao {
         return 0;
     }
 
+    @Override
+    public int updateUPassword(String upassword, String userid) {
+        Connection connection=null;
+        PreparedStatement preparedStatement=null;
+        try{
+            connection = JDBCUtil.getConnection();
+            String sql="update users set upassword=? where userid=?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,upassword);
+            preparedStatement.setString(2,userid);
+            return preparedStatement.executeUpdate();
+        }catch (Exception e){}
+        finally {
+            JDBCUtil.close(null,preparedStatement,connection);
+        }
+        return 0;
+    }
 }

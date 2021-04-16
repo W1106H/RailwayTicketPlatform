@@ -23,16 +23,17 @@ public class PassengerDaoImpl implements PassengerDao {
         ResultSet rs = null;
         try {
             conn = JDBCUtil.getConnection();
-            String sql = "select * from passengrs where passenger=?";
+            //修改
+            String sql = "select * from passengrs where passengerid=?";
             ps = conn.prepareStatement(sql);
             ps.setString(1,passengerid);
             rs = ps.executeQuery();
             if (rs.next()) {
-                String PassengerId = rs.getString("passengerid");
-                String PName = rs.getString("pname");
-                String PTel = rs.getString("ptel");
-                String PId = rs.getString("pid");
-                String PGender = rs.getString("pgender");
+                String PassengerId = rs.getString("passengerid").trim();
+                String PName = rs.getString("pname").trim();
+                String PTel = rs.getString("ptel").trim();
+                String PId = rs.getString("pid").trim();
+                String PGender = rs.getString("pgender").trim();
                 passenger = new Passenger(PassengerId, PName, PTel, PId, PGender);
             }
         } catch (SQLException e) {
@@ -54,8 +55,8 @@ public class PassengerDaoImpl implements PassengerDao {
             preparedStatement.setString(1, passenger.getPassengerId());
             preparedStatement.setString(2, passenger.getPName());
             preparedStatement.setString(3, passenger.getPTel());
-            preparedStatement.setString(4,passenger.getPGender());
-            preparedStatement.setString(5,passenger.getPId());
+            preparedStatement.setString(4,passenger.getPId());
+            preparedStatement.setString(5,passenger.getPGender());
             return preparedStatement.executeUpdate();
         }catch (Exception e){}
         finally {
@@ -81,13 +82,14 @@ public class PassengerDaoImpl implements PassengerDao {
         return 0;
     }
 
-    public int count() {
+    public int count(String pId) {
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement ps=null;
         ResultSet rs = null;
         int number = 0;
         try {
             ps = connection.prepareStatement("select  count(*) from passengers where pid=?");
+            ps.setString(1, pId);
             rs = ps.executeQuery();
             if(rs.next()){
                 number = rs.getInt(1);
@@ -98,24 +100,25 @@ public class PassengerDaoImpl implements PassengerDao {
         return number;
     }
 
-    public Object[][] list() {
+    public Object[][] list(User user) {
         Object[][] passengers = null;
         Connection connection = JDBCUtil.getConnection();
         String sql="select * from passengers where pid=?";
         PreparedStatement preparedStatement = null;
+
         ResultSet resultSet = null;
-        passengers = new Object[this.count()][];
+        passengers = new Object[this.count(user.getPId())][];
         try{
             preparedStatement =connection.prepareStatement(sql);
+            preparedStatement.setString(1,user.getPId());
             resultSet = preparedStatement.executeQuery();
             int i=0;
             while (resultSet.next()){
-                String PassengerId = resultSet.getString("passengerid");
-                String PName = resultSet.getString("pname");
-                String PTel = resultSet.getString("ptel");
-                String PGender = resultSet.getString("pgender");
-                String PId = resultSet.getString("pid");
-                passengers[i] = new Object[]{PassengerId,PName,PTel,PGender,PId};
+                String PassengerId = resultSet.getString("passengerid").trim();
+                String PName = resultSet.getString("pname").trim();
+                String PTel = resultSet.getString("ptel").trim();
+                String PGender = resultSet.getString("pgender").trim();
+                passengers[i] = new Object[]{PName,PassengerId,PTel,PGender};
                 i++;
             }
 

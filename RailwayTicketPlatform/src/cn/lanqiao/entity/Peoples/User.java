@@ -1,10 +1,13 @@
 package cn.lanqiao.entity.Peoples;
 
+import java.io.Serializable;
+
 /**
  * @author moqirun
  * @date 2021/4/12 17:34
  **/
-public class User {
+public class User implements Serializable  {
+    private static final long serialVersionUID = -6306566448717931119L;
     private String UTel;
     private String UserId;
     private String URealName;
@@ -26,6 +29,7 @@ public class User {
         this.UPassword = UPassword;
         this.PId = PId;
     }
+
 
     public String getUTel() {
         return UTel;

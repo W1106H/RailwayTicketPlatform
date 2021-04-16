@@ -13,5 +13,7 @@ public interface UserDao {
 
     public int deleteUser(String utel);
 
-    public int updateUser(String utel, String userid);
+    public int updateUPassword(String upassword, String userid);
+
+    public int updateUTel(String utel, String userid);
 }

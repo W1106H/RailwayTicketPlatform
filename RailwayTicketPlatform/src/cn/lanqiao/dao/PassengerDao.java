@@ -15,4 +15,8 @@ public interface PassengerDao {
     public int deletePassenger(String passengerid);
 
     public int updatePassenger(String ptel, String passengerid);
+
+    public  int count(String pId);
+
+    public  Object[][] list(User user);
 }

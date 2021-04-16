@@ -26,7 +26,16 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="ojdbc6" level="project" />
-    <orderEntry type="library" name="datepicker" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://D:/蓝桥班笔记/jar/datepicker.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://D:/蓝桥班笔记/jar/datepicker.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>

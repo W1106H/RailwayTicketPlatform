@@ -1,15 +1,19 @@
 package cn.lanqiao.test;
 
-import cn.lanqiao.dao.TrainInforDao;
 import cn.lanqiao.dao.OrderDao;
+import cn.lanqiao.dao.PassengerDao;
+import cn.lanqiao.dao.TrainInforDao;
 import cn.lanqiao.dao.impl.OrderDaoImpl;
+import cn.lanqiao.dao.impl.PassengerDaoImpl;
 import cn.lanqiao.dao.impl.TrainInforDaoimpl;
 import cn.lanqiao.entity.TrainInformation.TrainInfo;
 import cn.lanqiao.entity.Peoples.Orders;
+import cn.lanqiao.entity.Peoples.User;
 import cn.lanqiao.util.JDBCUtil;
 import cn.lanqiao.util.StringForData;
 import org.junit.Test;
 
+import java.io.File;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -165,6 +169,34 @@ public class TestClass {
         OrderDao orderDao = new OrderDaoImpl();
         Orders detailOrder = orderDao.getDetailOrder("5");
         System.out.println(detailOrder.toString());
+    }
+
+    @Test
+    public void test1() {
+        PassengerDao passengerDao = new PassengerDaoImpl();
+        Object[][] list = passengerDao.list(new User("18977330764", "450923199804165416", "莫启润", "男", "3034267233@qq.com", "广西玉林", "moqirun", "123", "f6c0e7da-a409-467d-a2c1-58d5e316a895"));
+        for (Object[] objects : list) {
+            System.out.println(objects);
+        }
+    }
+
+    @Test
+    public void testdelet() {
+        String fileName = "user.data";
+        String fileName1 = "D:\\gitproject\\RailwayTicketPlatform\\userWithAut.data";
+        //修改
+               /* if (AutcheckBox.isSelected()) {
+                    fileName = "userWithAut.data";
+                } */
+        File file = new File(fileName);
+        File file1=new File(fileName1);
+        if(file.exists()){
+            boolean isdelete = file.delete();
+            System.out.println(isdelete);
+        } else if (file1.exists()) {
+            boolean isdelete = file.delete();
+            System.out.println(isdelete);
+        }
     }
 
     @Test
