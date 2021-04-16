@@ -622,8 +622,9 @@ public class TrainInforDaoimpl implements TrainInforDao {
     }
     //退票
     @Override
-    public void refundTicket(String trainNum, String startStationNum, String endStationNum) {
+    public void refundTicket(String orderNo,String trainNum, String startStationNum, String endStationNum) {
         String sql="UPDATE train_parking_station set remaining_tickets=remaining_tickets+1 where station_order<=? and  station_order>=?  and train_num=?";
+        String sql2="DELETE orders where order_no= ?";
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement preparedStatement = null;
         try {
@@ -631,6 +632,9 @@ public class TrainInforDaoimpl implements TrainInforDao {
             preparedStatement.setString(1, startStationNum);
             preparedStatement.setString(2, endStationNum);
             preparedStatement.setString(3, trainNum);
+            preparedStatement.execute();
+            preparedStatement = connection.prepareStatement(sql2);
+            preparedStatement.setString(1,orderNo);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

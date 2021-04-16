@@ -20,7 +20,7 @@ import javax.swing.*;
 public class CreateOrder extends JFrame {
     Object[][] order=new Object[1][];
     String year_month_day;
-    int ticketType;
+    int ticketType;//学生票为1  成人票为2
     public CreateOrder(Object[][] order,String year_month_day,int ticketType) {
         this.order = order;
         this.year_month_day=year_month_day;
@@ -52,6 +52,7 @@ public class CreateOrder extends JFrame {
         try {
             java.util.Date startData =  sdf.parse(startTime);
             java.util.Date endDate = sdf.parse(endTime);
+
             System.out.println(passengerId);
             System.out.println(trainNum);
             System.out.println(startNo + " " + endNo);
@@ -62,8 +63,6 @@ public class CreateOrder extends JFrame {
         } catch (ParseException e1) {
             e1.printStackTrace();
         }
-
-
     }
 
     private void initComponents() {

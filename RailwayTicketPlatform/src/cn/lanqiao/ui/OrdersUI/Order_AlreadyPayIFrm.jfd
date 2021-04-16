@@ -210,6 +210,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "cancel"
 						"text": "取消订单"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cancelActionPerformed", true ) )
 					}, new FormLayoutConstraints( null ) {
 						"x": 225
 						"y": 330

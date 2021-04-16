@@ -9,7 +9,9 @@ import javax.swing.event.*;
 
 import cn.lanqiao.entity.Peoples.Orders;
 import cn.lanqiao.service.OrderService;
+import cn.lanqiao.service.TrainInforService;
 import cn.lanqiao.service.impl.OrderServiceImpl;
+import cn.lanqiao.service.impl.TrainInforServiceimpl;
 
 import java.awt.*;
 import javax.swing.*;
@@ -71,7 +73,7 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
         int currentPage2=Integer.parseInt(this.currentPage2.getText());
         int pageCount2=(orderService.getOrderNotTravel_Count("1001")%2)==0?(orderService.getOrderNotTravel_Count("1001")/2):(orderService.getOrderNotTravel_Count("1001")/2)+1;
         this.pageCount2.setText(String.valueOf(pageCount2));
-        Object[][] table2OrderNotTravel = orderService.getOrderNotPay("1001",currentPage2);
+        Object[][] table2OrderNotTravel = orderService.getOrderNotTravel("1001",currentPage2);
         table2.setModel(new DefaultTableModel(
                 table2OrderNotTravel,
                 table2Title
@@ -182,18 +184,12 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
     private void refreshActionPerformed(ActionEvent e) {
         int currentPage2 = Integer.parseInt(this.currentPage2.getText());
         OrderService orderService = new OrderServiceImpl();
-        Object[][] orderNotPay = orderService.getOrderNotPay("1001",currentPage2);
-        if (orderService.getOrderNotPay_JudgeFlag() == false){
-            JOptionPane.showMessageDialog(table2,"暂无未支付订单信息");
-            this.flagOfTable2 = false;
-        }
-        else {
-            table2.setModel(new DefaultTableModel(
-                    orderNotPay,
-                    table2Title
-            ));
-            this.flagOfTable2 = true;
-        }
+        Object[][] orderNotTravel = orderService.getOrderNotTravel("1001",currentPage2);
+        table2.setModel(new DefaultTableModel(
+            orderNotTravel,
+            table2Title
+        ));
+        this.flagOfTable2 = true;
     }
 
     private void lastPage2ActionPerformed(ActionEvent e) {
@@ -204,9 +200,9 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
         {
             currentPage2.setText(String.valueOf(current2-1));
             OrderService orderService = new OrderServiceImpl();
-            Object[][] orderNotPay = orderService.getOrderNotPay("1001",current2);
+            Object[][] orderNotTravel = orderService.getOrderNotTravel("1001",current2);
             table2.setModel(new DefaultTableModel(
-                    orderNotPay,
+                    orderNotTravel,
                     table2Title
             ));
             this.flagOfTable2 = true;
@@ -220,9 +216,9 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
         {
             currentPage2.setText(String.valueOf(current2+1));
             OrderService orderService = new OrderServiceImpl();
-            Object[][] orderNotPay = orderService.getOrderNotPay("1001",current2);
+            Object[][] orderNotTravel = orderService.getOrderNotTravel("1001",current2);
             table2.setModel(new DefaultTableModel(
-                    orderNotPay,
+                    orderNotTravel,
                     table2Title
             ));
             this.flagOfTable2 = true;
@@ -235,9 +231,9 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
         currentPage2.setText(String.valueOf(1));
         int current2= Integer.parseInt(currentPage2.getText());
         OrderService orderService = new OrderServiceImpl();
-        Object[][] orderNotPay = orderService.getOrderNotPay("1001",current2);
+        Object[][] orderNotTravel = orderService.getOrderNotTravel("1001",current2);
         table2.setModel(new DefaultTableModel(
-                orderNotPay,
+                orderNotTravel,
                 table2Title
         ));
         this.flagOfTable2 = true;
@@ -281,6 +277,35 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
 
     private void thisInternalFrameClosing(InternalFrameEvent e) {
         OrderInformationFrm.setVis();
+    }
+
+    private void cancelActionPerformed(ActionEvent e) {
+        OrderService orderService = new OrderServiceImpl();
+        if(table2.getSelectedRowCount()==0){
+            JOptionPane.showMessageDialog(table2,"请选择想要取消的订单");
+            return ;
+        }
+        int confirmDialog = JOptionPane.showConfirmDialog(table2, "是否确认取消订单？");
+        if(confirmDialog==0) {
+            String orderNo = table2.getValueAt(table2.getSelectedRow(), 0).toString();  //获得订单号
+            String trainNum = orderService.getOrderByOrderNo(orderNo).getTrain_No();
+            String startStationNum = orderService.getOrderByOrderNo(orderNo).getStation_Start_No();
+            String endStationNum = orderService.getOrderByOrderNo(orderNo).getStation_End_NO();
+            String pid = orderService.getOrderByOrderNo(orderNo).getPid();
+            TrainInforService trainInforService = new TrainInforServiceimpl();
+            trainInforService.refundTicket(orderNo, trainNum, startStationNum, endStationNum);
+            int current2 = Integer.parseInt(currentPage2.getText());
+            Object[][] orderNotTravel = orderService.getOrderNotTravel(pid, current2);
+            table2.setModel(new DefaultTableModel(
+                    new Object[][] {},
+                    new String[] {}
+            ));
+            table2.setModel(new DefaultTableModel(
+                    orderNotTravel,
+                    table2Title
+            ));
+            JOptionPane.showMessageDialog(table2, "已成功取消！");
+        }
     }
 
     private void initComponents() {
@@ -454,6 +479,7 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
 
                 //---- cancel ----
                 cancel.setText("\u53d6\u6d88\u8ba2\u5355");
+                cancel.addActionListener(e -> cancelActionPerformed(e));
                 desktopPane1.add(cancel, JLayeredPane.DEFAULT_LAYER);
                 cancel.setBounds(225, 330, 95, 30);
             }

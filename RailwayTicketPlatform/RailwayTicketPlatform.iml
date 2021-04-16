@@ -37,5 +37,7 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="ojdbc6" level="project" />
+    <orderEntry type="library" name="datepicker" level="project" />
   </component>
 </module>

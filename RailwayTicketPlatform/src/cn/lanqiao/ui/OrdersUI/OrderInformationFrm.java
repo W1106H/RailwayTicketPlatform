@@ -16,11 +16,9 @@ import javax.swing.table.DefaultTableModel;
  * @author Brainrain
  */
 public class OrderInformationFrm extends JFrame {
-
     static private JDesktopPane desktopPane1;
     private String[] table1Title = {"订单编号","列车号","起始站","到达站","出发时间","票价","乘客姓名"};
     public OrderInformationFrm() {
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         initComponents();
         init();
     }
@@ -201,7 +199,6 @@ public class OrderInformationFrm extends JFrame {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         menuBar2 = new JMenuBar();
         menu2 = new JMenu();
-        historialsOrders = new JMenuItem();
         unPayOrders = new JMenuItem();
         alreadyPayOrders = new JMenuItem();
         menu3 = new JMenu();
@@ -237,22 +234,6 @@ public class OrderInformationFrm extends JFrame {
                         menu2MouseExited(e);
                     }
                 });
-
-                //---- historialsOrders ----
-                historialsOrders.setText("\u6240\u6709\u5386\u53f2\u8ba2\u5355");
-                historialsOrders.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, KeyEvent.CTRL_MASK));
-                historialsOrders.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        menuItem3MouseEntered(e);
-                    }
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        menuItem3MouseExited(e);
-                    }
-                });
-                historialsOrders.addActionListener(e -> historialsOrdersActionPerformed(e));
-                menu2.add(historialsOrders);
                 menu2.addSeparator();
 
                 //---- unPayOrders ----
@@ -368,7 +349,6 @@ public class OrderInformationFrm extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JMenuBar menuBar2;
     private JMenu menu2;
-    private JMenuItem historialsOrders;
     private JMenuItem unPayOrders;
     private JMenuItem alreadyPayOrders;
     private JMenu menu3;

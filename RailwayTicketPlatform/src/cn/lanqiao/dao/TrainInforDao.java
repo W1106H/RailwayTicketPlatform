@@ -17,7 +17,7 @@ public interface TrainInforDao {
     public Object[][] getDetailTrainParking(String trainNum,String startStation,String endStation);
     public int getTrainPakingNum(String trainNum, String startStation, String endStation);
     public Object[][] TicketsOrder( String orders_creator, String trainNum,String startStation, String endStation);
-    public void refundTicket(String trainNum, String startStationNum, String endStationNum);
+    public void refundTicket(String orderNo,String trainNum, String startStationNum, String endStationNum);
     public void updataTicket(String trainNum, String startStationNum, String endStationNum);
     public Object[][] getTransferInfor(String startStation, String endStation,boolean decSortYesOrNo);
     public int getTransferTotalPrice(int startStationOrder1, int endStationOrder1,int startStationOrder2,int endStationOrder2);

@@ -7,11 +7,12 @@ package cn.lanqiao.ui;
 import cn.lanqiao.entity.Peoples.User;
 import cn.lanqiao.ui.TrainInfoUI.AllTrainInfoFrm;
 import cn.lanqiao.ui.TrainInfoUI.serTrainInfoByStation1;
+import cn.lanqiao.ui.OrdersUI.OrderInformationFrm;
 import com.eltima.components.ui.DatePicker;
+
 
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.*;
@@ -21,6 +22,7 @@ import javax.swing.*;
  */
 public class MainFrm extends JFrame {
     private User currentUser;
+    private JDesktopPane desktopPane1=new JDesktopPane();
     public MainFrm(User user) {
         this.currentUser = user;
         this.setTitle("\u94c1\u8def\u7968\u52a1\u7ba1\u7406\u5e73\u53f0");
@@ -189,8 +191,26 @@ public class MainFrm extends JFrame {
 
 
 
+    private void ordersActionPerformed(ActionEvent e) {
+        OrderInformationFrm orderInformationFrm = new OrderInformationFrm();
+    }
 
+    private void allOrdersActionPerformed(ActionEvent e) {
+        OrderInformationFrm orderInformationFrm = new OrderInformationFrm();
+        orderInformationFrm.setVisible(true);
+    }
 
+    private void allOrdersMouseClicked(MouseEvent e) {
+        OrderInformationFrm orderInformationFrm = new OrderInformationFrm();
+        orderInformationFrm.setVisible(true);
+
+    }
+
+    private void personnalMessMouseClicked(MouseEvent e) {
+        User currentUser = this.currentUser;
+        PersonalForm personalForm = new PersonalForm(currentUser);
+            personalForm.setVisible(true);
+    }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -198,8 +218,9 @@ public class MainFrm extends JFrame {
         menuBar2 = new JMenuBar();
         menu1 = new JMenu();
         alltrainInfo = new JMenuItem();
-        menu3 = new JMenu();
-        menu4 = new JMenu();
+        orders = new JMenu();
+        allOrders = new JMenu();
+        personnalMess = new JMenu();
         origin = new JTextField();
         destination = new JTextField();
         radioButton1 = new JRadioButton();
@@ -238,19 +259,38 @@ public class MainFrm extends JFrame {
             }
             menuBar1.add(menuBar2);
 
-            //======== menu3 ========
+            //======== orders ========
             {
-                menu3.setText("\u8ba2\u5355\u4fe1\u606f");
-                menu3.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 14));
-            }
-            menuBar1.add(menu3);
+                orders.setText("\u8ba2\u5355\u4fe1\u606f");
+                orders.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 14));
+                orders.addActionListener(e -> ordersActionPerformed(e));
 
-            //======== menu4 ========
-            {
-                menu4.setText("\u4e2a\u4eba\u4fe1\u606f");
-                menu4.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 14));
+                //======== allOrders ========
+                {
+                    allOrders.setText("\u6240\u6709\u8ba2\u5355");
+                    allOrders.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            allOrdersMouseClicked(e);
+                        }
+                    });
+                }
+                orders.add(allOrders);
             }
-            menuBar1.add(menu4);
+            menuBar1.add(orders);
+
+            //======== personnalMess ========
+            {
+                personnalMess.setText("\u4e2a\u4eba\u4fe1\u606f");
+                personnalMess.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 14));
+                personnalMess.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        personnalMessMouseClicked(e);
+                    }
+                });
+            }
+            menuBar1.add(personnalMess);
         }
         setJMenuBar(menuBar1);
 
@@ -388,8 +428,9 @@ public class MainFrm extends JFrame {
     private JMenuBar menuBar2;
     private JMenu menu1;
     private JMenuItem alltrainInfo;
-    private JMenu menu3;
-    private JMenu menu4;
+    private JMenu orders;
+    private JMenu allOrders;
+    private JMenu personnalMess;
     private JTextField origin;
     private JTextField destination;
     private JRadioButton radioButton1;
@@ -398,6 +439,7 @@ public class MainFrm extends JFrame {
     private JButton ticketSearch;
     private JLabel label3;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
+
 
     public static void main(String[] args) {
         MainFrm mainFrm = new MainFrm(new User("133","1","王欢","女","2795222","北街","wh","123","622630"));

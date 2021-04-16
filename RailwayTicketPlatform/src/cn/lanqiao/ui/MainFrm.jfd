@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "7.0.1.0.272" Java: "1.8.0_152-release" encoding: "UTF-8"
+JFDML JFormDesigner: "7.0.1.0.272" Java: "11.0.5" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -114,14 +114,21 @@ new FormModel {
 					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
-					name: "menu3"
+					name: "orders"
 					"text": "订单信息"
 					"font": new java.awt.Font( "仿宋", 1, 14 )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "ordersActionPerformed", true ) )
+					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+						name: "allOrders"
+						"text": "所有订单"
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "allOrdersMouseClicked", true ) )
+					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
-					name: "menu4"
+					name: "personnalMess"
 					"text": "个人信息"
 					"font": new java.awt.Font( "仿宋", 1, 14 )
+					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "personnalMessMouseClicked", true ) )
 				} )
 			}
 		}, new FormLayoutConstraints( null ) {

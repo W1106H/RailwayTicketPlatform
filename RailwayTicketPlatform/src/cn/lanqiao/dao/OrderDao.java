@@ -19,4 +19,6 @@ public interface OrderDao {
     public java.util.Date getTrainPassInfo_trainStartDate(String orderNo);
     public Object[][] getTrainPassInfo(String orderNo);
     public int getTrainPassInfo_Count(String orderNo);
+    public Orders getOrderByOrderNo(String orderNo);
+    //public void addOrder(String PID,String train_no,)
 }

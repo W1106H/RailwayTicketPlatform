@@ -90,14 +90,6 @@ new FormModel {
 					"text": "订单信息"
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "menu2MouseEntered", true ) )
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "menu2MouseExited", true ) )
-					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "historialsOrders"
-						"text": "所有历史订单"
-						"accelerator": static javax.swing.KeyStroke getKeyStroke( 65, 130, false )
-						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "menuItem3MouseEntered", true ) )
-						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "menuItem3MouseExited", true ) )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "historialsOrdersActionPerformed", true ) )
-					} )
 					add( new FormComponent( "javax.swing.JPopupMenu$Separator" ) {
 						name: "separator1"
 					} )

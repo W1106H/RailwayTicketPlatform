@@ -6,8 +6,12 @@ package cn.lanqiao.ui.OrdersUI;
 
 import java.awt.event.*;
 import javax.swing.event.*;
+
+import cn.lanqiao.entity.Peoples.Orders;
 import cn.lanqiao.service.OrderService;
+import cn.lanqiao.service.TrainInforService;
 import cn.lanqiao.service.impl.OrderServiceImpl;
+import cn.lanqiao.service.impl.TrainInforServiceimpl;
 
 import java.awt.*;
 import javax.swing.*;
@@ -92,7 +96,33 @@ public class Order_UnPayIFrm extends JInternalFrame {
     }
 
     private void deleteOrderActionPerformed(ActionEvent e) {
-        //原车票表加回去
+        OrderService orderService = new OrderServiceImpl();
+        if(table1.getSelectedRowCount()==0){
+            JOptionPane.showMessageDialog(table1,"请选择想要删除的订单");
+            return ;
+        }
+        int confirmDialog = JOptionPane.showConfirmDialog(table1, "是否确认删除？");
+        if(confirmDialog==0) {
+            String orderNo = table1.getValueAt(table1.getSelectedRow(), 0).toString();  //获得订单号
+            String pid = orderService.getOrderByOrderNo(orderNo).getPid();
+            String trainNum = orderService.getOrderByOrderNo(orderNo).getTrain_No();
+            String startStationNum = orderService.getOrderByOrderNo(orderNo).getStation_Start_No();
+            String endStationNum = orderService.getOrderByOrderNo(orderNo).getStation_End_NO();
+            TrainInforService trainInforService = new TrainInforServiceimpl();
+            trainInforService.refundTicket(orderNo, trainNum, startStationNum, endStationNum);
+            int current = Integer.parseInt(currentPage.getText());
+            Object[][] orderNotPay = orderService.getOrderNotPay(pid, current);
+            table1.setModel(new DefaultTableModel(
+                    new Object[][] {},
+                    new String[] {}
+            ));
+            table1.setModel(new DefaultTableModel(
+                    orderNotPay,
+                    table1Title
+            ));
+            JOptionPane.showMessageDialog(table1, "删除成功！");
+        }
+
     }
 
     private void initComponents() {

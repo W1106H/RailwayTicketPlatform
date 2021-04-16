@@ -18,7 +18,7 @@ public class Orders {
     String order_state;
     Date order_Create_Time;
     double sumPrice;
-    boolean Visual;
+    String visual;
     String order_Type;  //订单的类型，学生票？成人票？
     Time train_start_Time;
     Time train_end_Time;
@@ -43,7 +43,7 @@ public class Orders {
         this.passengerName = passengerName;
     }
 
-    public Orders(String order_No, String pid, String train_No, Date train_Start_Date, Date train_End_Date, String station_Start_No, String station_End_NO, String carriage_No, String seat_No, String order_Creator, String order_state, Date order_Create_Time, double sumPrice, boolean visual, String order_Type) {
+    public Orders(String order_No, String pid, String train_No, Date train_Start_Date, Date train_End_Date, String station_Start_No, String station_End_NO, String carriage_No, String seat_No, String order_Creator, String order_state, Date order_Create_Time, double sumPrice, String visual, String order_Type) {
         this.order_No = order_No;
         this.pid = pid;
         this.train_No = train_No;
@@ -57,9 +57,11 @@ public class Orders {
         this.order_state = order_state;
         this.order_Create_Time = order_Create_Time;
         this.sumPrice = sumPrice;
-        Visual = visual;
+        this.visual = visual;
         this.order_Type = order_Type;
     }
+
+
 
     @Override
     public String toString() {
@@ -78,7 +80,7 @@ public class Orders {
                 ", order_state='" + order_state + '\'' +
                 ", order_Create_Time=" + order_Create_Time +
                 ", sumPrice=" + sumPrice +
-                ", Visual=" + Visual +
+                ", Visual=" + visual +
                 ", order_Type='" + order_Type + '\'' +
                 '}';
     }
@@ -195,12 +197,12 @@ public class Orders {
         this.sumPrice = sumPrice;
     }
 
-    public boolean isVisual() {
-        return Visual;
+    public String getVisual() {
+        return visual;
     }
 
-    public void setVisual(boolean visual) {
-        Visual = visual;
+    public void setVisual(String visual) {
+        this.visual = visual;
     }
 
     public String getOrder_Type() {

@@ -79,7 +79,7 @@ public class OrderDaoImpl implements OrderDao {
         String sql = "select * " +
                 "from " +
                 "    (select table1.*,ROWNUM rn " +
-                "    from\n" +
+                "    from " +
                 "        (select o.order_no,o.train_no,tps1.station_name as startStationName,tps2.station_name as arriveStationName,o.train_start_time,o.sumprice,p.pname " +
                 "        from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
                 "        where o.order_creator = '1001' " +
@@ -387,6 +387,45 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public Orders getOrderByOrderNo(String orderNo) {
+        Orders orders = null;
+        Connection connection = JDBCUtil.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            String sql = "select * " +
+                    "from orders o,order_type ot,train_parking_station tps1,train_parking_station tps2,seat s,passengers p " +
+                    "where o.order_no = ? " ;
+            ps = connection.prepareStatement(sql);
+            ps.setString(1,orderNo);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                String order_no = rs.getString("order_no");
+                String PID = rs.getString("PID");
+                String train_no = rs.getString("train_no");
+                Date train_start_Date = rs.getDate("train_start_time");
+                Date train_end_Date = rs.getDate("train_end_time");
+                String start_station = rs.getString("station_start_no");
+                String arrive_station = rs.getString("station_end_no");
+                String carriage_no = rs.getString("carriage_no");
+                String seat_no = rs.getString("seat_no");
+                String order_creator = rs.getString("order_creator");
+                String order_state = rs.getString("order_state");
+                Date order_create_Time = rs.getDate("Order_Create_Time");
+                double sumprice = rs.getDouble("sumprice");
+                String order_type = rs.getString("Order_Type");
+                String visual = rs.getString("Visual");
+                orders = new Orders(order_no,PID,train_no,train_start_Date,train_end_Date,start_station,arrive_station,carriage_no,seat_no,order_creator,order_state,order_create_Time,sumprice,visual,order_type);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtil.close(rs,ps,connection);
+        }
+        return orders;
+    }
+
+    @Override
     public int getHistoricalOrders_Count(String userPID) {
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement ps = null;
@@ -456,21 +495,21 @@ public class OrderDaoImpl implements OrderDao {
                 "from " +
                 "    (select table1.*,ROWNUM rn " +
                 "    from " +
-                "        (select o.order_no,o.train_no,tps1.station_name,tps2.station_name,o.train_start_time,o.sumprice,p.pname " +
+                "        (select o.order_no,o.train_no,tps1.station_name as startStationName,tps2.station_name as arriveStationName,o.train_start_time,o.sumprice,p.pname " +
                 "from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
                 "where o.order_creator = '1001' " +
-                "    and o.PID = p.passengerID " +
-                "    and o.visual = 'T' " +
-                "    and o.train_no = tps1.train_num " +
-                "    and o.train_no = tps2.train_num " +
-                "    and o.station_start_no = tps1.station_order " +
-                "    and o.station_end_no = tps2.station_order " +
-                "    and o.train_start_time > to_char(sysdate) " +
-                "ORDER BY train_start_time DESC) table1) table2 " +
+                "and o.PID = p.passengerid " +
+                "and o.visual = 'T' " +
+                "and o.train_no = tps1.train_num " +
+                "and o.train_no = tps2.train_num " +
+                "and o.station_start_no = tps1.station_order " +
+                "and o.station_end_no = tps2.station_order " +
+                "and o.train_start_time > to_char(sysdate) " +
+                "ORDER BY o.train_start_time DESC) table1) table2 " +
                 "where rn between "+startIndex+" and "+endIndex;
         PreparedStatement pr = null;
         ResultSet rs = null;
-        orderNotTravel= new Object[this.getOrderNotTravel_Count(userPID)][];
+        orderNotTravel = new Object[this.getOrderNotTravel_Count(userPID)][];
         try {
             pr = connection.prepareStatement(sql);
             rs = pr.executeQuery();
@@ -504,17 +543,17 @@ public class OrderDaoImpl implements OrderDao {
         ResultSet rs = null;
         int number = 0;
         try {
-            String sql = "select count(*) " +
+            String sql = "select count(*)" +
                     "from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
                     "where o.order_creator = '1001' " +
-                    "    and o.PID = p.passengerID " +
-                    "    and o.visual = 'T' " +
-                    "    and o.train_no = tps1.train_num " +
-                    "    and o.train_no = tps2.train_num " +
-                    "    and o.station_start_no = tps1.station_order " +
-                    "    and o.station_end_no = tps2.station_order " +
-                    "    and o.train_start_time > to_char(sysdate) " +
-                    "ORDER BY train_start_time DESC" ;
+                    "and o.PID = p.passengerid " +
+                    "and o.visual = 'T' " +
+                    "and o.train_no = tps1.train_num " +
+                    "and o.train_no = tps2.train_num " +
+                    "and o.station_start_no = tps1.station_order " +
+                    "and o.station_end_no = tps2.station_order " +
+                    "and o.train_start_time > to_char(sysdate) " +
+                    "ORDER BY o.train_start_time DESC";
             ps = connection.prepareStatement(sql);
             rs = ps.executeQuery();
             if(rs.next()){

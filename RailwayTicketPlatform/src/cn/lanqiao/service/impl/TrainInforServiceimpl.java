@@ -68,8 +68,8 @@ public class TrainInforServiceimpl implements TrainInforService {
     }
 
     @Override
-    public void refundTicket(String trainNum, String startStationNum, String endStationNum) {
-        trainInforDao.refundTicket(trainNum, startStationNum, endStationNum);
+    public void refundTicket(String orderNo,String trainNum, String startStationNum, String endStationNum) {
+        trainInforDao.refundTicket(orderNo,trainNum, startStationNum, endStationNum);
     }
 
     @Override

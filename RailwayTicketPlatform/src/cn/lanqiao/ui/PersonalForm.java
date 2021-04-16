@@ -76,7 +76,6 @@ public class PersonalForm extends JFrame {
                 Namelabel.setBackground(Color.white);
                 Namelabel.setFont(Namelabel.getFont().deriveFont(Namelabel.getFont().getStyle() | Font.BOLD));
                 Namelabel.setForeground(Color.white);
-                Namelabel.setText(currentUser.getUName().trim());
                 panel1.add(Namelabel);
                 Namelabel.setBounds(145, 10, 110, 25);
             }
@@ -120,7 +119,7 @@ public class PersonalForm extends JFrame {
                 panel3.setLayout(null);
 
                 //---- label3 ----
-                new PersonalFormThread(label3).start();
+                label3.setIcon(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/1.jpeg")));
                 label3.setBackground(Color.white);
                 panel3.add(label3);
                 label3.setBounds(0, 0, 400, 280);
@@ -173,6 +172,5 @@ class PersonalFormThread extends Thread {
                 }
             }
         }
-
     }
 }
