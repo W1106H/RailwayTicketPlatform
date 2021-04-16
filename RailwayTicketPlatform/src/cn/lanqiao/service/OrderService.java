@@ -18,5 +18,6 @@ public interface OrderService {
     public int getOrderNotTravel_Count(String userPID);
     public String getTrainPassInfo_trainStartDate(String userPID);
     public Object[][] getTrainPassInfo(String orderNo);
+    public Object[][] getPersonalTicket(String userPID);
     public Orders getOrderByOrderNo(String orderNo);
 }

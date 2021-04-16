@@ -23,8 +23,9 @@ public class Orders {
     Time train_start_Time;
     Time train_end_Time;
     String passengerName;
+    Time order_createDetailTime;
 
-    public Orders(String order_No, String pid, String train_No, Date train_Start_Date, Date train_End_Date, String station_Start_No, String station_End_NO, String carriage_No, String seat_No, String seat_Type, String order_state, double sumPrice, String order_Type,Time train_start_Time,Time train_end_Time,String passengerName) {
+    public Orders(String order_No, String pid, String train_No, Date train_Start_Date, Date train_End_Date, String station_Start_No, String station_End_NO, String carriage_No, String seat_No, String seat_Type, String order_state, double sumPrice, String order_Type,Time train_start_Time,Time train_end_Time,String passengerName,Date order_Create_Time,Time order_createDetailTime) {
         this.order_No = order_No;
         this.pid = pid;
         this.train_No = train_No;
@@ -41,6 +42,8 @@ public class Orders {
         this.train_start_Time = train_start_Time;
         this.train_end_Time = train_end_Time;
         this.passengerName = passengerName;
+        this.order_Create_Time = order_Create_Time;
+        this.order_createDetailTime = order_createDetailTime;
     }
 
     public Orders(String order_No, String pid, String train_No, Date train_Start_Date, Date train_End_Date, String station_Start_No, String station_End_NO, String carriage_No, String seat_No, String order_Creator, String order_state, Date order_Create_Time, double sumPrice, String visual, String order_Type) {
@@ -223,5 +226,13 @@ public class Orders {
 
     public String getPassengerName() {
         return passengerName;
+    }
+
+    public Time getOrder_createDetailTime() {
+        return order_createDetailTime;
+    }
+
+    public void setOrder_createDetailTime(Time order_createDetailTime) {
+        this.order_createDetailTime = order_createDetailTime;
     }
 }

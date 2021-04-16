@@ -58,7 +58,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label1"
 						"text": "所有订单列表"
-						"font": new java.awt.Font( "仿宋", 1, 24 )
+						"font": &Font0 new java.awt.Font( "仿宋", 1, 24 )
 					}, new FormLayoutConstraints( null ) {
 						"x": 350
 						"y": 10
@@ -77,6 +77,53 @@ new FormModel {
 				}, new FormLayoutConstraints( null ) {
 					"x": 0
 					"y": 0
+					"width": 865
+					"height": 410
+				} )
+				add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
+					name: "desktopPane2"
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label2"
+						"text": "本人车票"
+						"font": #Font0
+					}, new FormLayoutConstraints( null ) {
+						"width": 105
+						"height": 22
+						"x": 375
+						"y": 10
+					} )
+					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+						name: "scrollPane2"
+						add( new FormComponent( "javax.swing.JTable" ) {
+							name: "personalTicketTable"
+						} )
+					}, new FormLayoutConstraints( null ) {
+						"x": 0
+						"y": 40
+						"height": 335
+						"width": 855
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "personalTicketFlush"
+						"text": "刷新"
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "personalTicketFlushMouseClicked", true ) )
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "personalTicketFlushMouseEntered", true ) )
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "personalTicketFlushMouseExited", true ) )
+					}, new FormLayoutConstraints( null ) {
+						"x": 350
+						"y": 380
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "checkDetail"
+						"text": "查看详情"
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "checkDetailMouseClicked", true ) )
+					}, new FormLayoutConstraints( null ) {
+						"x": 450
+						"y": 380
+					} )
+				}, new FormLayoutConstraints( null ) {
+					"location": new java.awt.Point( 45, 520 )
+					"size": new java.awt.Dimension( 855, 430 )
 					"width": 865
 					"height": 410
 				} )
@@ -115,6 +162,7 @@ new FormModel {
 					"text": "本人车票"
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "menu3MouseEntered", true ) )
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "menu3MouseExited", true ) )
+					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "menu3MouseClicked", true ) )
 				} )
 			}
 		}, new FormLayoutConstraints( null ) {

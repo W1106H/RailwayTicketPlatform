@@ -4,6 +4,7 @@
 
 package cn.lanqiao.ui.OrdersUI;
 
+import cn.lanqiao.entity.Peoples.Orders;
 import cn.lanqiao.service.OrderService;
 import cn.lanqiao.service.impl.OrderServiceImpl;
 
@@ -29,6 +30,7 @@ public class OrderInformationFrm extends JFrame {
     }
 
     private void init(){
+        desktopPane2.setVisible(true);
         historicalOrdersTable.setModel(new DefaultTableModel(
                 new Object[][] {},
                 new String[] {}
@@ -107,6 +109,7 @@ public class OrderInformationFrm extends JFrame {
 
     private void menuItem5ActionPerformed(ActionEvent e) {
         desktopPane1.setVisible(false);
+        desktopPane2.setVisible(false);
         // TODO add your code here
 //        已经打开过的“已支付订单”不可以再次打开
         JInternalFrame[] childFrame = frmContainer.getAllFrames();
@@ -128,6 +131,7 @@ public class OrderInformationFrm extends JFrame {
 
     private void menuItem4ActionPerformed(ActionEvent e) {
         desktopPane1.setVisible(false);
+        desktopPane2.setVisible(false);
         // TODO add your code here
 //        已经打开过的“未支付订单”不可以再次打开
         JInternalFrame[] childFrame = frmContainer.getAllFrames();
@@ -194,6 +198,64 @@ public class OrderInformationFrm extends JFrame {
         ));
     }
 
+    private void menu3MouseClicked(MouseEvent e) {
+        // TODO add your code here
+        desktopPane1.setVisible(false);
+        desktopPane2.setVisible(true);
+        OrderService orderService = new OrderServiceImpl();
+        Object[][] personalTicket = orderService.getPersonalTicket("450000200010090022");
+        if(personalTicket == null){
+            JOptionPane.showMessageDialog(desktopPane2,"暂无本人车票信息");
+        }else{
+            personalTicketTable.setModel(new DefaultTableModel(
+                    personalTicket,
+                    table1Title
+            ));
+        }
+    }
+
+    private void personalTicketFlushMouseClicked(MouseEvent e) {
+        // TODO add your code here
+        OrderService orderService = new OrderServiceImpl();
+        Object[][] personalTicket = orderService.getPersonalTicket("450000200010090022");
+        if(personalTicket == null){
+            JOptionPane.showMessageDialog(desktopPane2,"暂无本人车票信息");
+        }else{
+            personalTicketTable.setModel(new DefaultTableModel(
+                    personalTicket,
+                    table1Title
+            ));
+        }
+    }
+
+    private void personalTicketFlushMouseEntered(MouseEvent e) {
+        // TODO add your code here
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
+
+    private void personalTicketFlushMouseExited(MouseEvent e) {
+        // TODO add your code here
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    }
+
+    private void checkDetailMouseClicked(MouseEvent e) {
+        // TODO add your code here
+        OrderService orderService = new OrderServiceImpl();
+        if(personalTicketTable.getSelectedRowCount()==0){
+            JOptionPane.showMessageDialog(personalTicketTable,"请选择需要查看的行");
+            return ;
+        }
+        String orderNo = personalTicketTable.getValueAt(personalTicketTable.getSelectedRow(), 0).toString();  //获得订单号
+        Orders detailOrder = orderService.getDetailOrder(orderNo);
+        if(detailOrder != null){
+            Order_Detail order_detail = new Order_Detail(detailOrder);
+            order_detail.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(personalTicketTable,"服务器开小差了~稍后再试试");
+        }
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -212,6 +274,12 @@ public class OrderInformationFrm extends JFrame {
         currentPage = new JLabel();
         label1 = new JLabel();
         pageCount = new JLabel();
+        desktopPane2 = new JDesktopPane();
+        label2 = new JLabel();
+        scrollPane2 = new JScrollPane();
+        personalTicketTable = new JTable();
+        personalTicketFlush = new JButton();
+        checkDetail = new JButton();
 
         //======== this ========
         setTitle("\u8ba2\u5355\u4fe1\u606f\u67e5\u8be2");
@@ -274,6 +342,10 @@ public class OrderInformationFrm extends JFrame {
             {
                 menu3.setText("\u672c\u4eba\u8f66\u7968");
                 menu3.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        menu3MouseClicked(e);
+                    }
                     @Override
                     public void mouseEntered(MouseEvent e) {
                         menu3MouseEntered(e);
@@ -339,6 +411,55 @@ public class OrderInformationFrm extends JFrame {
             }
             frmContainer.add(desktopPane1, JLayeredPane.DEFAULT_LAYER);
             desktopPane1.setBounds(0, 0, 865, 410);
+
+            //======== desktopPane2 ========
+            {
+
+                //---- label2 ----
+                label2.setText("\u672c\u4eba\u8f66\u7968");
+                label2.setFont(new Font("\u4eff\u5b8b", Font.BOLD, 24));
+                desktopPane2.add(label2, JLayeredPane.DEFAULT_LAYER);
+                label2.setBounds(375, 10, 105, 22);
+
+                //======== scrollPane2 ========
+                {
+                    scrollPane2.setViewportView(personalTicketTable);
+                }
+                desktopPane2.add(scrollPane2, JLayeredPane.DEFAULT_LAYER);
+                scrollPane2.setBounds(0, 40, 855, 335);
+
+                //---- personalTicketFlush ----
+                personalTicketFlush.setText("\u5237\u65b0");
+                personalTicketFlush.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        personalTicketFlushMouseClicked(e);
+                    }
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        personalTicketFlushMouseEntered(e);
+                    }
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        personalTicketFlushMouseExited(e);
+                    }
+                });
+                desktopPane2.add(personalTicketFlush, JLayeredPane.DEFAULT_LAYER);
+                personalTicketFlush.setBounds(new Rectangle(new Point(350, 380), personalTicketFlush.getPreferredSize()));
+
+                //---- checkDetail ----
+                checkDetail.setText("\u67e5\u770b\u8be6\u60c5");
+                checkDetail.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        checkDetailMouseClicked(e);
+                    }
+                });
+                desktopPane2.add(checkDetail, JLayeredPane.DEFAULT_LAYER);
+                checkDetail.setBounds(new Rectangle(new Point(450, 380), checkDetail.getPreferredSize()));
+            }
+            frmContainer.add(desktopPane2, JLayeredPane.DEFAULT_LAYER);
+            desktopPane2.setBounds(0, 0, 865, 410);
         }
         contentPane.add(frmContainer, BorderLayout.CENTER);
         setSize(860, 480);
@@ -361,6 +482,12 @@ public class OrderInformationFrm extends JFrame {
     private JLabel currentPage;
     private JLabel label1;
     private JLabel pageCount;
+    private JDesktopPane desktopPane2;
+    private JLabel label2;
+    private JScrollPane scrollPane2;
+    private JTable personalTicketTable;
+    private JButton personalTicketFlush;
+    private JButton checkDetail;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     public static void main(String[] args) {

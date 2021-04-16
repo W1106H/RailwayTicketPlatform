@@ -227,7 +227,7 @@ public class OrderDaoImpl implements OrderDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            String sql = "select o.order_no,o.PID,o.train_no,o.train_start_time,o.train_end_time,tps1.station_name as start_station,tps2.station_name as arrive_station,o.carriage_no,o.seat_no,s.seat_type,ot.type,o.order_state,o.sumprice,p.pname " +
+            String sql = "select o.order_no,o.PID,o.train_no,o.train_start_time,o.train_end_time,tps1.station_name as start_station,tps2.station_name as arrive_station,o.carriage_no,o.seat_no,s.seat_type,ot.type,o.order_state,o.sumprice,p.pname,o.order_create_time " +
                     "from orders o,order_type ot,train_parking_station tps1,train_parking_station tps2,seat s,passengers p " +
                     "where o.order_no = " + orderNo + " " +
                     "    and o.train_no = tps1.train_num " +
@@ -259,7 +259,9 @@ public class OrderDaoImpl implements OrderDao {
                 java.sql.Time train_start_time = rs.getTime("train_start_time");
                 java.sql.Time train_end_time = rs.getTime("train_end_time");
                 String passengerName = rs.getString("pname");
-                orders = new Orders(order_no,PID,train_no,train_start_Date,train_end_Date,start_station,arrive_station,carriage_no,seat_no,seat_type,order_state,sumprice,order_type,train_start_time,train_end_time,passengerName);
+                Date order_create_time = rs.getDate("order_create_time");
+                java.sql.Time order_createDetailTime = rs.getTime("order_create_time");
+                orders = new Orders(order_no,PID,train_no,train_start_Date,train_end_Date,start_station,arrive_station,carriage_no,seat_no,seat_type,order_state,sumprice,order_type,train_start_time,train_end_time,passengerName,order_create_time,order_createDetailTime);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -300,6 +302,7 @@ public class OrderDaoImpl implements OrderDao {
                     int timeSub = StringForData.getTimeSub(arrive_Time, start_Time);
                     trainPassInfo[i] = new Object[]{station_name, arriveTime, startTime, timeSub + "分钟"};
                 }
+                i++;
             }
         } catch (SQLException e){
             e.printStackTrace();
@@ -369,7 +372,7 @@ public class OrderDaoImpl implements OrderDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try{
-            String sql = "select tps.* " +
+            String sql = "select count(*) " +
                     "from orders o,train_parking_station tps " +
                     "where o.order_no = '" + orderNo + "' " +
                     "    and o.train_no = tps.train_num ";
@@ -555,6 +558,76 @@ public class OrderDaoImpl implements OrderDao {
                     "and o.train_start_time > to_char(sysdate) " +
                     "ORDER BY o.train_start_time DESC";
             ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                number = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtil.close(rs,ps,connection);
+        }
+        return number;
+    }
+
+    @Override
+    public Object[][] getPersonalTicket(String userPID) {
+        Object[][] personalTicketArray = null;
+        Connection con = JDBCUtil.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        personalTicketArray = new Object[this.getPersonalTicket_Count(userPID)][];
+        try {
+            String sql = "select o.order_no,o.train_no,tps1.station_name as startStation,tps2.station_name as arriveStation,o.train_start_time,o.sumprice,p.pname " +
+                    "from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
+                    "where o.PID = ? " +
+                    "    and o.PID = p.passengerID " +
+                    "    and o.train_no = tps1.train_num " +
+                    "    and o.train_no = tps2.train_num " +
+                    "    and o.station_start_no = tps1.station_order " +
+                    "    and o.station_end_no = tps2.station_order " +
+                    "    and o.order_state = 'T' " +
+                    "order by o.train_start_time DESC ";
+            ps = con.prepareStatement(sql);
+            ps.setString(1,userPID);
+            rs = ps.executeQuery();
+            int i = 0;
+            while (rs.next()){
+                String orderNo = rs.getString("order_no");
+                String trainNo = rs.getString("train_no");
+                String startStation = rs.getString("startStation");
+                String arriveStation = rs.getString("arriveStation");
+                String trainStartTime = rs.getString("train_start_time");
+                String sumPrice = rs.getString("sumprice");
+                String personalName = rs.getString("pname");
+                personalTicketArray[i] = new Object[]{orderNo,trainNo,startStation,arriveStation,trainStartTime,sumPrice,personalName};
+                i++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return personalTicketArray;
+    }
+
+    @Override
+    public int getPersonalTicket_Count(String userPID) {
+        Connection connection = JDBCUtil.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int number = 0;
+        try {
+            String sql = "select count(*) " +
+                    "from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
+                    "where o.pid = ? " +
+                    "    and o.PID = p.passengerID " +
+                    "    and o.train_no = tps1.train_num " +
+                    "    and o.train_no = tps2.train_num " +
+                    "    and o.station_start_no = tps1.station_order " +
+                    "    and o.station_end_no = tps2.station_order " +
+                    "    and o.order_state = 'T' " +
+                    "order by o.train_start_time DESC ";
+            ps = connection.prepareStatement(sql);
+            ps.setString(1,userPID);
             rs = ps.executeQuery();
             if(rs.next()){
                 number = rs.getInt(1);

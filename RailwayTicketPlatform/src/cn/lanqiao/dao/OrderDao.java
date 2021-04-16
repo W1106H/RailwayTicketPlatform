@@ -21,4 +21,6 @@ public interface OrderDao {
     public int getTrainPassInfo_Count(String orderNo);
     public Orders getOrderByOrderNo(String orderNo);
     //public void addOrder(String PID,String train_no,)
+    public Object[][] getPersonalTicket(String userPID);
+    public int getPersonalTicket_Count(String userPID);
 }

@@ -223,6 +223,34 @@ new FormModel {
 					"width": 230
 					"height": 25
 				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label6"
+					"text": "订单创建时间："
+					"font": new java.awt.Font( "方正粗黑宋简体", 0, 12 )
+				}, new FormLayoutConstraints( null ) {
+					"width": 85
+					"height": 25
+					"x": 0
+					"y": 270
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "orderCreateDate"
+					"text": "2021-04-16"
+				}, new FormLayoutConstraints( null ) {
+					"width": 70
+					"height": 25
+					"x": 80
+					"y": 270
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "orderCreateTime"
+					"text": "19:48"
+				}, new FormLayoutConstraints( null ) {
+					"width": 85
+					"height": 25
+					"x": 150
+					"y": 270
+				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 0
 				"y": 0

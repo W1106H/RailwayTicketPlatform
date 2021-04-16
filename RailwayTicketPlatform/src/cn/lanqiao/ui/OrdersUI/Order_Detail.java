@@ -36,6 +36,7 @@ public class Order_Detail extends JDialog {
         java.sql.Time time = null;
         SimpleDateFormat sdf1 = new SimpleDateFormat("MM月dd日");
         SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
 
         String order_no = orders.getOrder_No();
         this.orderNo.setText(order_no);
@@ -93,6 +94,13 @@ public class Order_Detail extends JDialog {
             this.orderState.setText("未支付");
         }
 
+        Date order_create_Date = orders.getOrder_Create_Time();
+        String order_create_dateStr = sdf3.format(order_create_Date);
+        this.orderCreateDate.setText(order_create_dateStr);
+
+        Time order_create_Time = orders.getOrder_createDetailTime();
+        String order_create_timeStr = sdf2.format(order_create_Time);
+        this.orderCreateTime.setText(order_create_timeStr);
 
     }
 
@@ -141,6 +149,9 @@ public class Order_Detail extends JDialog {
         seatType = new JLabel();
         label5 = new JLabel();
         orderNo = new JLabel();
+        label6 = new JLabel();
+        orderCreateDate = new JLabel();
+        orderCreateTime = new JLabel();
 
         //======== this ========
         setTitle("\u8f66\u7968\u8be6\u60c5");
@@ -289,6 +300,22 @@ public class Order_Detail extends JDialog {
             orderNo.setText("5");
             desktopPane1.add(orderNo, JLayeredPane.DEFAULT_LAYER);
             orderNo.setBounds(30, 5, 230, 25);
+
+            //---- label6 ----
+            label6.setText("\u8ba2\u5355\u521b\u5efa\u65f6\u95f4\uff1a");
+            label6.setFont(new Font("\u65b9\u6b63\u7c97\u9ed1\u5b8b\u7b80\u4f53", Font.PLAIN, 12));
+            desktopPane1.add(label6, JLayeredPane.DEFAULT_LAYER);
+            label6.setBounds(0, 270, 85, 25);
+
+            //---- orderCreateDate ----
+            orderCreateDate.setText("2021-04-16");
+            desktopPane1.add(orderCreateDate, JLayeredPane.DEFAULT_LAYER);
+            orderCreateDate.setBounds(80, 270, 70, 25);
+
+            //---- orderCreateTime ----
+            orderCreateTime.setText("19:48");
+            desktopPane1.add(orderCreateTime, JLayeredPane.DEFAULT_LAYER);
+            orderCreateTime.setBounds(150, 270, 85, 25);
         }
         contentPane.add(desktopPane1);
         desktopPane1.setBounds(0, 0, 470, 320);
@@ -336,5 +363,8 @@ public class Order_Detail extends JDialog {
     private JLabel seatType;
     private JLabel label5;
     private JLabel orderNo;
+    private JLabel label6;
+    private JLabel orderCreateDate;
+    private JLabel orderCreateTime;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

@@ -94,8 +94,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int getOrderNotTravel_Count(String userPID)
-    {
+    public int getOrderNotTravel_Count(String userPID) {
         return orderDao.getOrderNotTravel_Count(userPID);
+    }
+
+    @Override
+    public Object[][] getPersonalTicket(String userPID) {
+        return orderDao.getPersonalTicket(userPID);
     }
 }
