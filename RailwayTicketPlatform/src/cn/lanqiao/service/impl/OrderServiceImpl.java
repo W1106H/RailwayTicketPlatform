@@ -56,6 +56,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Boolean updateOrderState(String orderNO) {
+         return orderDao.updateOrderState(orderNO);
+    }
+
+    @Override
     public String getTrainPassInfo_trainStartDate(String orderNo) {
         Date tsd = orderDao.getTrainPassInfo_trainStartDate(orderNo);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

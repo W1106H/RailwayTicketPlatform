@@ -127,6 +127,34 @@ public class Order_UnPayIFrm extends JInternalFrame {
 
     }
 
+    private void goToPayMouseClicked(MouseEvent e) {
+        OrderService orderService = new OrderServiceImpl();
+        if(table1.getSelectedRowCount()==0){
+            JOptionPane.showMessageDialog(table1,"请选择想要支付的订单");
+            return ;
+        }
+        int confirmDialog = JOptionPane.showConfirmDialog(table1, "是否确认支付？");
+        if(confirmDialog==0){
+            String orderNo = table1.getValueAt(table1.getSelectedRow(), 0).toString();  //获得订单号
+            String pid = orderService.getOrderByOrderNo(orderNo).getPid();
+            Boolean aBoolean = orderService.updateOrderState(orderNo);
+            if(aBoolean)
+                JOptionPane.showMessageDialog(table1, "订单支付成功！");
+            else
+                JOptionPane.showMessageDialog(table1, "订单支付失败！");
+            int current = Integer.parseInt(currentPage.getText());
+            Object[][] orderNotPay = orderService.getOrderNotPay(pid, current);
+            table1.setModel(new DefaultTableModel(
+                    new Object[][] {},
+                    new String[] {}
+            ));
+            table1.setModel(new DefaultTableModel(
+                    orderNotPay,
+                    table1Title
+            ));
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         scrollPane1 = new JScrollPane();
@@ -160,7 +188,7 @@ public class Order_UnPayIFrm extends JInternalFrame {
             scrollPane1.setViewportView(table1);
         }
         contentPane.add(scrollPane1);
-        scrollPane1.setBounds(0, 10, 865, 335);
+        scrollPane1.setBounds(0, 10, 750, 295);
 
         //---- refresh ----
         refresh.setText("\u5237\u65b0");
@@ -170,6 +198,12 @@ public class Order_UnPayIFrm extends JInternalFrame {
 
         //---- goToPay ----
         goToPay.setText("\u53bb\u652f\u4ed8");
+        goToPay.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                goToPayMouseClicked(e);
+            }
+        });
         contentPane.add(goToPay);
         goToPay.setBounds(115, 330, 90, 30);
 

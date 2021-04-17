@@ -102,6 +102,8 @@ public class LoginForm extends JFrame {
                 }
             }
            new MainFrm(currentUser).setVisible(true);//主窗体
+
+
             //登录窗体需要隐藏;
             this.setVisible(false);
         } else{

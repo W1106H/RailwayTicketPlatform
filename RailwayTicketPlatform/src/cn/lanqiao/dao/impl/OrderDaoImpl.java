@@ -5,6 +5,7 @@ import cn.lanqiao.entity.Peoples.Orders;
 import cn.lanqiao.util.JDBCUtil;
 import cn.lanqiao.util.StringForData;
 
+import javax.swing.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
@@ -693,6 +694,29 @@ public class OrderDaoImpl implements OrderDao {
             }
         }
         return flag;
+    }
+
+    @Override
+    public Boolean updateOrderState(String orderNO) {
+        Connection connection = JDBCUtil.getConnection();
+        String sql = "update orders set order_state = 'T' where order_no = ?";
+        PreparedStatement preparedStatement = null;
+        int issuccess=0;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,orderNO);
+            issuccess= preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtil.close(null, preparedStatement, connection);
+        }
+        if(issuccess>0){
+            return true;// "修改支付状态成功！"
+        }else{
+            return false;//"修改支付状态失败！"
+        }
+
     }
 
     public void setOrderAlreadyPayFlag(boolean orderAlreadyPayFlag) {
