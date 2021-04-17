@@ -56,7 +56,7 @@ public class AllPassenger extends JDialog {
         java.util.Date startData=null;
         java.util.Date endData=null;
         int selectedRow = table1.getSelectedRow();
-        if (selectedRow > 0) {
+        if (table1.getSelectedRow()>=0) {
             String passengerId = table1.getValueAt(selectedRow, 1).toString();
             String trainNum = order[0][0].toString();
             String startTime = year_month_day + " " + order[0][1].toString();
