@@ -165,13 +165,16 @@ public class TrainInforDaoimpl implements TrainInforDao {
     @Override
     //列车信息表
     public Object[][] getAllTrainInfo() {
+        String sql = "SELECT t1.NUM_OF_CARRIAGE,t1.train_num,t1.train_type,t1.train_start_station,t1.train_end_station,t1.train_start_time,t1.train_end_time,t1.train_price,t2.remaining_tickets,\n" +
+                "to_char(t1.TRAIN_START_TIME,'hh24:mi') as startTime ,to_char(t1.train_end_time,'hh24:mi') as endTime FROM train_info t1,train_parking_station t2\n" +
+                "where t1.train_num=t2.train_num and t1.train_end_station=t2.station_name";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Object[][] trains = new Object[this.Traincount()][];
         try {
             connection = JDBCUtil.getConnection();
-            preparedStatement = connection.prepareStatement("SELECT NUM_OF_CARRIAGE,train_num,train_type,train_start_station,train_end_station,train_start_time,train_end_time,to_char(TRAIN_START_TIME,'hh24:mi') as startTime ,to_char(train_end_time,'hh24:mi') as endTime FROM train_info");
+            preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             int i = 0;
             while (resultSet.next()) {
@@ -182,6 +185,8 @@ public class TrainInforDaoimpl implements TrainInforDao {
                 String trainStartStation = resultSet.getString("TRAIN_START_STATION");
                 String trainEndStation = resultSet.getString("TRAIN_END_STATION");
                 int carriageNum = resultSet.getInt("NUM_OF_CARRIAGE");
+                int price = resultSet.getInt("train_price");
+                int tickets = resultSet.getInt("remaining_tickets");
                 //计算运行时间
                 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
                 java.util.Date date2 = sdf.parse(trainEndTime);
@@ -203,7 +208,7 @@ public class TrainInforDaoimpl implements TrainInforDao {
                     time.append(mins);
                 }
                 String runTime = time.toString();
-                trains[i] = new Object[]{trainNum, trainType, trainStartTime, trainEndTime, trainStartStation, trainEndStation, runTime, carriageNum};
+                trains[i] = new Object[]{trainNum, trainType, trainStartTime, trainEndTime, trainStartStation, trainEndStation, runTime, carriageNum,price,tickets};
                 i++;
             }
         } catch (SQLException e) {
@@ -432,17 +437,19 @@ public class TrainInforDaoimpl implements TrainInforDao {
                 "s.station_order sStationOrder,e.station_order  eStationOrder,tf.train_type,\n" +
                 "to_char(s.start_time,'HH24:mi') as startTime, to_char(e.arrive_time,'HH24:mi') as arriveTime from \n" +
                 "train_parking_station s,train_parking_station e,train_info tf\n" +
-                "where s.train_num=e.train_num and e.station_order>s.station_order and s.station_name=? and e.station_name=? and tf.train_num=s.train_num\n" +
+                "where s.train_num=e.train_num and e.station_order>s.station_order and s.station_name like ? and e.station_name like ? and tf.train_num=s.train_num\n" +
                 "and tf.train_type=?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        String name1 = startStation + "_";
+        String name2 = endStation + "_";
         Object[][] trains = new Object[this.TraincountByStationNameAndtrainType(startStation, endStation,trainType)][];
         try {
             connection = JDBCUtil.getConnection();
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, startStation);
-            preparedStatement.setString(2, endStation);
+            preparedStatement.setString(1, name1);
+            preparedStatement.setString(2, name2);
             preparedStatement.setString(3,trainType);
             resultSet = preparedStatement.executeQuery();
             int i = 0;
@@ -523,16 +530,18 @@ public class TrainInforDaoimpl implements TrainInforDao {
                 "s.station_order sStationOrder,e.station_order  eStationOrder,tf.train_type,\n" +
                 "to_char(s.start_time,'HH24:mi') as startTime, to_char(e.arrive_time,'HH24:mi') as arriveTime from \n" +
                 "train_parking_station s,train_parking_station e,train_info tf\n" +
-                "where s.train_num=e.train_num and e.station_order>s.station_order and s.station_name=?  and e.station_name=?  and tf.train_num=s.train_num\n" +
+                "where s.train_num=e.train_num and e.station_order>s.station_order and s.station_name like ?  and e.station_name like ?  and tf.train_num=s.train_num\n" +
                 "and tf.train_type=?) ";
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int num = 0;
+        String name1 = startStation + "_";
+        String name2 = endStationg + "_";
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, startStation);
-            preparedStatement.setString(2, endStationg);
+            preparedStatement.setString(1, name1);
+            preparedStatement.setString(2, name2);
             preparedStatement.setString(3,trainType);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -661,6 +670,52 @@ public class TrainInforDaoimpl implements TrainInforDao {
         finally {
             JDBCUtil.close(null, preparedStatement, connection);
         }
+    }
+
+    @Override
+    public String getStationOrder(String trainNum, String stationName) {
+        String sql = "select * from TRAIN_PARKING_STATION where TRAIN_NUM=? and station_name=?";
+        Connection connection = JDBCUtil.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String stationOrder = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, trainNum);
+            preparedStatement.setString(2, stationName);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) { stationOrder = resultSet.getString("STATION_ORDER");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            JDBCUtil.close(resultSet, preparedStatement, connection);
+        }
+        return stationOrder;
+    }
+
+    @Override
+    public int getOneTrainPrice(int startStationOrder, int endStationOrder) {
+        Connection connection = JDBCUtil.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String sql="select sum(price) as price from train_parking_station where (station_order > ? and station_order<= ?) ";
+        int price = 0;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,String.valueOf(startStationOrder));
+            preparedStatement.setString(2,String.valueOf(endStationOrder));
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                price = resultSet.getInt("price");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            JDBCUtil.close(resultSet,preparedStatement,connection);
+        }
+        return price;
+
     }
 
     //得到列车车厢数

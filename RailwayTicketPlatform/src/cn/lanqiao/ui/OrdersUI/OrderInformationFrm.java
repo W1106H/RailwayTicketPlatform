@@ -5,6 +5,7 @@
 package cn.lanqiao.ui.OrdersUI;
 
 import cn.lanqiao.entity.Peoples.Orders;
+import cn.lanqiao.entity.Peoples.User;
 import cn.lanqiao.service.OrderService;
 import cn.lanqiao.service.impl.OrderServiceImpl;
 
@@ -18,9 +19,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class OrderInformationFrm extends JFrame {
     static private JDesktopPane desktopPane1;
+    public User currentUser = null;
     private String[] table1Title = {"订单编号","列车号","起始站","到达站","出发时间","票价","乘客姓名"};
-    public OrderInformationFrm() {
+    public OrderInformationFrm(User user) {
         initComponents();
+        this.currentUser = user;
         init();
     }
 
@@ -496,8 +499,8 @@ public class OrderInformationFrm extends JFrame {
     private JButton checkDetail;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
-    public static void main(String[] args) {
+  /*  public static void main(String[] args) {
         OrderInformationFrm orderInformationFrm = new OrderInformationFrm();
         orderInformationFrm.setVisible(true);
-    }
+    }*/
 }

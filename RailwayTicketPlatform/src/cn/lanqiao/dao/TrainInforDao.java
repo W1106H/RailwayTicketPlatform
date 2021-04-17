@@ -21,5 +21,7 @@ public interface TrainInforDao {
     public void updataTicket(String trainNum, String startStationNum, String endStationNum);
     public Object[][] getTransferInfor(String startStation, String endStation,boolean decSortYesOrNo);
     public int getTransferTotalPrice(int startStationOrder1, int endStationOrder1,int startStationOrder2,int endStationOrder2);
+    public String getStationOrder(String trainNum, String stationName);
+    public int getOneTrainPrice(int startStationOrder, int endStationOrder);
 }
 

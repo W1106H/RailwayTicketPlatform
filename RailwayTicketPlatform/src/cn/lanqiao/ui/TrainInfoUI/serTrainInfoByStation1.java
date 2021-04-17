@@ -5,6 +5,10 @@
 package cn.lanqiao.ui.TrainInfoUI;
 
 import java.awt.event.*;
+
+import cn.lanqiao.dao.TrainInforDao;
+import cn.lanqiao.dao.impl.TrainInforDaoimpl;
+import cn.lanqiao.entity.Peoples.User;
 import cn.lanqiao.service.TrainInforService;
 import cn.lanqiao.service.impl.TrainInforServiceimpl;
 
@@ -21,15 +25,15 @@ public class serTrainInfoByStation1 extends JFrame {
     private String startStation;
     private String endStation ;
     private String trainType;
-    private String Creator;
     private String year_month_day;
     private int ticketType;
+    private User currentUser;
     private TrainInforService trainInforService = new TrainInforServiceimpl();
-    public serTrainInfoByStation1(String startStation, String endStation,String trainType,String Creator,String year_month_day,int ticketType) {
+    public serTrainInfoByStation1(String startStation, String endStation,String trainType,String year_month_day,int ticketType,User currentUser) {
         this.startStation=startStation;
+        this.currentUser=currentUser;
         this.endStation = endStation;
         this.trainType=trainType;
-        this.Creator = Creator;
         this.year_month_day=year_month_day;
         this.ticketType = ticketType;
         initComponents();
@@ -62,18 +66,22 @@ public class serTrainInfoByStation1 extends JFrame {
         String trainNum=table1.getValueAt(selectedRow,0).toString();
         String startStation=table1.getValueAt(selectedRow,4).toString();
         String endStation=table1.getValueAt(selectedRow,5).toString();
-        GetDetailTrainParkingFrm getDetailTrainParkingFrm = new GetDetailTrainParkingFrm(trainNum, startStation, endStation,year_month_day,ticketType);
+        GetDetailTrainParkingFrm getDetailTrainParkingFrm = new GetDetailTrainParkingFrm(trainNum, startStation, endStation,year_month_day,ticketType,currentUser);
         getDetailTrainParkingFrm.setVisible(true);
     }
         //定票
     private void btnOrderActionPerformed(ActionEvent e) {
         // TODO add your code here
+        TrainInforDao trainInforDao = new TrainInforDaoimpl();
         int selectedRow = table1.getSelectedRow();
         String trainNum = table1.getValueAt(selectedRow, 0).toString();
         String startStation = table1.getValueAt(selectedRow, 4).toString();
         String endStation = table1.getValueAt(selectedRow, 5).toString();
-        Object[][] order = trainInforService.UserBuyBuyTickets(Creator, trainNum, startStation, endStation);
-        CreateOrder createOrder = new CreateOrder(order, year_month_day,ticketType);
+        Object[][] order = trainInforService.UserBuyBuyTickets(currentUser.getPId(), trainNum, startStation, endStation);
+        int startOrder = Integer.valueOf(trainInforDao.getStationOrder(trainNum, startStation));
+        int  endOrder = Integer.valueOf(trainInforDao.getStationOrder(trainNum, endStation));
+        int price=trainInforDao.getOneTrainPrice(startOrder,endOrder);
+        CreateOrder createOrder = new CreateOrder(order, year_month_day,ticketType,price);
         createOrder.setVisible(true);
     }
 
@@ -83,7 +91,7 @@ public class serTrainInfoByStation1 extends JFrame {
         int selectedRow = table1.getSelectedRow();
         String startStation=table1.getValueAt(selectedRow,4).toString();
         String endStation=table1.getValueAt(selectedRow,5).toString();
-        TraintransferFrm1 traintransferFrm1 = new TraintransferFrm1(startStation, endStation,year_month_day,ticketType);
+        TraintransferFrm1 traintransferFrm1 = new TraintransferFrm1(startStation, endStation,year_month_day,ticketType,currentUser);
         traintransferFrm1.setVisible(true);
 
     }
@@ -135,7 +143,7 @@ public class serTrainInfoByStation1 extends JFrame {
         btndatail.setText("\u67e5\u8be2\u8be6\u60c5");
         btndatail.addActionListener(e -> btndatailActionPerformed(e));
         contentPane.add(btndatail);
-        btndatail.setBounds(new Rectangle(new Point(655, 200), btndatail.getPreferredSize()));
+        btndatail.setBounds(new Rectangle(new Point(660, 200), btndatail.getPreferredSize()));
 
         //---- btnOrder ----
         btnOrder.setText("\u8ba2\u7968");

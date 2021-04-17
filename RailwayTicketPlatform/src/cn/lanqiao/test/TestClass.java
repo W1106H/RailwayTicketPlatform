@@ -194,7 +194,7 @@ public class TestClass {
             boolean isdelete = file.delete();
             System.out.println(isdelete);
         } else if (file1.exists()) {
-            boolean isdelete = file.delete();
+            boolean isdelete = file1.delete();
             System.out.println(isdelete);
         }
     }
@@ -236,6 +236,12 @@ public class TestClass {
             }
             System.out.println();
         }
+    }
+
+    @Test
+    public void testgetStationOrder() {
+        TrainInforDao trainInforDao = new TrainInforDaoimpl();
+        System.out.println(trainInforDao.getStationOrder("D8481", "贵港站"));
     }
 }
 

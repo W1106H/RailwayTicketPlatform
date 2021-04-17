@@ -5,6 +5,7 @@
 package cn.lanqiao.ui;
 
 import cn.lanqiao.entity.Peoples.User;
+import cn.lanqiao.ui.OrdersUI.OrderInformationFrm;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -36,6 +37,7 @@ public class PersonalForm extends JFrame {
             return;
         }
         //new 订单窗口
+        new OrderInformationFrm(currentUser).setVisible(true);
     }
 
     private void settingButtonActionPerformed(ActionEvent e) {

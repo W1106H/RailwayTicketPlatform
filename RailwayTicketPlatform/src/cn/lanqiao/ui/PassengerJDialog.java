@@ -14,6 +14,7 @@ import cn.lanqiao.service.impl.UserServiceImpl;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.*;
+import javax.swing.undo.CannotUndoException;
 
 /**
  * @author Brainrain
@@ -25,8 +26,21 @@ public class PassengerJDialog extends JDialog {
     public PassengerJDialog(User user) {
         this.currentUser = user;
         initComponents();
+        init();
     }
 
+    private void init() {
+        {
+
+            //---- table1 ----
+            table1.setModel(new DefaultTableModel(
+                    passengerService.getAllPassenger(currentUser),
+                    header
+            ));
+            table1.setAutoCreateRowSorter(true);
+            scrollPane1.setViewportView(table1);
+        }
+    }
     private void deleteButtonActionPerformed(ActionEvent e) {
         if (currentUser == null) {
             return;
@@ -81,7 +95,7 @@ public class PassengerJDialog extends JDialog {
         //======== this ========
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
-        setTitle("\u4e58\u8f66\u4ebaxinxi");
+        setTitle("\u4e58\u8f66\u4eba\u4fe1\u606f");
         setBackground(Color.white);
         var contentPane = getContentPane();
         contentPane.setLayout(null);

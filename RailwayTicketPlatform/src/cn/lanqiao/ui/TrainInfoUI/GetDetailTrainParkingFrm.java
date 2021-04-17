@@ -5,6 +5,10 @@
 package cn.lanqiao.ui.TrainInfoUI;
 
 import java.awt.event.*;
+
+import cn.lanqiao.dao.TrainInforDao;
+import cn.lanqiao.dao.impl.TrainInforDaoimpl;
+import cn.lanqiao.entity.Peoples.User;
 import cn.lanqiao.service.TrainInforService;
 import cn.lanqiao.service.impl.TrainInforServiceimpl;
 
@@ -23,14 +27,16 @@ public class GetDetailTrainParkingFrm extends JFrame {
     private String endStation;
     private String year_month_day;
     private int ticketType;
+    private User currentUser;
     private Object[][] detailTrainParking;
 
     public Object[][] getDetailTrainParking() {
         return detailTrainParking;
     }
 
-    public GetDetailTrainParkingFrm(String trainNum, String startStation, String endStation, String year_month_day, int ticketType) {
+    public GetDetailTrainParkingFrm(String trainNum, String startStation, String endStation, String year_month_day, int ticketType,User currentUser) {
         initComponents();
+        this.currentUser=currentUser;
         this.trainNum=trainNum;
         this.startStation=startStation;
         this.endStation = endStation;
@@ -61,29 +67,39 @@ public class GetDetailTrainParkingFrm extends JFrame {
     }
 
     private void btnreservationActionPerformed(ActionEvent e) {
+        TrainInforDao trainInforDao = new TrainInforDaoimpl();
         int[] selectedRows = table1.getSelectedRows();
         String trainNum=null;
         String startStation=null;
         String endStation=null;
         Object[][] order=null;
+        int price = 0;
+        int startOrder;
+        int endOrder;
         if (selectedRows.length == 2) {
             int startRow = selectedRows[0];
             int endRow = selectedRows[1];
             trainNum= table1.getValueAt(startRow,0).toString();
             startStation = table1.getValueAt(startRow, 1).toString();
             endStation = table1.getValueAt(endRow, 2).toString();
-            order = trainInforService.UserBuyBuyTickets( "123", trainNum, startStation, endStation);
+            order = trainInforService.UserBuyBuyTickets( currentUser.getPId(), trainNum, startStation, endStation);
+            startOrder = Integer.valueOf(trainInforDao.getStationOrder(trainNum, startStation));
+            endOrder = Integer.valueOf(trainInforDao.getStationOrder(trainNum, endStation));
+            price=trainInforDao.getOneTrainPrice(startOrder,endOrder);
         } else if (selectedRows.length == 1) {
             trainNum= table1.getValueAt(selectedRows[0],0).toString();
             startStation = table1.getValueAt(selectedRows[0], 1).toString();
             endStation = table1.getValueAt(selectedRows[0], 2).toString();
-            order = trainInforService.UserBuyBuyTickets( "123", trainNum, startStation, endStation);
+            order = trainInforService.UserBuyBuyTickets( currentUser.getPId(), trainNum, startStation, endStation);
+            startOrder = Integer.valueOf(trainInforDao.getStationOrder(trainNum, startStation));
+            endOrder = Integer.valueOf(trainInforDao.getStationOrder(trainNum, endStation));
+            price=trainInforDao.getOneTrainPrice(startOrder,endOrder);
         }
         else {
             JOptionPane.showMessageDialog(null,"请选择两行或一行");
         }
         //还差参数
-        CreateOrder createOrder = new CreateOrder(order, year_month_day, ticketType);
+        CreateOrder createOrder = new CreateOrder(order, year_month_day, ticketType,price);
         createOrder.setVisible(true);
     /*    for (int i = 0; i < 1; i++) {
             for (int j = 0; j < 6; j++) {

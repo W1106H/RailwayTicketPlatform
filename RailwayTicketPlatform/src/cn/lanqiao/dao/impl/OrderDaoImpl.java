@@ -229,7 +229,7 @@ public class OrderDaoImpl implements OrderDao {
         try {
             String sql = "select o.order_no,o.PID,o.train_no,o.train_start_time,o.train_end_time,tps1.station_name as start_station,tps2.station_name as arrive_station,o.carriage_no,o.seat_no,s.seat_type,ot.type,o.order_state,o.sumprice,p.pname,o.order_create_time " +
                     "from orders o,order_type ot,train_parking_station tps1,train_parking_station tps2,seat s,passengers p " +
-                    "where o.order_no = " + orderNo + " " +
+                    "where o.order_no = ? " +
                     "    and o.train_no = tps1.train_num " +
                     "    and o.train_no = tps2.train_num " +
                     "    and o.station_start_no = tps1.station_order " +
@@ -241,6 +241,7 @@ public class OrderDaoImpl implements OrderDao {
                     "    and o.carriage_no = s.carriage_num " +
                     "    and o.pid = p.passengerId";
             ps = connection.prepareStatement(sql);
+            ps.setString(1,orderNo);
             rs = ps.executeQuery();
             if(rs.next()){
                 String order_no = rs.getString("order_no");

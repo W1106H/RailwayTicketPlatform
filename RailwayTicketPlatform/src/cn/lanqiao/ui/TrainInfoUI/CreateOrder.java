@@ -18,15 +18,24 @@ import javax.swing.*;
  * @author Brainrain
  */
 public class CreateOrder extends JFrame {
-    Object[][] order=new Object[1][];
-    String year_month_day;
-    int ticketType;//学生票为1  成人票为2
-    public CreateOrder(Object[][] order,String year_month_day,int ticketType) {
+    private Object[][] order=new Object[1][];
+    private String year_month_day;
+    private int ticketType;//学生票为1  成人票为2
+    private int price;
+
+    public CreateOrder(Object[][] order,String year_month_day,int ticketType,int price) {
         this.order = order;
         this.year_month_day=year_month_day;
         this.ticketType=ticketType;
+        this.price = price;
         initComponents();
     }
+
+    public String getPassenger() {
+        String passenger1 = passenger.getText();
+        return passenger1;
+    }
+
 
 
     private void btnCreateActionPerformed(ActionEvent e) {
@@ -60,6 +69,7 @@ public class CreateOrder extends JFrame {
             System.out.println(startData + " || " + endDate);
             System.out.println(creatTime);
             System.out.println(ticketType);
+            System.out.println(price);
         } catch (ParseException e1) {
             e1.printStackTrace();
         }

@@ -21,7 +21,7 @@ import javax.swing.*;
  * @author Brainrain
  */
 public class MainFrm extends JFrame {
-    private User currentUser;
+    public User currentUser;
     private JDesktopPane desktopPane1=new JDesktopPane();
     public MainFrm(User user) {
         this.currentUser = user;
@@ -170,7 +170,7 @@ public class MainFrm extends JFrame {
             JOptionPane.showMessageDialog(null, "请选择时间");
         } else {
             time = datePicker.getText().substring(0, 10);
-            serTrainInfoByStation1 serTrainInfoByStation = new serTrainInfoByStation1(origin, destination, type,Creator,time,ticketType);
+            serTrainInfoByStation1 serTrainInfoByStation = new serTrainInfoByStation1(origin, destination, type,time,ticketType,currentUser);
             if (serTrainInfoByStation.getTrainsInfoByStationName().length>0) {
                 serTrainInfoByStation.setVisible(true);
             } else {
@@ -183,23 +183,23 @@ public class MainFrm extends JFrame {
 
     private void alltrainInfoActionPerformed(ActionEvent e) {
         //测试 year_month_day，ticketType 还需从AllTrainInfoFrm窗口中获取
-        AllTrainInfoFrm allTrainInfoFrm = new AllTrainInfoFrm();
+        AllTrainInfoFrm allTrainInfoFrm = new AllTrainInfoFrm(currentUser);
         allTrainInfoFrm.setVisible(true);
     }
 
 
 
     private void ordersActionPerformed(ActionEvent e) {
-        OrderInformationFrm orderInformationFrm = new OrderInformationFrm();
+        OrderInformationFrm orderInformationFrm = new OrderInformationFrm(currentUser);
     }
 
     private void allOrdersActionPerformed(ActionEvent e) {
-        OrderInformationFrm orderInformationFrm = new OrderInformationFrm();
+        OrderInformationFrm orderInformationFrm = new OrderInformationFrm(currentUser);
         orderInformationFrm.setVisible(true);
     }
 
     private void allOrdersMouseClicked(MouseEvent e) {
-        OrderInformationFrm orderInformationFrm = new OrderInformationFrm();
+        OrderInformationFrm orderInformationFrm = new OrderInformationFrm(currentUser);
         orderInformationFrm.setVisible(true);
 
     }

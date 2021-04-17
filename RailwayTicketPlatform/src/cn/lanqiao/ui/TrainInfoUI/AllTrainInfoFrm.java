@@ -6,6 +6,9 @@ package cn.lanqiao.ui.TrainInfoUI;
 
 import java.awt.event.*;
 
+import cn.lanqiao.dao.TrainInforDao;
+import cn.lanqiao.dao.impl.TrainInforDaoimpl;
+import cn.lanqiao.entity.Peoples.User;
 import cn.lanqiao.entity.TrainInformation.TrainInfo;
 import cn.lanqiao.service.TrainInforService;
 import cn.lanqiao.service.impl.TrainInforServiceimpl;
@@ -22,14 +25,16 @@ import com.eltima.components.ui.*;
  */
 public class AllTrainInfoFrm extends JFrame {
     private TrainInforService trainInforService = new TrainInforServiceimpl();
-    private String[] header = new String[]{"列车编号", "列车类型", "发车时间", "到达时间", "起点站", "终点站", "运行时间", "车厢数"};
+    private String[] header = new String[]{"列车编号", "列车类型", "发车时间", "到达时间", "起点站", "终点站", "运行时间", "车厢数","价格","余票"};
     private Object[][] allTrainInfo = trainInforService.getAllTrainInfo();
     private String year_month_day;
     private int ticketType;
+    private User currentUser;
 
-    public AllTrainInfoFrm() {
+    public AllTrainInfoFrm(User currentUser) {
         this.year_month_day = year_month_day;
         this.ticketType = ticketType;
+        this.currentUser=currentUser;
         initComponents();
         init();
     }
@@ -53,7 +58,6 @@ public class AllTrainInfoFrm extends JFrame {
         table1.setShowHorizontalLines(false);
         table1.setShowVerticalLines(false);
         //拿到所有列车信息
-
         this.table1.setModel(new DefaultTableModel(allTrainInfo,header));
         //必须加上下面语句猜能显示
         scrollPane1.setViewportView(table1);
@@ -72,23 +76,28 @@ public class AllTrainInfoFrm extends JFrame {
     }
 
     private void btndetailsActionPerformed(ActionEvent e) {
-        if (datePicker1.getText().length() > 0) {
-            year_month_day = datePicker1.getText().substring(0,10);
-            if (radioButton1.isSelected()) {
-                ticketType = 2;//学生票
+        if (table1.getSelectedRow() > 0) {
+            if (datePicker1.getText().length() > 0) {
+                year_month_day = datePicker1.getText().substring(0, 10);
+                if (radioButton1.isSelected()) {
+                    ticketType = 2;//学生票
+                } else {
+                    ticketType = 1;
+                }
+                int selectedRow = table1.getSelectedRow();
+                String trainNum = table1.getValueAt(selectedRow, 0).toString();
+                String startStation = table1.getValueAt(selectedRow, 4).toString();
+                String endStation = table1.getValueAt(selectedRow, 5).toString();
+                //需要修改
+                GetDetailTrainParkingFrm getDetailTrainParkingFrm = new GetDetailTrainParkingFrm(trainNum, startStation, endStation, year_month_day, ticketType, currentUser);
+                getDetailTrainParkingFrm.setVisible(true);
             } else {
-                ticketType = 1;
+                JOptionPane.showMessageDialog(null, "请选择时间");
             }
-            int selectedRow = table1.getSelectedRow();
-            String trainNum = table1.getValueAt(selectedRow, 0).toString();
-            String startStation = table1.getValueAt(selectedRow, 4).toString();
-            String endStation = table1.getValueAt(selectedRow, 5).toString();
-            //需要修改
-            GetDetailTrainParkingFrm getDetailTrainParkingFrm = new GetDetailTrainParkingFrm(trainNum, startStation, endStation, year_month_day, ticketType);
-            getDetailTrainParkingFrm.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "请选择时间");
+            JOptionPane.showMessageDialog(null,"请选择列车");
         }
+
 
     }
 
@@ -102,6 +111,35 @@ public class AllTrainInfoFrm extends JFrame {
     private void btnupdataActionPerformed(ActionEvent e) {
         this.table1.setModel(new DefaultTableModel(allTrainInfo, header));
         scrollPane1.setViewportView(table1);
+    }
+        //订票
+    private void btnorderActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        if (table1.getSelectedRow()> 0) {
+            if (datePicker1.getText().length() > 0) {
+                year_month_day = datePicker1.getText().substring(0, 10);
+                ticketType = radioButton1.isSelected() ? 1 : 2;
+                TrainInforService trainInforService = new TrainInforServiceimpl();
+                int selectedRow = table1.getSelectedRow();
+                String trainNum = table1.getValueAt(selectedRow, 0).toString();
+                String startStation = table1.getValueAt(selectedRow, 4).toString();
+                String endStation = table1.getValueAt(selectedRow, 5).toString();
+                Object[][] order = trainInforService.UserBuyBuyTickets(currentUser.getPId(), trainNum, startStation, endStation);
+                TrainInforDao trainInforDao = new TrainInforDaoimpl();
+                int startOrder = Integer.valueOf(trainInforDao.getStationOrder(trainNum, startStation));
+                int endOrder = Integer.valueOf(trainInforDao.getStationOrder(trainNum, endStation));
+                int price = trainInforDao.getOneTrainPrice(startOrder, endOrder);
+                CreateOrder createOrder = new CreateOrder(order, year_month_day, ticketType, price);
+                createOrder.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "请选择时间");
+                return;
+            }
+        } else {
+            JOptionPane.showMessageDialog(null,"请选择列车");
+            return;
+        }
+
     }
 
 
@@ -117,6 +155,7 @@ public class AllTrainInfoFrm extends JFrame {
         btnupdata = new JButton();
         datePicker1 = new DatePicker();
         radioButton1 = new JRadioButton();
+        btnorder = new JButton();
 
         //======== this ========
         setTitle("\u6240\u6709\u5217\u8f66\u4fe1\u606f");
@@ -132,22 +171,22 @@ public class AllTrainInfoFrm extends JFrame {
             table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             table1.setModel(new DefaultTableModel(
                 new Object[][] {
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
                 },
                 new String[] {
-                    null, null, null, null, null, null, null, null
+                    null, null, null, null, null, null, null, null, null, null
                 }
             ));
             scrollPane1.setViewportView(table1);
@@ -189,6 +228,12 @@ public class AllTrainInfoFrm extends JFrame {
         contentPane.add(radioButton1);
         radioButton1.setBounds(255, 70, 70, radioButton1.getPreferredSize().height);
 
+        //---- btnorder ----
+        btnorder.setText("\u8ba2\u7968");
+        btnorder.addActionListener(e -> btnorderActionPerformed(e));
+        contentPane.add(btnorder);
+        btnorder.setBounds(new Rectangle(new Point(560, 360), btnorder.getPreferredSize()));
+
         contentPane.setPreferredSize(new Dimension(865, 465));
         setSize(865, 465);
         setLocationRelativeTo(getOwner());
@@ -205,6 +250,7 @@ public class AllTrainInfoFrm extends JFrame {
     private JButton btnupdata;
     private DatePicker datePicker1;
     private JRadioButton radioButton1;
+    private JButton btnorder;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
   /*  public static void main(String[] args) {
         AllTrainInfoFrm allTrainInfoFrm=new AllTrainInfoFrm();

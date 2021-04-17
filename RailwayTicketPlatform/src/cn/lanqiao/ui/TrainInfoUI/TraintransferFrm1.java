@@ -5,10 +5,18 @@
 package cn.lanqiao.ui.TrainInfoUI;
 
 import java.awt.event.*;
+
+import cn.lanqiao.dao.TrainInforDao;
+import cn.lanqiao.dao.impl.TrainInforDaoimpl;
+import cn.lanqiao.entity.Peoples.User;
 import cn.lanqiao.service.TrainInforService;
 import cn.lanqiao.service.impl.TrainInforServiceimpl;
 
 import java.awt.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -21,9 +29,11 @@ public class TraintransferFrm1 extends JFrame {
     private Object[][] transferInforObject=null;
     private String year_month_day;
     private int ticketType;
+    private User currentUser;
 
-    public TraintransferFrm1(String startStation, String endStation, String year_month_day, int ticketType) {
+    public TraintransferFrm1(String startStation, String endStation, String year_month_day, int ticketType,User currentUser) {
         this.year_month_day = year_month_day;
+        this.currentUser = currentUser;
         this.ticketType = ticketType;
         this.startStation = startStation;
         this.endStation = endStation;
@@ -45,16 +55,68 @@ public class TraintransferFrm1 extends JFrame {
         return transferInforObject;
     }
 
+    //订票
+    private void btnOrderActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            int selectedRow = table1.getSelectedRow();
+            String trainNum1 = table1.getValueAt(selectedRow, 1).toString();
+            String trainNum2 = table1.getValueAt(selectedRow, 6).toString();
+            String tranNum[] = new String[]{trainNum1, trainNum2};
+            String startStation = table1.getValueAt(selectedRow, 0).toString();
+            String trasferStation = table1.getValueAt(selectedRow, 5).toString();
+            String endStation = table1.getValueAt(selectedRow, 9).toString();
+            String sumPrice = table1.getValueAt(selectedRow, 11).toString();
+            Date startTime1 = sdf.parse(year_month_day + " " + table1.getValueAt(selectedRow, 2).toString());
+            Date endTime1 = sdf.parse(year_month_day + " " + table1.getValueAt(selectedRow, 3).toString());
+            Date startTime2 = sdf.parse(year_month_day + " " + table1.getValueAt(selectedRow, 7).toString());
+            Date endTime2 = sdf.parse(year_month_day + " " + table1.getValueAt(selectedRow, 8).toString());
+            Date Time[] = new Date[]{startTime1, endTime1, startTime2, endTime2};
+            TrainInforDao trainInforDao = new TrainInforDaoimpl();
+            int stationOrder1 = Integer.valueOf(trainInforDao.getStationOrder(trainNum1, startStation));
+            int stationOrder2 = Integer.valueOf(trainInforDao.getStationOrder(trainNum1, trasferStation));
+            int stationOrder3 = Integer.valueOf(trainInforDao.getStationOrder(trainNum2, trasferStation));
+            int stationOoder4 = Integer.valueOf(trainInforDao.getStationOrder(trainNum2, endStation));
+            int price1 = trainInforDao.getOneTrainPrice(stationOrder1, stationOrder2);
+            int price2 = trainInforDao.getOneTrainPrice(stationOrder3, stationOoder4);
+            TrainInforService trainInforService = new TrainInforServiceimpl();
+            Object[][] order1 = trainInforService.UserBuyBuyTickets(currentUser.getPId(), trainNum1, startStation,trasferStation);
+            Object[][] order2 = trainInforService.UserBuyBuyTickets(currentUser.getPId(), trainNum2, trasferStation, endStation);
+
+            CreateOrder createOrder = null;
+            for (int i = 0; i <= 1; i++) {
+                if (i == 0) {
+                    createOrder = new CreateOrder( order1,year_month_day, ticketType,price1);
+                    createOrder.setTitle("第一订单");
+                    createOrder.setVisible(true);
+                } else if (i == 1) {
+                    createOrder = new CreateOrder(order2, year_month_day, ticketType,price2);
+                    createOrder.setTitle("第二订单");
+                    createOrder.setVisible(true);
+                }
+
+                //createOrder.setVisible(true);
+            }
+
+        } catch (ParseException e1) {
+            e1.printStackTrace();
+        }
+
+
+    }
+
 
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         scrollPane1 = new JScrollPane();
         table1 = new JTable();
-        btnbuy = new JButton();
+        btnOrder = new JButton();
         label1 = new JLabel();
 
         //======== this ========
+        setTitle("\u4e2d\u8f6c\u4fe1\u606f");
         setIconImage(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/mainLogo.png")).getImage());
         var contentPane = getContentPane();
         contentPane.setLayout(null);
@@ -78,10 +140,11 @@ public class TraintransferFrm1 extends JFrame {
         contentPane.add(scrollPane1);
         scrollPane1.setBounds(0, 0, 945, 205);
 
-        //---- btnbuy ----
-        btnbuy.setText("\u8d2d\u7968");
-        contentPane.add(btnbuy);
-        btnbuy.setBounds(new Rectangle(new Point(850, 215), btnbuy.getPreferredSize()));
+        //---- btnOrder ----
+        btnOrder.setText("\u8ba2\u7968");
+        btnOrder.addActionListener(e -> btnOrderActionPerformed(e));
+        contentPane.add(btnOrder);
+        btnOrder.setBounds(new Rectangle(new Point(850, 215), btnOrder.getPreferredSize()));
 
         contentPane.setPreferredSize(new Dimension(945, 280));
         pack();
@@ -95,7 +158,7 @@ public class TraintransferFrm1 extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JScrollPane scrollPane1;
     private JTable table1;
-    private JButton btnbuy;
+    private JButton btnOrder;
     private JLabel label1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
   /*  public static void main(String[] args) {

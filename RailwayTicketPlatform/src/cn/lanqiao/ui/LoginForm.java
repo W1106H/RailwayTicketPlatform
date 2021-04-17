@@ -20,6 +20,7 @@ import javax.swing.*;
 public class LoginForm extends JFrame {
     public static User currentUser = null;
     public LoginForm() {
+
         initComponents();
         this.getRootPane().setDefaultButton(this.LoginButton); //按回车键，触发登录按钮;
     }
@@ -145,7 +146,9 @@ public class LoginForm extends JFrame {
                 panel1.setLayout(null);
 
                 //---- label1 ----
-                label1.setIcon(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/sky (1).jpg")));
+
+                LoginBackGroundThread loginBackGroundThread = new LoginBackGroundThread(label1);
+                loginBackGroundThread.start();
                 panel1.add(label1);
                 label1.setBounds(0, 0, 430, 130);
             }
@@ -157,8 +160,8 @@ public class LoginForm extends JFrame {
                 panel2.setLayout(null);
 
                 //---- label2 ----
-                label2.setIcon(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/user.png")));
                 panel2.add(label2);
+                label2.setIcon(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/user.png")));
                 label2.setBounds(60, 15, 30, 30);
 
                 //---- label3 ----
