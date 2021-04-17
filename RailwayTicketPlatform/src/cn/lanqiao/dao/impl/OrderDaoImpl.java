@@ -352,7 +352,6 @@ public class OrderDaoImpl implements OrderDao {
         PreparedStatement pr = null;
         ResultSet rs = null;
         historicalOrders = new Object[this.getHistoricalOrders_Count(userPID)][];
-        System.out.println(this.getHistoricalOrders_Count(userPID));
         try {
             pr = connection.prepareStatement(sql);
             pr.setString(1,userPID);
