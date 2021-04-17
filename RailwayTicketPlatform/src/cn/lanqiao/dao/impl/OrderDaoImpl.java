@@ -7,6 +7,7 @@ import cn.lanqiao.util.StringForData;
 
 import javax.swing.*;
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
@@ -669,8 +670,18 @@ public class OrderDaoImpl implements OrderDao {
         PreparedStatement ps = null;
         try{
 //            获得订单创建时间
-            java.util.Date nowDate = new java.util.Date();
-            Date order_create_date = new Date(nowDate.getTime());
+            //java.util.Date nowDate = new java.util.Date();
+           //Date order_create_date = new Date(nowDate.getTime());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String sdate = sdf.format(new java.util.Date());
+            java.util.Date date = null;
+            try {
+                date = sdf.parse(sdate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            java.sql.Timestamp order_create_date = new java.sql.Timestamp(date.getTime());
+           // java.sql.Date date1 = (java.sql.Date)order_create_date;
 
 //            插入订单至订单表中
             UUID uuid = UUID.randomUUID();
@@ -688,7 +699,8 @@ public class OrderDaoImpl implements OrderDao {
             ps.setString(9,String.valueOf((int)(Math.random()*11 + 1)));
             ps.setString(10,order_creator);
             ps.setString(11,"F");
-            ps.setDate(12,order_create_date);
+            //ps.setDate(12,order_create_date);
+            ps.setTimestamp(12,order_create_date);
             ps.setDouble(13,sumprice);
             ps.setString(14,"T");
             ps.setInt(15,orderType);

@@ -21,6 +21,7 @@ public class PersonalForm extends JFrame {
         this.currentUser=currentUser;
         initComponents();
         init(label3);
+        Namelabel.setText(currentUser.getURealName());
     }
 
     private void passengerButtonActionPerformed(ActionEvent e) {
@@ -66,7 +67,7 @@ public class PersonalForm extends JFrame {
 
         //======== this ========
         setResizable(false);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setIconImage(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/userImg.jpg")).getImage());
         var contentPane = getContentPane();
         contentPane.setLayout(null);
@@ -83,8 +84,9 @@ public class PersonalForm extends JFrame {
                 Namelabel.setBackground(Color.white);
                 Namelabel.setFont(Namelabel.getFont().deriveFont(Namelabel.getFont().getStyle() | Font.BOLD));
                 Namelabel.setForeground(Color.white);
+                Namelabel.setHorizontalAlignment(SwingConstants.CENTER);
                 panel1.add(Namelabel);
-                Namelabel.setBounds(145, 10, 110, 25);
+                Namelabel.setBounds(135, 10, 110, 25);
             }
             layeredPane1.add(panel1, JLayeredPane.DEFAULT_LAYER);
             panel1.setBounds(0, 0, 400, 50);

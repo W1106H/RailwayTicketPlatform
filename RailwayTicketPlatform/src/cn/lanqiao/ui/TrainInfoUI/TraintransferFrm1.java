@@ -11,6 +11,7 @@ import cn.lanqiao.dao.impl.TrainInforDaoimpl;
 import cn.lanqiao.entity.Peoples.User;
 import cn.lanqiao.service.TrainInforService;
 import cn.lanqiao.service.impl.TrainInforServiceimpl;
+import cn.lanqiao.ui.AllPassenger;
 
 import java.awt.*;
 import java.text.ParseException;
@@ -84,27 +85,26 @@ public class TraintransferFrm1 extends JFrame {
             Object[][] order1 = trainInforService.UserBuyBuyTickets(currentUser.getPId(), trainNum1, startStation,trasferStation);
             Object[][] order2 = trainInforService.UserBuyBuyTickets(currentUser.getPId(), trainNum2, trasferStation, endStation);
 
-            CreateOrder createOrder = null;
+            AllPassenger allPassenger=null;
             for (int i = 0; i <= 1; i++) {
                 if (i == 0) {
-                    createOrder = new CreateOrder( order1,year_month_day, ticketType,price1);
-                    createOrder.setTitle("第一订单");
-                    createOrder.setVisible(true);
+                    allPassenger = new AllPassenger(currentUser, order1, year_month_day, ticketType, price1);
+                    allPassenger.setTitle("第一订单");
+                        allPassenger.setVisible(true);
                 } else if (i == 1) {
-                    createOrder = new CreateOrder(order2, year_month_day, ticketType,price2);
-                    createOrder.setTitle("第二订单");
-                    createOrder.setVisible(true);
+                    allPassenger = new AllPassenger(currentUser, order2, year_month_day, ticketType, price2);
+                    allPassenger.setTitle("第二订单");
+                    allPassenger.setVisible(true);
                 }
 
-                //createOrder.setVisible(true);
             }
-
         } catch (ParseException e1) {
             e1.printStackTrace();
         }
 
 
     }
+
 
 
 

@@ -20,9 +20,9 @@ import javax.swing.*;
 public class LoginForm extends JFrame {
     public static User currentUser = null;
     public LoginForm() {
-
         initComponents();
         this.getRootPane().setDefaultButton(this.LoginButton); //按回车键，触发登录按钮;
+        init();
     }
     public void init() {
         File file = new File("user.data");

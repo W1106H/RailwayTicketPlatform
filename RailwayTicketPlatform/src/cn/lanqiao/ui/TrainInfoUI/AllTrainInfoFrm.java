@@ -18,6 +18,9 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.swing.*;
 import javax.swing.table.*;
+
+import cn.lanqiao.ui.AllPassenger;
+import cn.lanqiao.ui.PassengerJDialog;
 import com.eltima.components.ui.*;
 
 /**
@@ -115,7 +118,7 @@ public class AllTrainInfoFrm extends JFrame {
         //订票
     private void btnorderActionPerformed(ActionEvent e) {
         // TODO add your code here
-        if (table1.getSelectedRow()> 0) {
+       /* if (table1.getSelectedRow()> 0) {
             if (datePicker1.getText().length() > 0) {
                 year_month_day = datePicker1.getText().substring(0, 10);
                 ticketType = radioButton1.isSelected() ? 1 : 2;
@@ -132,6 +135,31 @@ public class AllTrainInfoFrm extends JFrame {
                 CreateOrder createOrder = new CreateOrder(order, year_month_day, ticketType, price);
                 createOrder.setVisible(true);
             } else {
+                JOptionPane.showMessageDialog(null, "请选择时间");
+                return;
+            }
+        } else {
+            JOptionPane.showMessageDialog(null,"请选择列车");
+            return;
+        }*/
+        if (table1.getSelectedRow()> 0) {
+            if (datePicker1.getText().length() > 0) {
+                year_month_day = datePicker1.getText().substring(0, 10);
+                ticketType = radioButton1.isSelected() ? 1 : 2;
+                TrainInforService trainInforService = new TrainInforServiceimpl();
+                int selectedRow = table1.getSelectedRow();
+                String trainNum = table1.getValueAt(selectedRow, 0).toString();
+                String startStation = table1.getValueAt(selectedRow, 4).toString();
+                String endStation = table1.getValueAt(selectedRow, 5).toString();
+                Object[][] order = trainInforService.UserBuyBuyTickets(currentUser.getPId(), trainNum, startStation, endStation);
+                TrainInforDao trainInforDao = new TrainInforDaoimpl();
+                int startOrder = Integer.valueOf(trainInforDao.getStationOrder(trainNum, startStation));
+                int endOrder = Integer.valueOf(trainInforDao.getStationOrder(trainNum, endStation));
+                int price = trainInforDao.getOneTrainPrice(startOrder, endOrder);
+                AllPassenger allPassenger = new AllPassenger(currentUser, order, year_month_day, ticketType, price);
+                allPassenger.setVisible(true);
+            }
+            else {
                 JOptionPane.showMessageDialog(null, "请选择时间");
                 return;
             }

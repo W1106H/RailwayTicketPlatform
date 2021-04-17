@@ -442,14 +442,14 @@ public class TrainInforDaoimpl implements TrainInforDao {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String name1 = startStation + "_";
-        String name2 = endStation + "_";
+        //String name1 = startStation + "_";
+        //String name2 = endStation + "_";
         Object[][] trains = new Object[this.TraincountByStationNameAndtrainType(startStation, endStation,trainType)][];
         try {
             connection = JDBCUtil.getConnection();
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, name1);
-            preparedStatement.setString(2, name2);
+            preparedStatement.setString(1, startStation);
+            preparedStatement.setString(2, endStation);
             preparedStatement.setString(3,trainType);
             resultSet = preparedStatement.executeQuery();
             int i = 0;
@@ -536,12 +536,12 @@ public class TrainInforDaoimpl implements TrainInforDao {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int num = 0;
-        String name1 = startStation + "_";
-        String name2 = endStationg + "_";
+       // String name1 = startStation + "_";
+        //String name2 = endStationg + "_";
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, name1);
-            preparedStatement.setString(2, name2);
+            preparedStatement.setString(1, startStation);
+            preparedStatement.setString(2, endStationg);
             preparedStatement.setString(3,trainType);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {

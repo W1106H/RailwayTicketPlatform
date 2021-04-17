@@ -11,6 +11,7 @@ import cn.lanqiao.dao.impl.TrainInforDaoimpl;
 import cn.lanqiao.entity.Peoples.User;
 import cn.lanqiao.service.TrainInforService;
 import cn.lanqiao.service.impl.TrainInforServiceimpl;
+import cn.lanqiao.ui.AllPassenger;
 
 import java.awt.*;
 import javax.swing.*;
@@ -81,8 +82,8 @@ public class serTrainInfoByStation1 extends JFrame {
         int startOrder = Integer.valueOf(trainInforDao.getStationOrder(trainNum, startStation));
         int  endOrder = Integer.valueOf(trainInforDao.getStationOrder(trainNum, endStation));
         int price=trainInforDao.getOneTrainPrice(startOrder,endOrder);
-        CreateOrder createOrder = new CreateOrder(order, year_month_day,ticketType,price);
-        createOrder.setVisible(true);
+        AllPassenger allPassenger = new AllPassenger(currentUser, order, year_month_day, ticketType, price);
+        allPassenger.setVisible(true);
     }
 
     //中转查询
