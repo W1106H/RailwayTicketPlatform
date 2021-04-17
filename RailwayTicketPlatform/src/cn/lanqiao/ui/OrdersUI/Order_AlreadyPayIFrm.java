@@ -8,6 +8,7 @@ import java.awt.event.*;
 import javax.swing.event.*;
 
 import cn.lanqiao.entity.Peoples.Orders;
+import cn.lanqiao.entity.Peoples.User;
 import cn.lanqiao.service.OrderService;
 import cn.lanqiao.service.TrainInforService;
 import cn.lanqiao.service.impl.OrderServiceImpl;
@@ -22,11 +23,12 @@ import javax.swing.table.*;
  * @author Brainrain
  */
 public class Order_AlreadyPayIFrm extends JInternalFrame {
-    private String userName;
+    public User user;
     private String[] table1Title = {"订单编号","列车号","起始站","到达站","出发时间","票价","乘客姓名"};
     private String[] table2Title = {"订单编号","列车号","起始站","到达站","出发时间","票价","乘客姓名"};
 
-    public Order_AlreadyPayIFrm() {
+    public Order_AlreadyPayIFrm(User currentuser) {
+        this.user=currentuser;
         initComponents();
         init();
     }
@@ -49,10 +51,11 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
         OrderService orderService = new OrderServiceImpl();
         currentPage.setText(String.valueOf(1));
         int currentPage=Integer.parseInt(this.currentPage.getText());
-        int pageCount=(orderService.getOrderAlreadyPay_Count("1001")%2)==0?(orderService.getOrderAlreadyPay_Count("1001")/2):(orderService.getOrderAlreadyPay_Count("1001")/2)+1;
+        String userPID=user.getPId();
+        int pageCount=(orderService.getOrderAlreadyPay_Count(userPID)%2)==0?(orderService.getOrderAlreadyPay_Count(userPID)/2):(orderService.getOrderAlreadyPay_Count(userPID)/2)+1;
         this.pageCount.setText(String.valueOf(pageCount));
 
-        Object[][] table1DetailInfo = orderService.getOrderAlreadyPay("1001",currentPage);
+        Object[][] table1DetailInfo = orderService.getOrderAlreadyPay(userPID,currentPage);
         if (orderService.getOrderAlreadyPay_JudgeFlag() == false){
             JOptionPane.showMessageDialog(table1,"暂无订单信息");
             this.flagOfTable1 = false;
@@ -75,9 +78,9 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
         ));
         currentPage2.setText(String.valueOf(1));
         int currentPage2=Integer.parseInt(this.currentPage2.getText());
-        int pageCount2=(orderService.getOrderNotTravel_Count("1001")%2)==0?(orderService.getOrderNotTravel_Count("1001")/2):(orderService.getOrderNotTravel_Count("1001")/2)+1;
+        int pageCount2=(orderService.getOrderNotTravel_Count(userPID)%2)==0?(orderService.getOrderNotTravel_Count(userPID)/2):(orderService.getOrderNotTravel_Count(userPID)/2)+1;
         this.pageCount2.setText(String.valueOf(pageCount2));
-        Object[][] table2OrderNotTravel = orderService.getOrderNotTravel("1001",currentPage2);
+        Object[][] table2OrderNotTravel = orderService.getOrderNotTravel(userPID,currentPage2);
         table2.setModel(new DefaultTableModel(
                 table2OrderNotTravel,
                 table2Title
@@ -88,15 +91,12 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
         return flagOfTable1;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     private void button1ActionPerformed(ActionEvent e) {
         // TODO add your code here
         int currentPage = Integer.parseInt(this.currentPage.getText());
         OrderService orderService = new OrderServiceImpl();
-        Object[][] orderAlreadyPay = orderService.getOrderAlreadyPay("1001",currentPage);
+        String userPID=user.getPId();
+        Object[][] orderAlreadyPay = orderService.getOrderAlreadyPay(userPID,currentPage);
         if (orderService.getOrderAlreadyPay_JudgeFlag() == false){
             JOptionPane.showMessageDialog(table1,"暂无订单信息");
             this.flagOfTable1 = false;
@@ -126,7 +126,8 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
             boolean orderAlreadyPay_setVisible = orderService.getOrderAlreadyPay_SetVisible(orderNo);
             if(orderAlreadyPay_setVisible){
                 JOptionPane.showMessageDialog(tabbedPane1,"删除成功！");
-                Object[][] orderAlreadyPay = orderService.getOrderAlreadyPay("1001",currentPage);
+                String userPID=user.getPId();
+                Object[][] orderAlreadyPay = orderService.getOrderAlreadyPay(userPID,currentPage);
                 table1.setModel(new DefaultTableModel(
                         orderAlreadyPay,
                         table1Title
@@ -146,7 +147,8 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
         {
             currentPage.setText(String.valueOf(current-1));
             OrderService orderService = new OrderServiceImpl();
-            Object[][] orderAlreadyPay = orderService.getOrderAlreadyPay("1001",current);
+            String userPID=user.getPId();
+            Object[][] orderAlreadyPay = orderService.getOrderAlreadyPay(userPID,current);
             table1.setModel(new DefaultTableModel(
                     orderAlreadyPay,
                     table1Title
@@ -162,7 +164,8 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
         {
             currentPage.setText(String.valueOf(current+1));
             OrderService orderService = new OrderServiceImpl();
-            Object[][] orderAlreadyPay = orderService.getOrderAlreadyPay("1001",current);
+            String userPID=user.getPId();
+            Object[][] orderAlreadyPay = orderService.getOrderAlreadyPay(userPID,current);
             table1.setModel(new DefaultTableModel(
                     orderAlreadyPay,
                     table1Title
@@ -177,7 +180,8 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
         currentPage.setText(String.valueOf(1));
         int current= Integer.parseInt(currentPage.getText());
         OrderService orderService = new OrderServiceImpl();
-        Object[][] orderAlreadyPay = orderService.getOrderAlreadyPay("1001",current);
+        String userPID=user.getPId();
+        Object[][] orderAlreadyPay = orderService.getOrderAlreadyPay(userPID,current);
         table1.setModel(new DefaultTableModel(
                 orderAlreadyPay,
                 table1Title
@@ -188,7 +192,8 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
     private void refreshActionPerformed(ActionEvent e) {
         int currentPage2 = Integer.parseInt(this.currentPage2.getText());
         OrderService orderService = new OrderServiceImpl();
-        Object[][] orderNotTravel = orderService.getOrderNotTravel("1001",currentPage2);
+        String userPID=user.getPId();
+        Object[][] orderNotTravel = orderService.getOrderNotTravel(userPID,currentPage2);
         table2.setModel(new DefaultTableModel(
             orderNotTravel,
             table2Title
@@ -204,7 +209,8 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
         {
             currentPage2.setText(String.valueOf(current2-1));
             OrderService orderService = new OrderServiceImpl();
-            Object[][] orderNotTravel = orderService.getOrderNotTravel("1001",current2);
+            String userPID=user.getPId();
+            Object[][] orderNotTravel = orderService.getOrderNotTravel(userPID,current2);
             table2.setModel(new DefaultTableModel(
                     orderNotTravel,
                     table2Title
@@ -220,7 +226,8 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
         {
             currentPage2.setText(String.valueOf(current2+1));
             OrderService orderService = new OrderServiceImpl();
-            Object[][] orderNotTravel = orderService.getOrderNotTravel("1001",current2);
+            String userPID=user.getPId();
+            Object[][] orderNotTravel = orderService.getOrderNotTravel(userPID,current2);
             table2.setModel(new DefaultTableModel(
                     orderNotTravel,
                     table2Title
@@ -235,7 +242,8 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
         currentPage2.setText(String.valueOf(1));
         int current2= Integer.parseInt(currentPage2.getText());
         OrderService orderService = new OrderServiceImpl();
-        Object[][] orderNotTravel = orderService.getOrderNotTravel("1001",current2);
+        String userPID=user.getPId();
+        Object[][] orderNotTravel = orderService.getOrderNotTravel(userPID,current2);
         table2.setModel(new DefaultTableModel(
                 orderNotTravel,
                 table2Title
@@ -286,10 +294,10 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
     private void cancelActionPerformed(ActionEvent e) {
         OrderService orderService = new OrderServiceImpl();
         if(table2.getSelectedRowCount()==0){
-            JOptionPane.showMessageDialog(table2,"请选择想要取消的订单");
+            JOptionPane.showMessageDialog(table2,"请选择想要退票的订单");
             return ;
         }
-        int confirmDialog = JOptionPane.showConfirmDialog(table2, "是否确认取消订单？");
+        int confirmDialog = JOptionPane.showConfirmDialog(table2, "是否确认退票？");
         if(confirmDialog==0) {
             String orderNo = table2.getValueAt(table2.getSelectedRow(), 0).toString();  //获得订单号
             String trainNum = orderService.getOrderByOrderNo(orderNo).getTrain_No();
@@ -308,7 +316,7 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
                     orderNotTravel,
                     table2Title
             ));
-            JOptionPane.showMessageDialog(table2, "已成功取消！");
+            JOptionPane.showMessageDialog(table2, "已成功退票！");
         }
     }
 
@@ -487,7 +495,7 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
                 currentPage2.setBounds(615, 365, 70, currentPage2.getPreferredSize().height);
 
                 //---- cancel ----
-                cancel.setText("\u53d6\u6d88\u8ba2\u5355");
+                cancel.setText("\u9000\u7968");
                 cancel.addActionListener(e -> cancelActionPerformed(e));
                 desktopPane1.add(cancel, JLayeredPane.DEFAULT_LAYER);
                 cancel.setBounds(225, 330, 95, 30);

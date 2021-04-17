@@ -43,9 +43,10 @@ public class OrderInformationFrm extends JFrame {
         OrderService orderService = new OrderServiceImpl();
         currentPage.setText(String.valueOf(1));
         int currentPage=Integer.parseInt(this.currentPage.getText());
-        int pageCount=(orderService.getHistoricalOrders_Count("1001")%2)==0?(orderService.getHistoricalOrders_Count("1001")/2):((orderService.getHistoricalOrders_Count("1001")/2)+1);
+        String userPID=currentUser.getPId();
+        int pageCount=(orderService.getHistoricalOrders_Count(userPID)%2)==0?(orderService.getHistoricalOrders_Count(userPID)/2):((orderService.getHistoricalOrders_Count(userPID)/2)+1);
         this.pageCount.setText(String.valueOf(pageCount));
-        Object[][] table1List = orderService.getHistoricalOrders("1001",currentPage);
+        Object[][] table1List = orderService.getHistoricalOrders(userPID,currentPage);
         historicalOrdersTable.setModel(new DefaultTableModel(
                 table1List,
                 table1Title
@@ -126,7 +127,7 @@ public class OrderInformationFrm extends JFrame {
             }
         }
         if(currentFrame == null){
-            Order_AlreadyPayIFrm order_alreadyPayIFrm = new Order_AlreadyPayIFrm();
+            Order_AlreadyPayIFrm order_alreadyPayIFrm = new Order_AlreadyPayIFrm(currentUser);
             if (order_alreadyPayIFrm.judge()) {
                 order_alreadyPayIFrm.setVisible(true);
                 frmContainer.add(order_alreadyPayIFrm);
@@ -148,7 +149,7 @@ public class OrderInformationFrm extends JFrame {
             }
         }
         if(currentFrame == null){
-            Order_UnPayIFrm order_unPayIFrm = new Order_UnPayIFrm();
+            Order_UnPayIFrm order_unPayIFrm = new Order_UnPayIFrm(currentUser);
             order_unPayIFrm.setVisible(true);
             frmContainer.add(order_unPayIFrm);
         }
@@ -160,14 +161,14 @@ public class OrderInformationFrm extends JFrame {
 
     private void lastPageActionPerformed(ActionEvent e) {
         int current = Integer.parseInt(currentPage.getText());
-        System.out.println("last"+current);
         if(current==1)
             JOptionPane.showMessageDialog(desktopPane1,"当前已是第一页！");
         if(current>=2)
         {
             currentPage.setText(String.valueOf(current-1));
             OrderService orderService = new OrderServiceImpl();
-            Object[][] table1List = orderService.getHistoricalOrders("1001",current-1);
+            String userPID=currentUser.getPId();
+            Object[][] table1List = orderService.getHistoricalOrders(userPID,current-1);
             historicalOrdersTable.setModel(new DefaultTableModel(
                     table1List,
                     table1Title
@@ -182,7 +183,8 @@ public class OrderInformationFrm extends JFrame {
         {
             currentPage.setText(String.valueOf(current+1));
             OrderService orderService = new OrderServiceImpl();
-            Object[][] tableList= orderService.getHistoricalOrders("1001",current+1);
+            String userPID=currentUser.getPId();
+            Object[][] tableList= orderService.getHistoricalOrders(userPID,current+1);
             historicalOrdersTable.setModel(new DefaultTableModel(
                     tableList,
                     table1Title
@@ -196,7 +198,8 @@ public class OrderInformationFrm extends JFrame {
         currentPage.setText(String.valueOf(1));
         int current= Integer.parseInt(currentPage.getText());
         OrderService orderService = new OrderServiceImpl();
-        Object[][] tableList = orderService.getHistoricalOrders("1001",current);
+        String userPID=currentUser.getPId();
+        Object[][] tableList = orderService.getHistoricalOrders(userPID,current);
         historicalOrdersTable.setModel(new DefaultTableModel(
                 tableList,
                 table1Title
@@ -208,7 +211,8 @@ public class OrderInformationFrm extends JFrame {
         desktopPane1.setVisible(false);
         desktopPane2.setVisible(true);
         OrderService orderService = new OrderServiceImpl();
-        Object[][] personalTicket = orderService.getPersonalTicket("450000200010090022");
+        String userPID=currentUser.getUserId();//身份证号
+        Object[][] personalTicket = orderService.getPersonalTicket(userPID);
         if(personalTicket == null){
             JOptionPane.showMessageDialog(desktopPane2,"暂无本人车票信息");
         }else{
@@ -222,7 +226,8 @@ public class OrderInformationFrm extends JFrame {
     private void personalTicketFlushMouseClicked(MouseEvent e) {
         // TODO add your code here
         OrderService orderService = new OrderServiceImpl();
-        Object[][] personalTicket = orderService.getPersonalTicket("450000200010090022");
+        String userPID=currentUser.getUserId();//身份证号
+        Object[][] personalTicket = orderService.getPersonalTicket(userPID);
         if(personalTicket == null){
             JOptionPane.showMessageDialog(desktopPane2,"暂无本人车票信息");
         }else{

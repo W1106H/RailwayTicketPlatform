@@ -8,6 +8,7 @@ import java.awt.event.*;
 import javax.swing.event.*;
 
 import cn.lanqiao.entity.Peoples.Orders;
+import cn.lanqiao.entity.Peoples.User;
 import cn.lanqiao.service.OrderService;
 import cn.lanqiao.service.TrainInforService;
 import cn.lanqiao.service.impl.OrderServiceImpl;
@@ -22,8 +23,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Brainrain
  */
 public class Order_UnPayIFrm extends JInternalFrame {
+    public User user;
     private String[] table1Title = {"订单编号","列车号","起始站","到达站","出发时间","票价","乘客姓名"};
-    public Order_UnPayIFrm() {
+    public Order_UnPayIFrm(User user) {
+        this.user=user;
         initComponents();
         init();
     }
@@ -40,9 +43,10 @@ public class Order_UnPayIFrm extends JInternalFrame {
         currentPage.setText(String.valueOf(1));
         int currentPage=Integer.parseInt(this.currentPage.getText());
         OrderService orderService = new OrderServiceImpl();
-        int pageCount=(orderService.getOrderNotPay_Count("1001")%2)==0?(orderService.getOrderNotPay_Count("1001")/2):(orderService.getOrderNotPay_Count("1001")/2)+1;
+        String userPID=user.getPId();
+        int pageCount=(orderService.getOrderNotPay_Count(userPID)%2)==0?(orderService.getOrderNotPay_Count(userPID)/2):(orderService.getOrderNotPay_Count(userPID)/2)+1;
         this.pageCount.setText(String.valueOf(pageCount));
-        Object[][] talbeUnpay = orderService.getOrderNotPay("1001",currentPage);
+        Object[][] talbeUnpay = orderService.getOrderNotPay(userPID,currentPage);
         table1.setModel(new DefaultTableModel(
                 talbeUnpay,
                 table1Title
@@ -57,7 +61,8 @@ public class Order_UnPayIFrm extends JInternalFrame {
         {
             currentPage.setText(String.valueOf(current-1));
             OrderService orderService = new OrderServiceImpl();
-            Object[][] orderNotPay = orderService.getOrderNotPay("1001",current);
+            String userPID=user.getPId();
+            Object[][] orderNotPay = orderService.getOrderNotPay(userPID,current);
             table1.setModel(new DefaultTableModel(
                     orderNotPay,
                     table1Title
@@ -72,7 +77,8 @@ public class Order_UnPayIFrm extends JInternalFrame {
         {
             currentPage.setText(String.valueOf(current+1));
             OrderService orderService = new OrderServiceImpl();
-            Object[][] orderNotPay = orderService.getOrderNotPay("1001",current);
+            String userPID=user.getPId();
+            Object[][] orderNotPay = orderService.getOrderNotPay(userPID,current);
             table1.setModel(new DefaultTableModel(
                     orderNotPay,
                     table1Title
@@ -90,7 +96,8 @@ public class Order_UnPayIFrm extends JInternalFrame {
         int currentPage = Integer.parseInt(this.currentPage.getText());
         System.out.println(currentPage);
         OrderService orderService = new OrderServiceImpl();
-        Object[][] orderNotPay = orderService.getOrderNotPay("1001",currentPage);
+        String userPID=user.getPId();
+        Object[][] orderNotPay = orderService.getOrderNotPay(userPID,currentPage);
         table1.setModel(new DefaultTableModel(
                 orderNotPay,
                 table1Title

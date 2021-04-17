@@ -26,10 +26,10 @@ public class OrderDaoImpl implements OrderDao {
         String sql = "select * " +
                 "from " +
                 "    (select table1.*,ROWNUM rn " +
-                "    from\n" +
+                "    from " +
                 "        (select o.order_no,o.train_no,tps1.station_name as startStationName,tps2.station_name as arriveStationName,o.train_start_time,o.sumprice,p.pname " +
                 "        from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
-                "        where o.order_creator = '1001' " +
+                "        where o.order_creator = ? " +
                 "            and o.visual = 'T' " +
                 "            and o.train_no = tps1.train_num " +
                 "            and o.train_no = tps2.train_num " +
@@ -41,12 +41,15 @@ public class OrderDaoImpl implements OrderDao {
                 "            and o.order_state = 'T' " +
                 "            and o.PID = p.passengerID " +
                 "        ORDER BY train_start_time DESC) table1) table2 " +
-                "where rn between "+startIndex+" and "+endIndex;
+                "where rn between ? and ?";
         PreparedStatement pr = null;
         ResultSet rs = null;
         orderAlreadyPay = new Object[this.getOrderAlreadyPay_Count(userPID)][];
         try {
             pr = connection.prepareStatement(sql);
+            pr.setString(1,userPID);
+            pr.setInt(2,startIndex);
+            pr.setInt(3,endIndex);
             rs = pr.executeQuery();
             int i = 0;  //数组下标
             while(rs.next()){
@@ -85,7 +88,7 @@ public class OrderDaoImpl implements OrderDao {
                 "    from " +
                 "        (select o.order_no,o.train_no,tps1.station_name as startStationName,tps2.station_name as arriveStationName,o.train_start_time,o.sumprice,p.pname " +
                 "        from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
-                "        where o.order_creator = '1001' " +
+                "        where o.order_creator = ? " +
                 "            and o.visual = 'T' " +
                 "            and o.train_no = tps1.train_num " +
                 "            and o.train_no = tps2.train_num " +
@@ -97,12 +100,15 @@ public class OrderDaoImpl implements OrderDao {
                 "            and o.order_state = 'F' " +
                 "            and o.PID = p.passengerID " +
                 "        ORDER BY train_start_time DESC) table1) table2 " +
-                "where rn between "+startIndex+" and "+endIndex;
+                "where rn between ? and ? ";
         PreparedStatement pr = null;
         ResultSet rs = null;
         orderNotPay = new Object[this.getOrderNotPay_Count(userPID)][];
         try {
             pr = connection.prepareStatement(sql);
+            pr.setString(1,userPID);
+            pr.setInt(2,startIndex);
+            pr.setInt(3,endIndex);
             rs = pr.executeQuery();
             int i = 0;  //数组下标
             while(rs.next()){
@@ -136,7 +142,7 @@ public class OrderDaoImpl implements OrderDao {
         try {
             String sql = "select count(*) " +
                     "from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
-                    "where o.order_creator = " + userPID + " " +
+                    "where o.order_creator =? " +
                     "    and o.visual = 'T' " +
                     "    and o.train_no = tps1.train_num " +
                     "    and o.train_no = tps2.train_num " +
@@ -149,6 +155,7 @@ public class OrderDaoImpl implements OrderDao {
                     "    and o.PID = p.passengerId " +
                     "ORDER BY train_start_time DESC " ;
             ps = connection.prepareStatement(sql);
+            ps.setString(1,userPID);
             rs = ps.executeQuery();
             if(rs.next()){
                 number = rs.getInt(1);
@@ -170,7 +177,7 @@ public class OrderDaoImpl implements OrderDao {
         try {
             String sql = "select count(*) " +
                     "from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
-                    "where o.order_creator = " + userPID + " " +
+                    "where o.order_creator = ? " +
                     "    and o.visual = 'T' " +
                     "    and o.train_no = tps1.train_num " +
                     "    and o.train_no = tps2.train_num " +
@@ -183,6 +190,7 @@ public class OrderDaoImpl implements OrderDao {
                     "    and o.PID = p.passengerId " +
                     "ORDER BY train_start_time DESC " ;
             ps = connection.prepareStatement(sql);
+            ps.setString(1,userPID);
             rs = ps.executeQuery();
             if(rs.next()){
                 number = rs.getInt(1);
@@ -286,9 +294,10 @@ public class OrderDaoImpl implements OrderDao {
         try {
             String sql = "select tps.* " +
                     "from orders o,train_parking_station tps " +
-                    "where o.order_no = '" + orderNo + "' " +
+                    "where o.order_no = ? " +
                     "    and o.train_no = tps.train_num ";
             ps = connection.prepareStatement(sql);
+            ps.setString(1,orderNo);
             rs = ps.executeQuery();
             int i = 0;
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -328,7 +337,7 @@ public class OrderDaoImpl implements OrderDao {
                 "    from" +
                 "        (select o.order_no,o.train_no,tps1.station_name as startStationName,tps2.station_name as arriveStationName,o.train_start_time,o.sumprice,p.pname " +
                 "        from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
-                "        where o.order_creator = '1001' " +
+                "        where o.order_creator = ? " +
                 "            and o.visual = 'T' " +
                 "            and o.train_no = tps1.train_num " +
                 "            and o.train_no = tps2.train_num " +
@@ -339,12 +348,16 @@ public class OrderDaoImpl implements OrderDao {
                 "            and o.train_end_time = tps2.arrive_time " +
                 "            and o.PID = p.passengerID " +
                 "        ORDER BY train_start_time DESC) table1) table2 " +
-                "where rn between "+startIndex+" and "+endIndex;
+                "where rn between ? and ? ";
         PreparedStatement pr = null;
         ResultSet rs = null;
         historicalOrders = new Object[this.getHistoricalOrders_Count(userPID)][];
+        System.out.println(this.getHistoricalOrders_Count(userPID));
         try {
             pr = connection.prepareStatement(sql);
+            pr.setString(1,userPID);
+            pr.setInt(2,startIndex);
+            pr.setInt(3,endIndex);
             rs = pr.executeQuery();
             int i = 0;  //数组下标
             while(rs.next()){
@@ -378,9 +391,10 @@ public class OrderDaoImpl implements OrderDao {
         try{
             String sql = "select count(*) " +
                     "from orders o,train_parking_station tps " +
-                    "where o.order_no = '" + orderNo + "' " +
+                    "where o.order_no = ? " +
                     "    and o.train_no = tps.train_num ";
             ps = connection.prepareStatement(sql);
+            ps.setString(1,orderNo);
             rs = ps.executeQuery();
             if(rs.next()){
                 number = rs.getInt(1);
@@ -441,7 +455,7 @@ public class OrderDaoImpl implements OrderDao {
         try {
             String sql = "select count(*) " +
                     "from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
-                    "        where o.order_creator = '1001' " +
+                    "        where o.order_creator = ? " +
                     "            and o.visual = 'T' " +
                     "            and o.train_no = tps1.train_num " +
                     "            and o.train_no = tps2.train_num " +
@@ -453,6 +467,7 @@ public class OrderDaoImpl implements OrderDao {
                     "            and o.PID = p.passengerID " +
                     "        ORDER BY train_start_time DESC " ;
             ps = connection.prepareStatement(sql);
+            ps.setString(1,userPID);
             rs = ps.executeQuery();
             if(rs.next()){
                 number = rs.getInt(1);
@@ -504,7 +519,7 @@ public class OrderDaoImpl implements OrderDao {
                 "    from " +
                 "        (select o.order_no,o.train_no,tps1.station_name as startStationName,tps2.station_name as arriveStationName,o.train_start_time,o.sumprice,p.pname " +
                 "from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
-                "where o.order_creator = '1001' " +
+                "where o.order_creator = ? " +
                 "and o.PID = p.passengerid " +
                 "and o.visual = 'T' " +
                 "and o.train_no = tps1.train_num " +
@@ -513,12 +528,15 @@ public class OrderDaoImpl implements OrderDao {
                 "and o.station_end_no = tps2.station_order " +
                 "and o.train_start_time > to_char(sysdate) " +
                 "ORDER BY o.train_start_time DESC) table1) table2 " +
-                "where rn between "+startIndex+" and "+endIndex;
+                "where rn between ? and ? ";
         PreparedStatement pr = null;
         ResultSet rs = null;
         orderNotTravel = new Object[this.getOrderNotTravel_Count(userPID)][];
         try {
             pr = connection.prepareStatement(sql);
+            pr.setString(1,userPID);
+            pr.setInt(2,startIndex);
+            pr.setInt(3,endIndex);
             rs = pr.executeQuery();
             int i = 0;  //数组下标
             while(rs.next()){
@@ -552,7 +570,7 @@ public class OrderDaoImpl implements OrderDao {
         try {
             String sql = "select count(*)" +
                     "from orders o,passengers p,train_parking_station tps1,train_parking_station tps2 " +
-                    "where o.order_creator = '1001' " +
+                    "where o.order_creator = ? " +
                     "and o.PID = p.passengerid " +
                     "and o.visual = 'T' " +
                     "and o.train_no = tps1.train_num " +
@@ -562,6 +580,7 @@ public class OrderDaoImpl implements OrderDao {
                     "and o.train_start_time > to_char(sysdate) " +
                     "ORDER BY o.train_start_time DESC";
             ps = connection.prepareStatement(sql);
+            ps.setString(1,userPID);
             rs = ps.executeQuery();
             if(rs.next()){
                 number = rs.getInt(1);
