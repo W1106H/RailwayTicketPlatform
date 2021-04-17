@@ -37,10 +37,9 @@ public class OrderDaoImpl implements OrderDao {
                 "            and o.station_start_no = tps1.station_order " +
                 "            and o.station_end_no = tps2.station_order " +
                 "            and tps1.train_num = tps2.train_num " +
-                "            and o.train_start_time = tps1.start_time " +
-                "            and o.train_end_time = tps2.arrive_time " +
                 "            and o.order_state = 'T' " +
-                "            and o.PID = p.passengerID " +
+                "            and o.PID = p.passengerID" +
+                "            and o.TRAIN_START_TIME < sysdate " +
                 "        ORDER BY train_start_time DESC) table1) table2 " +
                 "where rn between ? and ?";
         PreparedStatement pr = null;
@@ -96,8 +95,6 @@ public class OrderDaoImpl implements OrderDao {
                 "            and o.station_start_no = tps1.station_order " +
                 "            and o.station_end_no = tps2.station_order " +
                 "            and tps1.train_num = tps2.train_num " +
-                "            and o.train_start_time = tps1.start_time " +
-                "            and o.train_end_time = tps2.arrive_time " +
                 "            and o.order_state = 'F' " +
                 "            and o.PID = p.passengerID " +
                 "        ORDER BY train_start_time DESC) table1) table2 " +
@@ -150,8 +147,6 @@ public class OrderDaoImpl implements OrderDao {
                     "    and o.station_start_no = tps1.station_order " +
                     "    and o.station_end_no = tps2.station_order " +
                     "    and tps1.train_num = tps2.train_num " +
-                    "    and o.train_start_time = tps1.start_time " +
-                    "    and o.train_end_time = tps2.arrive_time" +
                     "    and o.order_state = 'T' " +
                     "    and o.PID = p.passengerId " +
                     "ORDER BY train_start_time DESC " ;
@@ -185,8 +180,6 @@ public class OrderDaoImpl implements OrderDao {
                     "    and o.station_start_no = tps1.station_order " +
                     "    and o.station_end_no = tps2.station_order " +
                     "    and tps1.train_num = tps2.train_num " +
-                    "    and o.train_start_time = tps1.start_time " +
-                    "    and o.train_end_time = tps2.arrive_time" +
                     "    and o.order_state = 'F' " +
                     "    and o.PID = p.passengerId " +
                     "ORDER BY train_start_time DESC " ;
@@ -246,8 +239,6 @@ public class OrderDaoImpl implements OrderDao {
                     "    and o.train_no = tps2.train_num " +
                     "    and o.station_start_no = tps1.station_order " +
                     "    and o.station_end_no = tps2.station_order " +
-                    "    and o.train_start_time = tps1.start_Time " +
-                    "    and o.train_end_time = tps2.arrive_Time " +
                     "    and o.order_type = ot.id " +
                     "    and o.train_no = s.train_num " +
                     "    and o.carriage_no = s.carriage_num " +
@@ -345,8 +336,6 @@ public class OrderDaoImpl implements OrderDao {
                 "            and o.station_start_no = tps1.station_order " +
                 "            and o.station_end_no = tps2.station_order " +
                 "            and tps1.train_num = tps2.train_num " +
-                "            and o.train_start_time = tps1.start_time " +
-                "            and o.train_end_time = tps2.arrive_time " +
                 "            and o.PID = p.passengerID " +
                 "        ORDER BY train_start_time DESC) table1) table2 " +
                 "where rn between ? and ? ";
@@ -462,8 +451,6 @@ public class OrderDaoImpl implements OrderDao {
                     "            and o.station_start_no = tps1.station_order " +
                     "            and o.station_end_no = tps2.station_order " +
                     "            and tps1.train_num = tps2.train_num " +
-                    "            and o.train_start_time = tps1.start_time " +
-                    "            and o.train_end_time = tps2.arrive_time " +
                     "            and o.PID = p.passengerID " +
                     "        ORDER BY train_start_time DESC " ;
             ps = connection.prepareStatement(sql);
@@ -526,7 +513,7 @@ public class OrderDaoImpl implements OrderDao {
                 "and o.train_no = tps2.train_num " +
                 "and o.station_start_no = tps1.station_order " +
                 "and o.station_end_no = tps2.station_order " +
-                "and o.train_start_time > to_char(sysdate) " +
+                "and o.train_start_time > sysdate " +
                 "ORDER BY o.train_start_time DESC) table1) table2 " +
                 "where rn between ? and ? ";
         PreparedStatement pr = null;
@@ -577,7 +564,7 @@ public class OrderDaoImpl implements OrderDao {
                     "and o.train_no = tps2.train_num " +
                     "and o.station_start_no = tps1.station_order " +
                     "and o.station_end_no = tps2.station_order " +
-                    "and o.train_start_time > to_char(sysdate) " +
+                    "and o.train_start_time > sysdate " +
                     "ORDER BY o.train_start_time DESC";
             ps = connection.prepareStatement(sql);
             ps.setString(1,userPID);

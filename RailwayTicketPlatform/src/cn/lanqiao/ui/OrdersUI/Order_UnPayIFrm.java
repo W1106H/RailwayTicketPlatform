@@ -13,6 +13,7 @@ import cn.lanqiao.service.OrderService;
 import cn.lanqiao.service.TrainInforService;
 import cn.lanqiao.service.impl.OrderServiceImpl;
 import cn.lanqiao.service.impl.TrainInforServiceimpl;
+import cn.lanqiao.util.ClientUtil;
 
 import java.awt.*;
 import javax.swing.*;
@@ -119,17 +120,21 @@ public class Order_UnPayIFrm extends JInternalFrame {
             String endStationNum = orderService.getOrderByOrderNo(orderNo).getStation_End_NO();
             TrainInforService trainInforService = new TrainInforServiceimpl();
             trainInforService.refundTicket(orderNo, trainNum, startStationNum, endStationNum);
+            String hostIp = ClientUtil.getHostIp();
+            String refundTicketString = ClientUtil.generateRefundTicketString(hostIp, orderNo, trainNum, startStationNum, endStationNum);
+            ClientUtil.sendInfo(refundTicketString);
+            boolean receiveFlag = ClientUtil.receiveInfo();
             int current = Integer.parseInt(currentPage.getText());
             Object[][] orderNotPay = orderService.getOrderNotPay(pid, current);
-            table1.setModel(new DefaultTableModel(
-                    new Object[][] {},
-                    new String[] {}
-            ));
             table1.setModel(new DefaultTableModel(
                     orderNotPay,
                     table1Title
             ));
-            JOptionPane.showMessageDialog(table1, "删除成功！");
+            if (receiveFlag) {
+                JOptionPane.showMessageDialog(table1, "订单删除成功！");
+            } else {
+                JOptionPane.showMessageDialog(table1, "服务器开小差了~等会儿再来试试吧~ -.-~");
+            }
         }
 
     }
@@ -144,8 +149,15 @@ public class Order_UnPayIFrm extends JInternalFrame {
         if(confirmDialog==0){
             String orderNo = table1.getValueAt(table1.getSelectedRow(), 0).toString();  //获得订单号
             String pid = orderService.getOrderByOrderNo(orderNo).getPid();
+            String trainNum = orderService.getOrderByOrderNo(orderNo).getTrain_No();
+            String startStationNum = orderService.getOrderByOrderNo(orderNo).getStation_Start_No();
+            String endStationNum = orderService.getOrderByOrderNo(orderNo).getStation_End_NO();
+            String hostIp = ClientUtil.getHostIp();
+            String generateBuyTicketString = ClientUtil.generateBuyTicketString(hostIp, trainNum, startStationNum, endStationNum);
+            ClientUtil.sendInfo(generateBuyTicketString);
+            boolean bBoolean = ClientUtil.receiveInfo();
             Boolean aBoolean = orderService.updateOrderState(orderNo);
-            if(aBoolean)
+            if(aBoolean && bBoolean)
                 JOptionPane.showMessageDialog(table1, "订单支付成功！");
             else
                 JOptionPane.showMessageDialog(table1, "订单支付失败！");

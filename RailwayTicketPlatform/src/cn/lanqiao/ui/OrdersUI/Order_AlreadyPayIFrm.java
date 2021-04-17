@@ -13,6 +13,7 @@ import cn.lanqiao.service.OrderService;
 import cn.lanqiao.service.TrainInforService;
 import cn.lanqiao.service.impl.OrderServiceImpl;
 import cn.lanqiao.service.impl.TrainInforServiceimpl;
+import cn.lanqiao.util.ClientUtil;
 
 import java.awt.*;
 import javax.swing.*;
@@ -148,7 +149,7 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
             currentPage.setText(String.valueOf(current-1));
             OrderService orderService = new OrderServiceImpl();
             String userPID=user.getPId();
-            Object[][] orderAlreadyPay = orderService.getOrderAlreadyPay(userPID,current);
+            Object[][] orderAlreadyPay = orderService.getOrderAlreadyPay(userPID,current-1);
             table1.setModel(new DefaultTableModel(
                     orderAlreadyPay,
                     table1Title
@@ -165,7 +166,7 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
             currentPage.setText(String.valueOf(current+1));
             OrderService orderService = new OrderServiceImpl();
             String userPID=user.getPId();
-            Object[][] orderAlreadyPay = orderService.getOrderAlreadyPay(userPID,current);
+            Object[][] orderAlreadyPay = orderService.getOrderAlreadyPay(userPID,current+1);
             table1.setModel(new DefaultTableModel(
                     orderAlreadyPay,
                     table1Title
@@ -210,7 +211,7 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
             currentPage2.setText(String.valueOf(current2-1));
             OrderService orderService = new OrderServiceImpl();
             String userPID=user.getPId();
-            Object[][] orderNotTravel = orderService.getOrderNotTravel(userPID,current2);
+            Object[][] orderNotTravel = orderService.getOrderNotTravel(userPID,current2-1);
             table2.setModel(new DefaultTableModel(
                     orderNotTravel,
                     table2Title
@@ -227,7 +228,7 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
             currentPage2.setText(String.valueOf(current2+1));
             OrderService orderService = new OrderServiceImpl();
             String userPID=user.getPId();
-            Object[][] orderNotTravel = orderService.getOrderNotTravel(userPID,current2);
+            Object[][] orderNotTravel = orderService.getOrderNotTravel(userPID,current2+1);
             table2.setModel(new DefaultTableModel(
                     orderNotTravel,
                     table2Title
@@ -304,19 +305,25 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
             String startStationNum = orderService.getOrderByOrderNo(orderNo).getStation_Start_No();
             String endStationNum = orderService.getOrderByOrderNo(orderNo).getStation_End_NO();
             String pid = orderService.getOrderByOrderNo(orderNo).getPid();
-            TrainInforService trainInforService = new TrainInforServiceimpl();
-            trainInforService.refundTicket(orderNo, trainNum, startStationNum, endStationNum);
+            String hostIp = ClientUtil.getHostIp();
+            String sendRefundStr = ClientUtil.generateRefundTicketString(hostIp,orderNo, trainNum, startStationNum, endStationNum);
+            ClientUtil.sendInfo(sendRefundStr);
+            boolean receiveFlag = ClientUtil.receiveInfo();
             int current2 = Integer.parseInt(currentPage2.getText());
-            Object[][] orderNotTravel = orderService.getOrderNotTravel(pid, current2);
-            table2.setModel(new DefaultTableModel(
-                    new Object[][] {},
-                    new String[] {}
-            ));
+            if (receiveFlag) {
+                JOptionPane.showMessageDialog(table2, "退票成功！");
+            } else {
+                JOptionPane.showMessageDialog(table2,"服务器开小差了~稍后再来试试退票吧~");
+            }
+
+            String userPID=user.getPId();
+            Object[][] orderNotTravel = orderService.getOrderNotTravel(userPID,current2);
             table2.setModel(new DefaultTableModel(
                     orderNotTravel,
                     table2Title
             ));
-            JOptionPane.showMessageDialog(table2, "已成功退票！");
+
+
         }
     }
 

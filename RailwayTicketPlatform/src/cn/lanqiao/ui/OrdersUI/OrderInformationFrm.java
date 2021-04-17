@@ -266,6 +266,24 @@ public class OrderInformationFrm extends JFrame {
         }
     }
 
+    private void button1ActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        OrderService orderService = new OrderServiceImpl();
+        if(historicalOrdersTable.getSelectedRowCount()==0){
+            JOptionPane.showMessageDialog(historicalOrdersTable,"请选择需要查看的行");
+            return ;
+        }
+        String orderNo = historicalOrdersTable.getValueAt(historicalOrdersTable.getSelectedRow(), 0).toString();  //获得订单号
+        Orders detailOrder = orderService.getDetailOrder(orderNo);
+        if(detailOrder != null){
+            Order_Detail order_detail = new Order_Detail(detailOrder);
+            order_detail.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(historicalOrdersTable,"服务器开小差了~稍后再试试");
+        }
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -284,6 +302,7 @@ public class OrderInformationFrm extends JFrame {
         currentPage = new JLabel();
         label1 = new JLabel();
         pageCount = new JLabel();
+        button1 = new JButton();
         desktopPane2 = new JDesktopPane();
         label2 = new JLabel();
         scrollPane2 = new JScrollPane();
@@ -381,6 +400,9 @@ public class OrderInformationFrm extends JFrame {
 
                 //======== scrollPane1 ========
                 {
+
+                    //---- historicalOrdersTable ----
+                    historicalOrdersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                     scrollPane1.setViewportView(historicalOrdersTable);
                 }
                 desktopPane1.add(scrollPane1, JLayeredPane.DEFAULT_LAYER);
@@ -421,6 +443,12 @@ public class OrderInformationFrm extends JFrame {
                 pageCount.setEnabled(false);
                 desktopPane1.add(pageCount, JLayeredPane.DEFAULT_LAYER);
                 pageCount.setBounds(555, 355, 65, pageCount.getPreferredSize().height);
+
+                //---- button1 ----
+                button1.setText("\u67e5\u770b\u8be6\u60c5");
+                button1.addActionListener(e -> button1ActionPerformed(e));
+                desktopPane1.add(button1, JLayeredPane.DEFAULT_LAYER);
+                button1.setBounds(new Rectangle(new Point(10, 380), button1.getPreferredSize()));
             }
             frmContainer.add(desktopPane1, JLayeredPane.DEFAULT_LAYER);
             desktopPane1.setBounds(0, 0, 865, 410);
@@ -496,6 +524,7 @@ public class OrderInformationFrm extends JFrame {
     private JLabel currentPage;
     private JLabel label1;
     private JLabel pageCount;
+    private JButton button1;
     private JDesktopPane desktopPane2;
     private JLabel label2;
     private JScrollPane scrollPane2;
