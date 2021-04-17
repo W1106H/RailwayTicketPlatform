@@ -8,14 +8,18 @@ new FormModel {
 		} ) {
 			name: "this"
 			"visible": true
-			"border": new javax.swing.border.LineBorder( sfield java.awt.Color black, 1, false )
+			"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
 			"title": "已支付订单"
 			"closable": true
+			"background": new java.awt.Color( 102, 153, 255, 255 )
 			addEvent( new FormEvent( "javax.swing.event.InternalFrameListener", "internalFrameClosing", "thisInternalFrameClosing", true ) )
 			add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
 				name: "tabbedPane1"
+				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"background": new java.awt.Color( 102, 153, 255, 255 )
 				add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
 					name: "desktopPane2"
+					"background": new java.awt.Color( 102, 153, 255, 255 )
 					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 						name: "scrollPane1"
 						add( new FormComponent( "javax.swing.JTable" ) {
@@ -128,6 +132,7 @@ new FormModel {
 				} )
 				add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
 					name: "desktopPane1"
+					"background": new java.awt.Color( 102, 153, 255, 255 )
 					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 						name: "scrollPane2"
 						add( new FormComponent( "javax.swing.JTable" ) {

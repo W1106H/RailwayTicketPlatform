@@ -101,6 +101,7 @@ public class GetDetailTrainParkingFrm extends JFrame {
 
         //======== this ========
         setTitle("\u7ecf\u505c\u7ad9\u4fe1\u606f");
+        setIconImage(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/mainLogo.png")).getImage());
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 

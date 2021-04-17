@@ -26,11 +26,10 @@ public class MainFrm extends JFrame {
     public MainFrm(User user) {
         this.currentUser = user;
         this.setTitle("\u94c1\u8def\u7968\u52a1\u7ba1\u7406\u5e73\u53f0");
-        this.setTitle(this.getTitle() +"      " + "欢迎：" + user.getUName());
         var contentPane = getContentPane();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// 关闭窗口后操作为退出程序
-        init(contentPane);
         initComponents();
+        init(contentPane);
     }
 
     private void init(Container contentPane){
@@ -40,7 +39,6 @@ public class MainFrm extends JFrame {
         contentPane.setBackground(new Color(102, 153, 255));
         contentPane = getContentPane();
         contentPane.setLayout(null);
-
 
         {
             // compute preferred size
@@ -209,7 +207,8 @@ public class MainFrm extends JFrame {
     private void personnalMessMouseClicked(MouseEvent e) {
         User currentUser = this.currentUser;
         PersonalForm personalForm = new PersonalForm(currentUser);
-            personalForm.setVisible(true);
+        personalForm.setVisible(true);
+
     }
 
     private void initComponents() {

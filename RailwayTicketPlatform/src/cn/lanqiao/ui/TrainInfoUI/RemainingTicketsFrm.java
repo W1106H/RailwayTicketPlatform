@@ -58,6 +58,7 @@ public class RemainingTicketsFrm extends JDialog {
         }
         contentPane.add(scrollPane1);
         scrollPane1.setBounds(0, 0, 425, 130);
+        setIconImage(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/mainLogo.png")).getImage());
 
         contentPane.setPreferredSize(new Dimension(425, 160));
         setSize(425, 160);

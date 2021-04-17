@@ -37,11 +37,11 @@ public class AllTrainInfoFrm extends JFrame {
     public void init() {
         //设置datepicker只看到年月日??
 
-
         //设置颜色
         Container contentPane = getContentPane();
         contentPane.setBackground(new Color(102, 153, 255));
         //当数据超过下面的宽度和高度即可拉
+        setSize(875, 505);
         table1.setPreferredScrollableViewportSize(new Dimension( 795, 255));
         //创建下拉条
         JScrollPane scrollPane = new JScrollPane(table1);
@@ -121,6 +121,7 @@ public class AllTrainInfoFrm extends JFrame {
         //======== this ========
         setTitle("\u6240\u6709\u5217\u8f66\u4fe1\u606f");
         setBackground(new Color(102, 153, 255));
+        setIconImage(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/mainLogo.png")).getImage());
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 
@@ -152,7 +153,7 @@ public class AllTrainInfoFrm extends JFrame {
             scrollPane1.setViewportView(table1);
         }
         contentPane.add(scrollPane1);
-        scrollPane1.setBounds(50, 100, 800, 230);
+        scrollPane1.setBounds(30, 100, 800, 230);
 
         //---- btnTicket ----
         btnTicket.setText("\u67e5\u8be2\u4f59\u7968");
@@ -166,30 +167,30 @@ public class AllTrainInfoFrm extends JFrame {
         contentPane.add(btndetails);
         btndetails.setBounds(665, 360, 84, btndetails.getPreferredSize().height);
         contentPane.add(trainNum);
-        trainNum.setBounds(55, 25, 305, 30);
+        trainNum.setBounds(25, 25, 305, 30);
 
         //---- butserch ----
         butserch.setText("\u641c\u7d22");
         butserch.addActionListener(e -> butserchActionPerformed(e));
         contentPane.add(butserch);
-        butserch.setBounds(new Rectangle(new Point(385, 30), butserch.getPreferredSize()));
+        butserch.setBounds(new Rectangle(new Point(365, 30), butserch.getPreferredSize()));
 
         //---- btnupdata ----
         btnupdata.setText("\u5237\u65b0");
         btnupdata.addActionListener(e -> btnupdataActionPerformed(e));
         contentPane.add(btnupdata);
-        btnupdata.setBounds(new Rectangle(new Point(485, 30), btnupdata.getPreferredSize()));
+        btnupdata.setBounds(new Rectangle(new Point(460, 30), btnupdata.getPreferredSize()));
         contentPane.add(datePicker1);
-        datePicker1.setBounds(55, 65, 200, 26);
+        datePicker1.setBounds(25, 65, 200, 26);
 
         //---- radioButton1 ----
         radioButton1.setText("\u5b66\u751f\u7968");
         radioButton1.setBackground(new Color(102, 153, 255, 110));
         contentPane.add(radioButton1);
-        radioButton1.setBounds(290, 70, 70, radioButton1.getPreferredSize().height);
+        radioButton1.setBounds(255, 70, 70, radioButton1.getPreferredSize().height);
 
-        contentPane.setPreferredSize(new Dimension(925, 440));
-        setSize(925, 440);
+        contentPane.setPreferredSize(new Dimension(865, 465));
+        setSize(865, 465);
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }

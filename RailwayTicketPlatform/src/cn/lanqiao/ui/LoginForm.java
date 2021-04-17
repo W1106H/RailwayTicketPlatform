@@ -7,6 +7,7 @@ package cn.lanqiao.ui;
 import cn.lanqiao.entity.Peoples.User;
 import cn.lanqiao.service.UserService;
 import cn.lanqiao.service.impl.UserServiceImpl;
+import com.sun.tools.javac.Main;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -99,10 +100,7 @@ public class LoginForm extends JFrame {
                     boolean isdelete = file1.delete();
                 }
             }
-            PersonalForm personalForm = new PersonalForm(user);
-            personalForm.setVisible(true);
-            //登录成功:转到主窗体
-            //new mainForm(currentUser).setVisible(true);
+           new MainFrm(currentUser).setVisible(true);//主窗体
             //登录窗体需要隐藏;
             this.setVisible(false);
         } else{
@@ -135,6 +133,7 @@ public class LoginForm extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("\u7528\u6237\u767b\u5f55");
         setBackground(Color.white);
+        setIconImage(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/mainLogo.png")).getImage());
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 

@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "7.0.1.0.272" Java: "11.0.9.1" encoding: "UTF-8"
+JFDML JFormDesigner: "7.0.1.0.272" Java: "11.0.5" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -11,6 +11,7 @@ new FormModel {
 			"title": "用户登录"
 			"$sizePolicy": 1
 			"background": new java.awt.Color( 255, 255, 255, 255 )
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/cn/lanqiao/util/Pictures/mainLogo.png" )
 			add( new FormContainer( "javax.swing.JLayeredPane", new FormLayoutManager( class javax.swing.JLayeredPane ) ) {
 				name: "layeredPane1"
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {

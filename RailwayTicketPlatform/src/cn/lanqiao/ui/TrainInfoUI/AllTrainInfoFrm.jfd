@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "7.0.1.0.272" Java: "1.8.0_152-release" encoding: "UTF-8"
+JFDML JFormDesigner: "7.0.1.0.272" Java: "11.0.5" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -10,6 +10,7 @@ new FormModel {
 			"$sizePolicy": 1
 			"title": "所有列车信息"
 			"background": new java.awt.Color( 102, 153, 255, 255 )
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/cn/lanqiao/util/Pictures/mainLogo.png" )
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "scrollPane1"
 				add( new FormComponent( "javax.swing.JTable" ) {
@@ -185,10 +186,10 @@ new FormModel {
 					} )
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 50
 				"y": 100
 				"width": 800
 				"height": 230
+				"x": 30
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnTicket"
@@ -211,7 +212,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "trainNum"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 55
+				"x": 25
 				"y": 25
 				"width": 305
 				"height": 30
@@ -221,7 +222,7 @@ new FormModel {
 				"text": "搜索"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "butserchActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 385
+				"x": 365
 				"y": 30
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
@@ -229,13 +230,13 @@ new FormModel {
 				"text": "刷新"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnupdataActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 485
+				"x": 460
 				"y": 30
 			} )
 			add( new FormComponent( "com.eltima.components.ui.DatePicker" ) {
 				name: "datePicker1"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 55
+				"x": 25
 				"y": 65
 				"width": 200
 				"height": 26
@@ -245,13 +246,13 @@ new FormModel {
 				"text": "学生票"
 				"background": new java.awt.Color( 102, 153, 255, 110 )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 290
+				"x": 255
 				"y": 70
 				"width": 70
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 85, 70 )
-			"size": new java.awt.Dimension( 925, 440 )
+			"location": new java.awt.Point( 120, 70 )
+			"size": new java.awt.Dimension( 865, 465 )
 		} )
 	}
 }

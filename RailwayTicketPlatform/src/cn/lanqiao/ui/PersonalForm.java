@@ -19,6 +19,7 @@ public class PersonalForm extends JFrame {
     public PersonalForm(User currentUser) {
         this.currentUser=currentUser;
         initComponents();
+        init(label3);
     }
 
     private void passengerButtonActionPerformed(ActionEvent e) {
@@ -43,6 +44,10 @@ public class PersonalForm extends JFrame {
             return;
         }
         new SettingJDialog(currentUser).setVisible(true);
+    }
+    private void init(JLabel label3)
+    {
+        new PersonalFormThread(label3).start();
     }
 
     private void initComponents() {

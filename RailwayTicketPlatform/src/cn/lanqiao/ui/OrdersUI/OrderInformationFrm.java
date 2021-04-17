@@ -30,6 +30,8 @@ public class OrderInformationFrm extends JFrame {
     }
 
     private void init(){
+        setSize(875, 505);
+        frmContainer.setBackground(new Color(102, 153, 255));
         desktopPane2.setVisible(true);
         historicalOrdersTable.setModel(new DefaultTableModel(
                 new Object[][] {},
@@ -283,6 +285,7 @@ public class OrderInformationFrm extends JFrame {
 
         //======== this ========
         setTitle("\u8ba2\u5355\u4fe1\u606f\u67e5\u8be2");
+        setIconImage(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/mainLogo.png")).getImage());
         var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -362,9 +365,11 @@ public class OrderInformationFrm extends JFrame {
 
         //======== frmContainer ========
         {
+            frmContainer.setBackground(new Color(102, 153, 255));
 
             //======== desktopPane1 ========
             {
+                desktopPane1.setBackground(new Color(102, 153, 255));
 
                 //======== scrollPane1 ========
                 {
@@ -414,6 +419,7 @@ public class OrderInformationFrm extends JFrame {
 
             //======== desktopPane2 ========
             {
+                desktopPane2.setBackground(new Color(102, 153, 255));
 
                 //---- label2 ----
                 label2.setText("\u672c\u4eba\u8f66\u7968");

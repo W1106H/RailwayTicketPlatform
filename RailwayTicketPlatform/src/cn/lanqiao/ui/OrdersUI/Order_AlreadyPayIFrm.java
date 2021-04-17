@@ -35,6 +35,10 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
         scrollPane1.setBounds(0, 0, 840, 325);
         tabbedPane1.setBounds(0, 0, 845, 390);
 
+        desktopPane2.setBackground(new Color(102, 153, 255));
+        tabbedPane1.setBackground(new Color(102, 153, 255));
+        desktopPane1.setBackground(new Color(102, 153, 255));
+
         button1.setVisible(true);
 //        初始化table1：已出行订单
         table1.setModel(new DefaultTableModel(
@@ -154,7 +158,7 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
     private void nextPageActionPerformed(ActionEvent e) {
         int current = Integer.parseInt(currentPage.getText());
         int pagecount= Integer.parseInt(pageCount.getText());
-        if(pagecount>=current)
+        if(pagecount!=current)
         {
             currentPage.setText(String.valueOf(current+1));
             OrderService orderService = new OrderServiceImpl();
@@ -212,7 +216,7 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
     private void nextPage2ActionPerformed(ActionEvent e) {
         int current2 = Integer.parseInt(currentPage2.getText());
         int pagecount2= Integer.parseInt(pageCount2.getText());
-        if(pagecount2>=current2)
+        if(pagecount2!=current2)
         {
             currentPage2.setText(String.valueOf(current2+1));
             OrderService orderService = new OrderServiceImpl();
@@ -338,9 +342,10 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
 
         //======== this ========
         setVisible(true);
-        setBorder(LineBorder.createBlackLineBorder());
+        setBorder(null);
         setTitle("\u5df2\u652f\u4ed8\u8ba2\u5355");
         setClosable(true);
+        setBackground(new Color(102, 153, 255));
         addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameClosing(InternalFrameEvent e) {
@@ -352,9 +357,12 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
 
         //======== tabbedPane1 ========
         {
+            tabbedPane1.setBorder(null);
+            tabbedPane1.setBackground(new Color(102, 153, 255));
 
             //======== desktopPane2 ========
             {
+                desktopPane2.setBackground(new Color(102, 153, 255));
 
                 //======== scrollPane1 ========
                 {
@@ -427,6 +435,7 @@ public class Order_AlreadyPayIFrm extends JInternalFrame {
 
             //======== desktopPane1 ========
             {
+                desktopPane1.setBackground(new Color(102, 153, 255));
 
                 //======== scrollPane2 ========
                 {

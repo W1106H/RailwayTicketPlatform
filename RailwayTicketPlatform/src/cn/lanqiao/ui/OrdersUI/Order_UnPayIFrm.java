@@ -30,12 +30,13 @@ public class Order_UnPayIFrm extends JInternalFrame {
 
     private void init(){
         scrollPane1.setBounds(0, 0, 840, 325);
-        this.setSize(850, 415);
+        this.setSize(865, 420);
 //        初始化table2：未支付订单
         table1.setModel(new DefaultTableModel(
                 new Object[][] {},
                 new String[] {}
         ));
+
         currentPage.setText(String.valueOf(1));
         int currentPage=Integer.parseInt(this.currentPage.getText());
         OrderService orderService = new OrderServiceImpl();
@@ -67,7 +68,7 @@ public class Order_UnPayIFrm extends JInternalFrame {
     private void nextPageActionPerformed(ActionEvent e) {
         int current = Integer.parseInt(currentPage.getText());
         int pagecount= Integer.parseInt(pageCount.getText());
-        if(pagecount>=current)
+        if(pagecount!=current)
         {
             currentPage.setText(String.valueOf(current+1));
             OrderService orderService = new OrderServiceImpl();
@@ -87,6 +88,7 @@ public class Order_UnPayIFrm extends JInternalFrame {
 
     private void refreshActionPerformed(ActionEvent e) {
         int currentPage = Integer.parseInt(this.currentPage.getText());
+        System.out.println(currentPage);
         OrderService orderService = new OrderServiceImpl();
         Object[][] orderNotPay = orderService.getOrderNotPay("1001",currentPage);
         table1.setModel(new DefaultTableModel(
@@ -142,7 +144,8 @@ public class Order_UnPayIFrm extends JInternalFrame {
         setVisible(true);
         setClosable(true);
         setTitle("\u672a\u652f\u4ed8\u8ba2\u5355");
-        setBorder(LineBorder.createBlackLineBorder());
+        setBorder(null);
+        setBackground(new Color(102, 153, 255));
         addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameActivated(InternalFrameEvent e) {
@@ -157,7 +160,7 @@ public class Order_UnPayIFrm extends JInternalFrame {
             scrollPane1.setViewportView(table1);
         }
         contentPane.add(scrollPane1);
-        scrollPane1.setBounds(5, 10, 750, 295);
+        scrollPane1.setBounds(0, 10, 865, 335);
 
         //---- refresh ----
         refresh.setText("\u5237\u65b0");

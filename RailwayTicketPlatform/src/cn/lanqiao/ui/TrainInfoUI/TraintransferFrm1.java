@@ -55,6 +55,7 @@ public class TraintransferFrm1 extends JFrame {
         label1 = new JLabel();
 
         //======== this ========
+        setIconImage(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/mainLogo.png")).getImage());
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 

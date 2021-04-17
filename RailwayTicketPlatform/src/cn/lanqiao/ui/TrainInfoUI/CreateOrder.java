@@ -72,6 +72,7 @@ public class CreateOrder extends JFrame {
         btnCreate = new JButton();
 
         //======== this ========
+        setIconImage(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/mainLogo.png")).getImage());
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 

@@ -100,6 +100,7 @@ public class serTrainInfoByStation1 extends JFrame {
 
         //======== this ========
         setTitle("\u5217\u8f66\u4fe1\u606f");
+        setIconImage(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/mainLogo.png")).getImage());
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 

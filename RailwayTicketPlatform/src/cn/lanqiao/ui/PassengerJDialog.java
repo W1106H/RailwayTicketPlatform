@@ -91,8 +91,11 @@ public class PassengerJDialog extends JDialog {
 
             //---- table1 ----
             table1.setModel(new DefaultTableModel(
-                    passengerService.getAllPassenger(currentUser),
-                    header
+                new Object[][] {
+                },
+                new String[] {
+                    null, null, null, null
+                }
             ));
             table1.setAutoCreateRowSorter(true);
             scrollPane1.setViewportView(table1);
