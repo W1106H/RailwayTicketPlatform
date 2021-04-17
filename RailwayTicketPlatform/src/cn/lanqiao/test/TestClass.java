@@ -9,6 +9,7 @@ import cn.lanqiao.dao.impl.TrainInforDaoimpl;
 import cn.lanqiao.entity.TrainInformation.TrainInfo;
 import cn.lanqiao.entity.Peoples.Orders;
 import cn.lanqiao.entity.Peoples.User;
+import cn.lanqiao.service.OrderService;
 import cn.lanqiao.util.JDBCUtil;
 import cn.lanqiao.util.StringForData;
 import org.junit.Test;
@@ -236,6 +237,14 @@ public class TestClass {
             }
             System.out.println();
         }
+    }
+
+    @Test
+    public void testOrderAdd(){
+        OrderDao orderDao = new OrderDaoImpl();
+        java.util.Date ad= new java.util.Date();
+        orderDao.addOrder("622222200010252244","D2985","31","35",new java.util.Date(),new java.util.Date(),"1001",168,2);
+        System.out.println("end");
     }
 
     @Test

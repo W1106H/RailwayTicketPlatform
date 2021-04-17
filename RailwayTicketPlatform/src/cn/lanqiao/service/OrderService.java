@@ -20,4 +20,5 @@ public interface OrderService {
     public Object[][] getTrainPassInfo(String orderNo);
     public Object[][] getPersonalTicket(String userPID);
     public Orders getOrderByOrderNo(String orderNo);
+    public boolean addOrder(String PID, String train_no, String start_station_no, String arrive_station_no, java.util.Date startTime ,java.util.Date arriveTime, String order_creator, double sumprice, int orderType);
 }

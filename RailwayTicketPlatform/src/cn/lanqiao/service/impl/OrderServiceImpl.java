@@ -102,4 +102,11 @@ public class OrderServiceImpl implements OrderService {
     public Object[][] getPersonalTicket(String userPID) {
         return orderDao.getPersonalTicket(userPID);
     }
+
+    @Override
+    public boolean addOrder(String PID, String train_no, String start_station_no, String arrive_station_no, Date startTime, Date arriveTime, String order_creator, double sumprice, int orderType) {
+        int flag = orderDao.addOrder(PID,train_no,start_station_no,arrive_station_no,startTime,arriveTime,order_creator,sumprice,orderType);
+        if(flag > 0) return true;
+        else return false;
+    }
 }

@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="ojdbc6">
     <CLASSES>
-      <root url="jar://D:/GUT/蓝桥学院/参考文档/jars/ojdbc6.jar!/" />
+      <root url="jar://F:/蓝桥/Jar/OracleJDBC/ojdbc6.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

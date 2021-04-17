@@ -7,6 +7,7 @@ import cn.lanqiao.util.StringForData;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.UUID;
 
 public class OrderDaoImpl implements OrderDao {
     private boolean orderAlreadyPayFlag = false;
@@ -69,6 +70,7 @@ public class OrderDaoImpl implements OrderDao {
         return orderAlreadyPay;
     }
 
+//    获得未支付的表格信息
     @Override
     public Object[][] getOrderNotPay(String userPID, int currentPage2) {
         Object[][] orderNotPay = null;
@@ -639,6 +641,58 @@ public class OrderDaoImpl implements OrderDao {
             JDBCUtil.close(rs,ps,connection);
         }
         return number;
+    }
+
+    @Override
+    public int addOrder(String PID, String train_no, String start_station_no, String arrive_station_no, java.util.Date startTime ,java.util.Date arriveTime, String order_creator, double sumprice, int orderType) {
+        int flag = 0;
+        Connection con = JDBCUtil.getConnection();
+        PreparedStatement ps = null;
+        try{
+//            获得订单创建时间
+            java.util.Date nowDate = new java.util.Date();
+            Date order_create_date = new Date(nowDate.getTime());
+
+//            插入订单至订单表中
+            UUID uuid = UUID.randomUUID();
+            String order_no = uuid.toString();
+            String sql="insert into orders values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, order_no);
+            ps.setString(2, PID);
+            ps.setString(3, train_no);
+            ps.setDate(4,new Date(startTime.getTime()));
+            ps.setDate(5,new Date(arriveTime.getTime()));
+            ps.setString(6,start_station_no);
+            ps.setString(7,arrive_station_no);
+            ps.setString(8,String.valueOf((int)(Math.random()*10 + 1)));
+            ps.setString(9,String.valueOf((int)(Math.random()*11 + 1)));
+            ps.setString(10,order_creator);
+            ps.setString(11,"F");
+            ps.setDate(12,order_create_date);
+            ps.setDouble(13,sumprice);
+            ps.setString(14,"T");
+            ps.setInt(15,orderType);
+            flag = ps.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return flag;
     }
 
     public void setOrderAlreadyPayFlag(boolean orderAlreadyPayFlag) {
