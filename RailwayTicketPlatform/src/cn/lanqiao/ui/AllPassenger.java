@@ -38,6 +38,7 @@ public class AllPassenger extends JDialog {
         this.price = price;
         initComponents();
         init();
+        this.setIconImage(new ImageIcon(getClass().getResource("/cn/lanqiao/util/Pictures/mainLogo.png")).getImage());
     }
     private void init() {
         {
@@ -99,6 +100,7 @@ public class AllPassenger extends JDialog {
         btnaddpasseng = new JButton();
 
         //======== this ========
+        setTitle("\u4e58\u5ba2\u4fe1\u606f");
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 
@@ -121,12 +123,14 @@ public class AllPassenger extends JDialog {
 
         //---- btncreatOrder ----
         btncreatOrder.setText("\u8ba2\u7968");
+        btncreatOrder.setFont(new Font("\u5b8b\u4f53", Font.PLAIN, 12));
         btncreatOrder.addActionListener(e -> btncreatOrderActionPerformed(e));
         contentPane.add(btncreatOrder);
         btncreatOrder.setBounds(new Rectangle(new Point(400, 295), btncreatOrder.getPreferredSize()));
 
         //---- btnaddpasseng ----
         btnaddpasseng.setText("\u6dfb\u52a0\u4e58\u5ba2");
+        btnaddpasseng.setFont(new Font("\u5b8b\u4f53", Font.PLAIN, 12));
         btnaddpasseng.addActionListener(e -> btnaddpassengActionPerformed(e));
         contentPane.add(btnaddpasseng);
         btnaddpasseng.setBounds(new Rectangle(new Point(305, 295), btnaddpasseng.getPreferredSize()));

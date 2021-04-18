@@ -66,8 +66,8 @@ public class AllTrainInfoFrm extends JFrame {
         scrollPane1.setViewportView(table1);
 
     }
-
-    private void btnTicketActionPerformed(ActionEvent e) {
+//----------弃用
+   /* private void btnTicketActionPerformed(ActionEvent e) {
         int selectedRow = table1.getSelectedRow();
         //等到选中列车的列车号
         String trainNum = table1.getValueAt(selectedRow, 0).toString();
@@ -76,10 +76,10 @@ public class AllTrainInfoFrm extends JFrame {
         //将座位信息传到RemainingTicketsFrm中
         RemainingTicketsFrm remainingTicketsFrm = new RemainingTicketsFrm(tickets);
         remainingTicketsFrm.setVisible(true);
-    }
+    }*/
 
     private void btndetailsActionPerformed(ActionEvent e) {
-        if (table1.getSelectedRow() > 0) {
+        if (table1.getSelectedRow() >= 0) {
             if (datePicker1.getText().length() > 0) {
                 year_month_day = datePicker1.getText().substring(0, 10);
                 if (radioButton1.isSelected()) {
@@ -142,7 +142,7 @@ public class AllTrainInfoFrm extends JFrame {
             JOptionPane.showMessageDialog(null,"请选择列车");
             return;
         }*/
-        if (table1.getSelectedRow()> 0) {
+        if (table1.getSelectedRow()>= 0) {
             if (datePicker1.getText().length() > 0) {
                 year_month_day = datePicker1.getText().substring(0, 10);
                 ticketType = radioButton1.isSelected() ? 1 : 2;
@@ -176,7 +176,6 @@ public class AllTrainInfoFrm extends JFrame {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         scrollPane1 = new JScrollPane();
         table1 = new JTable();
-        btnTicket = new JButton();
         btndetails = new JButton();
         trainNum = new JTextField();
         butserch = new JButton();
@@ -222,28 +221,25 @@ public class AllTrainInfoFrm extends JFrame {
         contentPane.add(scrollPane1);
         scrollPane1.setBounds(30, 100, 800, 230);
 
-        //---- btnTicket ----
-        btnTicket.setText("\u67e5\u8be2\u4f59\u7968");
-        btnTicket.addActionListener(e -> btnTicketActionPerformed(e));
-        contentPane.add(btnTicket);
-        btnTicket.setBounds(770, 360, 85, btnTicket.getPreferredSize().height);
-
         //---- btndetails ----
         btndetails.setText("\u67e5\u8be2\u8be6\u60c5");
+        btndetails.setFont(new Font("\u5b8b\u4f53", Font.PLAIN, 12));
         btndetails.addActionListener(e -> btndetailsActionPerformed(e));
         contentPane.add(btndetails);
-        btndetails.setBounds(665, 360, 84, btndetails.getPreferredSize().height);
+        btndetails.setBounds(745, 360, 84, btndetails.getPreferredSize().height);
         contentPane.add(trainNum);
         trainNum.setBounds(25, 25, 305, 30);
 
         //---- butserch ----
         butserch.setText("\u641c\u7d22");
+        butserch.setFont(new Font("\u5b8b\u4f53", Font.PLAIN, 12));
         butserch.addActionListener(e -> butserchActionPerformed(e));
         contentPane.add(butserch);
         butserch.setBounds(new Rectangle(new Point(365, 30), butserch.getPreferredSize()));
 
         //---- btnupdata ----
         btnupdata.setText("\u5237\u65b0");
+        btnupdata.setFont(new Font("\u5b8b\u4f53", Font.PLAIN, 12));
         btnupdata.addActionListener(e -> btnupdataActionPerformed(e));
         contentPane.add(btnupdata);
         btnupdata.setBounds(new Rectangle(new Point(460, 30), btnupdata.getPreferredSize()));
@@ -253,14 +249,16 @@ public class AllTrainInfoFrm extends JFrame {
         //---- radioButton1 ----
         radioButton1.setText("\u5b66\u751f\u7968");
         radioButton1.setBackground(new Color(102, 153, 255, 110));
+        radioButton1.setFont(new Font("\u5b8b\u4f53", Font.PLAIN, 12));
         contentPane.add(radioButton1);
         radioButton1.setBounds(255, 70, 70, radioButton1.getPreferredSize().height);
 
         //---- btnorder ----
         btnorder.setText("\u8ba2\u7968");
+        btnorder.setFont(new Font("\u5b8b\u4f53", Font.PLAIN, 12));
         btnorder.addActionListener(e -> btnorderActionPerformed(e));
         contentPane.add(btnorder);
-        btnorder.setBounds(new Rectangle(new Point(560, 360), btnorder.getPreferredSize()));
+        btnorder.setBounds(new Rectangle(new Point(615, 360), btnorder.getPreferredSize()));
 
         contentPane.setPreferredSize(new Dimension(865, 465));
         setSize(865, 465);
@@ -271,7 +269,6 @@ public class AllTrainInfoFrm extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JScrollPane scrollPane1;
     private JTable table1;
-    private JButton btnTicket;
     private JButton btndetails;
     private JTextField trainNum;
     private JButton butserch;

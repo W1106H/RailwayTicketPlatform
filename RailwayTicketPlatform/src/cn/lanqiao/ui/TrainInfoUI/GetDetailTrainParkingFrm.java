@@ -11,6 +11,7 @@ import cn.lanqiao.dao.impl.TrainInforDaoimpl;
 import cn.lanqiao.entity.Peoples.User;
 import cn.lanqiao.service.TrainInforService;
 import cn.lanqiao.service.impl.TrainInforServiceimpl;
+import cn.lanqiao.ui.AllPassenger;
 
 import java.awt.*;
 import javax.swing.*;
@@ -98,9 +99,11 @@ public class GetDetailTrainParkingFrm extends JFrame {
         else {
             JOptionPane.showMessageDialog(null,"请选择两行或一行");
         }
+        AllPassenger allPassenger = new AllPassenger(currentUser, order, year_month_day, ticketType, price);
+        allPassenger.setVisible(true);
         //还差参数
-        CreateOrder createOrder = new CreateOrder(order, year_month_day, ticketType,price);
-        createOrder.setVisible(true);
+        //CreateOrder createOrder = new CreateOrder(order, year_month_day, ticketType,price);
+        //createOrder.setVisible(true);
     /*    for (int i = 0; i < 1; i++) {
             for (int j = 0; j < 6; j++) {
                 System.out.print(order[i][j]+" ");
@@ -147,12 +150,14 @@ public class GetDetailTrainParkingFrm extends JFrame {
 
         //---- btnreservation ----
         btnreservation.setText("\u8ba2\u7968");
+        btnreservation.setFont(new Font("\u5b8b\u4f53", Font.PLAIN, 12));
         btnreservation.addActionListener(e -> btnreservationActionPerformed(e));
         contentPane.add(btnreservation);
         btnreservation.setBounds(new Rectangle(new Point(450, 165), btnreservation.getPreferredSize()));
 
         //---- label1 ----
         label1.setText("\u8ba2\u7968\u6309\u4f4fCTRL\u9009\u62e9\u4e24\u884c\u6216\u9009\u62e9\u4e00\u884c");
+        label1.setFont(new Font("\u5b8b\u4f53", Font.PLAIN, 12));
         contentPane.add(label1);
         label1.setBounds(10, 160, 195, 30);
 

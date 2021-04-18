@@ -142,18 +142,21 @@ public class serTrainInfoByStation1 extends JFrame {
 
         //---- btndatail ----
         btndatail.setText("\u67e5\u8be2\u8be6\u60c5");
+        btndatail.setFont(new Font("\u5b8b\u4f53", Font.PLAIN, 12));
         btndatail.addActionListener(e -> btndatailActionPerformed(e));
         contentPane.add(btndatail);
         btndatail.setBounds(new Rectangle(new Point(660, 200), btndatail.getPreferredSize()));
 
         //---- btnOrder ----
         btnOrder.setText("\u8ba2\u7968");
+        btnOrder.setFont(new Font("\u5b8b\u4f53", Font.PLAIN, 12));
         btnOrder.addActionListener(e -> btnOrderActionPerformed(e));
         contentPane.add(btnOrder);
         btnOrder.setBounds(new Rectangle(new Point(555, 200), btnOrder.getPreferredSize()));
 
         //---- btntransfer ----
         btntransfer.setText("\u4e2d\u8f6c\u67e5\u8be2");
+        btntransfer.setFont(new Font("\u5b8b\u4f53", Font.PLAIN, 12));
         btntransfer.addActionListener(e -> btntransferActionPerformed(e));
         contentPane.add(btntransfer);
         btntransfer.setBounds(new Rectangle(new Point(450, 200), btntransfer.getPreferredSize()));

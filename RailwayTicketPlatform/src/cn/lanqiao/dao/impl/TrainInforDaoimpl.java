@@ -678,14 +678,14 @@ public class TrainInforDaoimpl implements TrainInforDao {
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String stationOrder = null;
+        String stationOrder = "1";
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, trainNum);
             preparedStatement.setString(2, stationName);
             resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) { stationOrder = resultSet.getString("STATION_ORDER");
-            }
+            while (resultSet.next()) { stationOrder = resultSet.getString("STATION_ORDER");
+           }
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {

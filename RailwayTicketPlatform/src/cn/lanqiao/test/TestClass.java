@@ -250,7 +250,7 @@ public class TestClass {
     @Test
     public void testgetStationOrder() {
         TrainInforDao trainInforDao = new TrainInforDaoimpl();
-        System.out.println(trainInforDao.getStationOrder("D8481", "贵港站"));
+        System.out.println(trainInforDao.getStationOrder("D8481", "桂林北"));
     }
 }
 

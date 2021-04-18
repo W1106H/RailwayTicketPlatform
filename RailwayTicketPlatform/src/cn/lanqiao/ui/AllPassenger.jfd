@@ -5,6 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "this"
+			"title": "乘客信息"
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "scrollPane1"
 				add( new FormComponent( "javax.swing.JTable" ) {
@@ -41,6 +42,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btncreatOrder"
 				"text": "订票"
+				"font": new java.awt.Font( "宋体", 0, 12 )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btncreatOrderActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 400
@@ -49,6 +51,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnaddpasseng"
 				"text": "添加乘客"
+				"font": new java.awt.Font( "宋体", 0, 12 )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnaddpassengActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 305
