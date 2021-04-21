@@ -1,0 +1,211 @@
+JFDML JFormDesigner: "7.0.1.0.272" Java: "11.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "this"
+			"title": "订单确认"
+			"background": new java.awt.Color( 102, 153, 255, 255 )
+			add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
+				name: "desktopPane1"
+				"background": new java.awt.Color( 102, 153, 255, 255 )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label1"
+					"text": "No."
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 3, false )
+				}, new FormLayoutConstraints( null ) {
+					"width": 30
+					"height": 30
+					"x": 0
+					"y": 35
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "orderNo"
+					"text": "asdfsdfasd"
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 1, false )
+				}, new FormLayoutConstraints( null ) {
+					"width": 445
+					"x": 30
+					"y": 40
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label3"
+					"text": "出发时间："
+					"font": new java.awt.Font( "方正粗黑宋简体", 0, 20 )
+				}, new FormLayoutConstraints( null ) {
+					"x": 65
+					"y": 195
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label4"
+					"text": "始发站："
+					"font": new java.awt.Font( "方正粗黑宋简体", 0, 20 )
+				}, new FormLayoutConstraints( null ) {
+					"width": 95
+					"height": 19
+					"x": 65
+					"y": 125
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label5"
+					"text": "到达站："
+					"font": new java.awt.Font( "方正粗黑宋简体", 0, 20 )
+				}, new FormLayoutConstraints( null ) {
+					"width": 90
+					"height": 19
+					"x": 65
+					"y": 160
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label6"
+					"text": "车   次："
+					"font": new java.awt.Font( "方正粗黑宋简体", 0, 20 )
+				}, new FormLayoutConstraints( null ) {
+					"width": 85
+					"height": 19
+					"x": 65
+					"y": 90
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label7"
+					"text": "乘车人："
+					"font": new java.awt.Font( "方正粗黑宋简体", 0, 20 )
+				}, new FormLayoutConstraints( null ) {
+					"height": 19
+					"x": 65
+					"y": 230
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label8"
+					"text": "身份证号："
+					"font": new java.awt.Font( "方正粗黑宋简体", 0, 20 )
+				}, new FormLayoutConstraints( null ) {
+					"width": 110
+					"height": 19
+					"x": 65
+					"y": 265
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label9"
+					"text": "总金额："
+					"font": new java.awt.Font( "方正粗黑宋简体", 0, 20 )
+				}, new FormLayoutConstraints( null ) {
+					"width": 100
+					"height": 19
+					"x": 65
+					"y": 300
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label10"
+					"text": "请确认您的订单信息并进行支付，您的订单信息如下:"
+					"font": new java.awt.Font( "田氏颜体大字库", 0, 21 )
+					"foreground": sfield java.awt.Color white
+				}, new FormLayoutConstraints( null ) {
+					"width": 495
+					"x": 0
+					"y": 0
+				} )
+				add( new FormComponent( "javax.swing.JCheckBox" ) {
+					name: "userCheck"
+					"text": "我已确认以上信息"
+					"font": new java.awt.Font( "楷体", 0, 19 )
+					"background": new java.awt.Color( 102, 153, 255, 255 )
+				}, new FormLayoutConstraints( null ) {
+					"x": 70
+					"y": 345
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "certainToPay"
+					"text": "支付"
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "certainToPayActionPerformed", true ) )
+				}, new FormLayoutConstraints( null ) {
+					"x": 295
+					"y": 345
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "trainNo"
+					"text": "D2894"
+					"font": &Font0 new java.awt.Font( "华文仿宋", 1, 20 )
+				}, new FormLayoutConstraints( null ) {
+					"width": 170
+					"x": 180
+					"y": 85
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "startStation"
+					"text": "桂林北站"
+					"font": #Font0
+				}, new FormLayoutConstraints( null ) {
+					"width": 170
+					"x": 180
+					"y": 120
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "arriveStation"
+					"text": "广州南站"
+					"font": #Font0
+				}, new FormLayoutConstraints( null ) {
+					"width": 170
+					"x": 180
+					"y": 155
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "startTime"
+					"text": "2021-04-18 14:53"
+					"font": #Font0
+				}, new FormLayoutConstraints( null ) {
+					"width": 170
+					"x": 180
+					"y": 190
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "passengerName"
+					"text": "姜柳彤"
+					"font": #Font0
+				}, new FormLayoutConstraints( null ) {
+					"width": 170
+					"x": 180
+					"y": 225
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "PID"
+					"text": "45010520001025204X"
+					"font": #Font0
+				}, new FormLayoutConstraints( null ) {
+					"width": 240
+					"x": 180
+					"y": 260
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "sumprice"
+					"text": "165"
+					"font": #Font0
+				}, new FormLayoutConstraints( null ) {
+					"width": 240
+					"x": 205
+					"y": 295
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label18"
+					"text": "￥"
+					"font": #Font0
+				}, new FormLayoutConstraints( null ) {
+					"width": 25
+					"x": 180
+					"y": 295
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 0
+				"y": 0
+				"width": 495
+				"height": 495
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 75, 85 )
+			"size": new java.awt.Dimension( 495, 455 )
+		} )
+	}
+}

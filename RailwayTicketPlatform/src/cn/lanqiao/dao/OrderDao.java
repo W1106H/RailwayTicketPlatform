@@ -23,7 +23,9 @@ public interface OrderDao {
     public int getTrainPassInfo_Count(String orderNo);
     public Orders getOrderByOrderNo(String orderNo);
     public int addOrder(String PID, String train_no, String start_station_no, String arrive_station_no, java.util.Date startTime ,java.util.Date arriveTime, String order_creator, double sumprice, int orderType);
+    public int addOrderIncludeUuid(String UUID,String PID, String train_no, String start_station_no, String arrive_station_no, java.util.Date startTime ,java.util.Date arriveTime, String order_creator, double sumprice, int orderType);
     public Object[][] getPersonalTicket(String userPID);
     public int getPersonalTicket_Count(String userPID);
     public Boolean updateOrderState(String orderNO);
+    public String getPassengerName(String PID);
 }

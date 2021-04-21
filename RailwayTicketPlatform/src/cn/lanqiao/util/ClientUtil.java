@@ -32,6 +32,7 @@ public class ClientUtil {
         Socket socket = null;
         OutputStream outputStream = null;
         try {
+//            哪个服务器就改成哪个服务器的IP
             socket = new Socket("192.168.1.8",8081);
             outputStream = socket.getOutputStream();
             String s = sendInfo;

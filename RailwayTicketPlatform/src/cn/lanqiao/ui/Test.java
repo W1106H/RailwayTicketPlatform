@@ -13,7 +13,6 @@ public class Test {
     public static void main(String[] args) {
         LoginForm loginForm = new LoginForm();
         if (LoginForm.currentUser == null) {
-
             loginForm.setVisible(true);
         }
     }

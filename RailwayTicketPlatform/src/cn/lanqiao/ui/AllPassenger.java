@@ -9,13 +9,17 @@ import java.awt.event.*;
 import cn.lanqiao.dao.OrderDao;
 import cn.lanqiao.dao.impl.OrderDaoImpl;
 import cn.lanqiao.entity.Peoples.User;
+import cn.lanqiao.service.OrderService;
 import cn.lanqiao.service.PassengerService;
+import cn.lanqiao.service.impl.OrderServiceImpl;
 import cn.lanqiao.service.impl.PassengerServiceImpl;
+import cn.lanqiao.ui.OrdersUI.CertainToPay;
 
 import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -74,11 +78,14 @@ public class AllPassenger extends JDialog {
             } catch (ParseException e1) {
                 e1.printStackTrace();
             }
-            OrderDao orderDao = new OrderDaoImpl();
-            int i = orderDao.addOrder(passengerId, trainNum, startNo, endNo, startData, endData, currentUser.getPId(), price, ticketType);
-            if (i == 1) {
-                JOptionPane.showMessageDialog(null, "订单创建成功");
-            } else if (i == 0) {
+            OrderService orderService = new OrderServiceImpl();
+            String order_no = UUID.randomUUID().toString();
+            boolean flag = orderService.addOrderIncludeUuid(order_no, passengerId, trainNum, startNo, endNo, startData, endData, currentUser.getPId(), price, ticketType);
+            if (flag) {
+                String passengerName = (String) table1.getValueAt(table1.getSelectedRow(), 0);
+                CertainToPay certainToPay = new CertainToPay(order_no,passengerName);
+                certainToPay.setVisible(true);
+            } else {
                 JOptionPane.showMessageDialog(null, "订单创建失败");
             }
         } else {

@@ -112,7 +112,7 @@ new FormModel {
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "orderState"
 					"text": "已支付"
-					"foreground": new java.awt.Color( 255, 17, 13, 255 )
+					"foreground": sfield java.awt.Color white
 				}, new FormLayoutConstraints( null ) {
 					"x": 40
 					"y": 220

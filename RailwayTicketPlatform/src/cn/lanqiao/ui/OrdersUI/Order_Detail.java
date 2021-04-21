@@ -224,7 +224,7 @@ public class Order_Detail extends JDialog {
 
             //---- orderState ----
             orderState.setText("\u5df2\u652f\u4ed8");
-            orderState.setForeground(new Color(255, 17, 13));
+            orderState.setForeground(Color.white);
             desktopPane1.add(orderState, JLayeredPane.DEFAULT_LAYER);
             orderState.setBounds(40, 220, 80, 45);
 

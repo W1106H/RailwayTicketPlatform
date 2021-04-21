@@ -114,4 +114,16 @@ public class OrderServiceImpl implements OrderService {
         if(flag > 0) return true;
         else return false;
     }
+
+    @Override
+    public boolean addOrderIncludeUuid(String UUID, String PID, String train_no, String start_station_no, String arrive_station_no, Date startTime, Date arriveTime, String order_creator, double sumprice, int orderType) {
+        int flag = orderDao.addOrderIncludeUuid(UUID,PID,train_no,start_station_no,arrive_station_no,startTime,arriveTime,order_creator,sumprice,orderType);
+        if(flag > 0) return true;
+        else return false;
+    }
+
+    @Override
+    public String getPassengerName(String PID) {
+        return orderDao.getPassengerName(PID);
+    }
 }

@@ -52,8 +52,7 @@ public class LoginForm extends JFrame {
                 AutcheckBox.setSelected(true);
                 //关闭
                 objectInputStream.close();
-                PersonalForm personalForm = new PersonalForm(user);
-                personalForm.setVisible(true);
+                new MainFrm(currentUser).setVisible(true);
                 this.setVisible(false);
                 return ;
             } catch (Exception e) {

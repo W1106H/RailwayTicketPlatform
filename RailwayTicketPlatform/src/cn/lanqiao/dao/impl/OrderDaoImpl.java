@@ -22,8 +22,8 @@ public class OrderDaoImpl implements OrderDao {
         Object[][] orderAlreadyPay = null;
 //        第一步：获得连接
         Connection connection = JDBCUtil.getConnection();
-        int startIndex=(currentPage2-1) *2 + 1;
-        int endIndex=currentPage2*2;
+        int startIndex=(currentPage2-1) *5 + 1;
+        int endIndex=currentPage2*5;
         String sql = "select * " +
                 "from " +
                 "    (select table1.*,ROWNUM rn " +
@@ -80,8 +80,8 @@ public class OrderDaoImpl implements OrderDao {
         Object[][] orderNotPay = null;
 //        第一步：获得连接
         Connection connection = JDBCUtil.getConnection();
-        int startIndex=(currentPage2-1) *2 + 1;
-        int endIndex=currentPage2*2;
+        int startIndex=(currentPage2-1) *5 + 1;
+        int endIndex=currentPage2*5;
         String sql = "select * " +
                 "from " +
                 "    (select table1.*,ROWNUM rn " +
@@ -321,8 +321,8 @@ public class OrderDaoImpl implements OrderDao {
         Object[][] historicalOrders = null;
 //        第一步：获得连接
         Connection connection = JDBCUtil.getConnection();
-        int startIndex=(currentPage-1) *2 + 1;
-        int endIndex=currentPage*2;
+        int startIndex=(currentPage-1) *5 + 1;
+        int endIndex=currentPage*5;
         String sql = "select * " +
                 "from " +
                 "    (select table1.*,ROWNUM rn " +
@@ -337,7 +337,7 @@ public class OrderDaoImpl implements OrderDao {
                 "            and o.station_end_no = tps2.station_order " +
                 "            and tps1.train_num = tps2.train_num " +
                 "            and o.PID = p.passengerID " +
-                "        ORDER BY train_start_time DESC) table1) table2 " +
+                "        ORDER BY order_Create_Time DESC) table1) table2 " +
                 "where rn between ? and ? ";
         PreparedStatement pr = null;
         ResultSet rs = null;
@@ -421,7 +421,8 @@ public class OrderDaoImpl implements OrderDao {
                 String seat_no = rs.getString("seat_no");
                 String order_creator = rs.getString("order_creator");
                 String order_state = rs.getString("order_state");
-                Date order_create_Time = rs.getDate("Order_Create_Time");
+                Timestamp order_create_Time = rs.getTimestamp("Order_Create_Time");
+               /* Date order_create_Time = rs.getDate("Order_Create_Time");*/
                 double sumprice = rs.getDouble("sumprice");
                 String order_type = rs.getString("Order_Type");
                 String visual = rs.getString("Visual");
@@ -498,8 +499,8 @@ public class OrderDaoImpl implements OrderDao {
         Object[][] orderNotTravel = null;
 //        第一步：获得连接
         Connection connection = JDBCUtil.getConnection();
-        int startIndex=(currentPage-1) *2 + 1;
-        int endIndex=currentPage*2;
+        int startIndex=(currentPage-1) *5 + 1;
+        int endIndex=currentPage*5;
         String sql = "select * " +
                 "from " +
                 "    (select table1.*,ROWNUM rn " +
@@ -597,6 +598,7 @@ public class OrderDaoImpl implements OrderDao {
                     "    and o.station_start_no = tps1.station_order " +
                     "    and o.station_end_no = tps2.station_order " +
                     "    and o.order_state = 'T' " +
+                    "    and o.visual = 'T' " +
                     "order by o.train_start_time DESC ";
             ps = con.prepareStatement(sql);
             ps.setString(1,userPID);
@@ -734,6 +736,90 @@ public class OrderDaoImpl implements OrderDao {
             return false;//"修改支付状态失败！"
         }
 
+    }
+
+    @Override
+    public int addOrderIncludeUuid(String UUID, String PID, String train_no, String start_station_no, String arrive_station_no, java.util.Date startTime, java.util.Date arriveTime, String order_creator, double sumprice, int orderType) {
+        int flag = 0;
+        Connection con = JDBCUtil.getConnection();
+        PreparedStatement ps = null;
+        try{
+//            获得订单创建时间
+            //java.util.Date nowDate = new java.util.Date();
+            //Date order_create_date = new Date(nowDate.getTime());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String sdate = sdf.format(new java.util.Date());
+            java.util.Date date = null;
+            try {
+                date = sdf.parse(sdate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            java.sql.Timestamp order_create_date = new java.sql.Timestamp(date.getTime());
+            // java.sql.Date date1 = (java.sql.Date)order_create_date;
+
+//            插入订单至订单表中
+            String sql="insert into orders values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, UUID);
+            ps.setString(2, PID);
+            ps.setString(3, train_no);
+            ps.setDate(4,new Date(startTime.getTime()));
+            ps.setDate(5,new Date(arriveTime.getTime()));
+            ps.setString(6,start_station_no);
+            ps.setString(7,arrive_station_no);
+            ps.setString(8,String.valueOf((int)(Math.random()*10 + 1)));
+            ps.setString(9,String.valueOf((int)(Math.random()*11 + 1)));
+            ps.setString(10,order_creator);
+            ps.setString(11,"F");
+            //ps.setDate(12,order_create_date);
+            ps.setTimestamp(12,order_create_date);
+            ps.setDouble(13,sumprice);
+            ps.setString(14,"T");
+            ps.setInt(15,orderType);
+            flag = ps.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return flag;
+    }
+
+    @Override
+    public String getPassengerName(String PID) {
+        Connection connection = JDBCUtil.getConnection();
+        String returnValue = null;
+        String sql = "select pName from passengers where passengerid=?";
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        int issuccess=0;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,PID);
+            rs = preparedStatement.executeQuery();
+            if(rs.next()){
+                returnValue = rs.getString("pName");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtil.close(null, preparedStatement, connection);
+        }
+        return returnValue;
     }
 
     public void setOrderAlreadyPayFlag(boolean orderAlreadyPayFlag) {
